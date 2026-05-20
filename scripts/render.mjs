@@ -110,10 +110,10 @@ function renderTemplate(html, data) {
 // ── 自适应分页逻辑 ───────────────────────────────
 // 封面概要模式：封面标题区 ~300px，剩余空间放新闻摘要
 // 画布高度 1200px - 状态条70 - 标题区250 - 底部50 = ~830px 可用
-// 每个概要卡片高度约 90px（含2行标题+来源+padding）
+// 每个概要卡片高度约 200px（含2行45px标题+来源+padding+间距）
 function splitNewsIntoPages(items) {
   const MAX_HEIGHT = 780; // 封面可用高度（留足余量）
-  const CARD_HEIGHT = 90;  // 概要卡片高度（2行标题+来源）
+  const CARD_HEIGHT = 200; // 概要卡片高度（2行标题+来源）
   const GAP = 8;           // 卡片间距
 
   const pages = [];
