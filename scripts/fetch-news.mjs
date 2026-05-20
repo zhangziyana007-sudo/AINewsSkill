@@ -20,25 +20,25 @@ const RSS_SOURCES = [
   // 中文源
   {
     name: '36氪快讯',
-    url: 'https://rsshub.app/36kr/newsflashes',
+    url: 'https://rsshub.ktachibana.party/36kr/newsflashes',
     lang: 'zh',
     keywords: ['AI', '人工智能', '大模型', 'GPT', '芯片', '算力', 'LLM', '机器人', 'Agent', '智能', 'Anthropic', 'OpenAI', 'Google', '英伟达', 'NVIDIA', '融资', '开源'],
   },
   {
-    name: '机器之心',
-    url: 'https://rsshub.app/jiqizhixin',
+    name: '雷峰网AI',
+    url: 'https://rsshub.ktachibana.party/leiphone/category/ai',
     lang: 'zh',
     keywords: null, // 全部都是 AI 相关
   },
   {
-    name: '量子位',
-    url: 'https://rsshub.app/qbitai',
+    name: 'IT之家AI',
+    url: 'https://rsshub.ktachibana.party/ithome/tag/AI',
     lang: 'zh',
     keywords: null,
   },
   {
     name: 'AI前线',
-    url: 'https://rsshub.app/infoq/recommend',
+    url: 'https://rsshub.ktachibana.party/infoq/recommend',
     lang: 'zh',
     keywords: ['AI', '人工智能', '大模型', 'GPT', 'LLM', '深度学习', 'Agent'],
   },
@@ -63,11 +63,12 @@ const RSS_SOURCES = [
   },
 ];
 
-// 备用 RSSHub 镜像（主站不可用时自动切换）
+// RSSHub 镜像（按可用性排序，失败时自动切换下一个）
 const RSSHUB_MIRRORS = [
+  'https://rsshub.ktachibana.party',
+  'https://hub.slarker.me',
   'https://rsshub.app',
   'https://rsshub.rssforever.com',
-  'https://rsshub.feedly.com',
 ];
 
 // ────────────────────────────────────────────
@@ -168,11 +169,14 @@ async function fetchWithTimeout(url, timeoutMs) {
 async function fetchSource(source) {
   const urls = [source.url];
 
-  // 如果是 RSSHub 源，添加镜像 URL
-  if (source.url.includes('rsshub.app')) {
-    const path = source.url.replace('https://rsshub.app', '');
-    for (const mirror of RSSHUB_MIRRORS.slice(1)) {
-      urls.push(mirror + path);
+  // 如果是 RSSHub 源，添加所有镜像作为备选
+  const rsshubDomain = RSSHUB_MIRRORS.find(m => source.url.includes(new URL(m).hostname));
+  if (rsshubDomain) {
+    const path = source.url.replace(rsshubDomain, '');
+    for (const mirror of RSSHUB_MIRRORS) {
+      if (mirror !== rsshubDomain) {
+        urls.push(mirror + path);
+      }
     }
   }
 
