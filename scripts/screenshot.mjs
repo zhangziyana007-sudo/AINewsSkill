@@ -79,8 +79,8 @@ async function screenshotPages(files) {
       const fileUrl = `file://${resolve(file)}`;
       await page.goto(fileUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
 
-      // 等待 Tailwind CDN + 初始渲染
-      await page.waitForTimeout(8000);
+      // 等待字体渲染（本地字体无需长时间等待）
+      await page.waitForTimeout(1500);
 
       // 强制解决字体加载：移除所有不可达的外部样式表 + 清除卡住的字体
       await page.evaluate(async () => {
