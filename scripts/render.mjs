@@ -252,11 +252,13 @@ async function main() {
 
   // 末页
   const endingData = rawData.pages.find(p => p.type === 'ending') || {};
+  const metaRaw = endingData.meta || '';
+  const metaStr = typeof metaRaw === 'object' ? Object.entries(metaRaw).map(([k, v]) => `${k}: ${v}`).join(' · ') : metaRaw;
   const endingHtml = renderTemplate(endingTpl, {
     ...shared,
     slogan: endingData.slogan || '关注 AI Daily · 不错过每一条前沿动态',
     cta: endingData.cta || '点赞 + 关注',
-    meta: endingData.meta || '',
+    meta: metaStr,
     pageNum: totalPages,
   });
   pages.push(endingHtml);
