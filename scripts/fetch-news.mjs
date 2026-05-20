@@ -16,50 +16,71 @@ import { dirname } from 'path';
 // ────────────────────────────────────────────
 // RSS 源配置
 // ────────────────────────────────────────────
+// 关键词聚焦：AI大模型 + AI工具
+const AI_KEYWORDS_ZH = [
+  '大模型', 'LLM', 'GPT', 'Claude', 'Gemini', 'Qwen', '通义', '文心', '豆包',
+  'Agent', '智能体', 'Copilot', 'ChatGPT', 'AI助手', 'AI工具',
+  'OpenAI', 'Anthropic', 'Google AI', 'DeepSeek', '零一万物', '月之暗面', 'Kimi',
+  '阶跃', 'MiniMax', '百川', '智谱',
+  'Transformer', '推理', '微调', 'RAG', '向量', 'token',
+  'Sora', 'Midjourney', 'Stable Diffusion', 'AI生成', 'AIGC',
+  'AI编程', 'AI代码', 'Cursor', 'Windsurf', 'Devin',
+  '具身智能', '人形机器人', '算力', '芯片', 'GPU', 'NVIDIA', '英伟达',
+];
+const AI_KEYWORDS_EN = [
+  'LLM', 'GPT', 'Claude', 'Gemini', 'large language model',
+  'AI agent', 'AI tool', 'Copilot', 'ChatGPT',
+  'OpenAI', 'Anthropic', 'DeepSeek',
+  'transformer', 'fine-tuning', 'RAG', 'inference',
+  'Sora', 'Midjourney', 'AI coding', 'Cursor',
+  'humanoid robot', 'embodied AI', 'NVIDIA', 'GPU',
+  'generative AI', 'foundation model', 'multimodal',
+];
+
 const RSS_SOURCES = [
   // 中文源
   {
     name: '36氪快讯',
     url: 'https://rsshub.ktachibana.party/36kr/newsflashes',
     lang: 'zh',
-    keywords: ['AI', '人工智能', '大模型', 'GPT', '芯片', '算力', 'LLM', '机器人', 'Agent', '智能', 'Anthropic', 'OpenAI', 'Google', '英伟达', 'NVIDIA', '融资', '开源'],
+    keywords: AI_KEYWORDS_ZH,
   },
   {
     name: '雷峰网AI',
     url: 'https://rsshub.ktachibana.party/leiphone/category/ai',
     lang: 'zh',
-    keywords: null, // 全部都是 AI 相关
+    keywords: AI_KEYWORDS_ZH,
   },
   {
     name: 'IT之家AI',
     url: 'https://rsshub.ktachibana.party/ithome/tag/AI',
     lang: 'zh',
-    keywords: null,
+    keywords: AI_KEYWORDS_ZH,
   },
   {
     name: 'AI前线',
     url: 'https://rsshub.ktachibana.party/infoq/recommend',
     lang: 'zh',
-    keywords: ['AI', '人工智能', '大模型', 'GPT', 'LLM', '深度学习', 'Agent'],
+    keywords: AI_KEYWORDS_ZH,
   },
   // 英文源
   {
     name: 'TechCrunch AI',
     url: 'https://techcrunch.com/category/artificial-intelligence/feed/',
     lang: 'en',
-    keywords: null,
+    keywords: AI_KEYWORDS_EN,
   },
   {
     name: 'The Verge AI',
     url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml',
     lang: 'en',
-    keywords: null,
+    keywords: AI_KEYWORDS_EN,
   },
   {
     name: 'Ars Technica',
     url: 'https://feeds.arstechnica.com/arstechnica/technology-lab',
     lang: 'en',
-    keywords: ['AI', 'artificial intelligence', 'GPT', 'LLM', 'machine learning', 'neural', 'OpenAI', 'Google', 'Anthropic', 'NVIDIA', 'robot'],
+    keywords: AI_KEYWORDS_EN,
   },
 ];
 
@@ -83,7 +104,7 @@ const args = Object.fromEntries(
     })
 );
 
-const LIMIT = parseInt(args.limit || '15', 10);
+const LIMIT = parseInt(args.limit || '10', 10);
 const OUTPUT_PATH = args.output || `./output/raw-news-${formatDate(new Date())}.md`;
 const TIMEOUT_MS = 10000;
 
