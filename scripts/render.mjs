@@ -166,7 +166,6 @@ async function main() {
   // 读取模板
   const coverTpl = await readFile(join(templateDir, 'cover.html'), 'utf-8');
   const coverContTpl = await readFile(join(templateDir, 'cover-cont.html'), 'utf-8');
-  const newsTpl = await readFile(join(templateDir, 'news.html'), 'utf-8');
   const endingTpl = await readFile(join(templateDir, 'ending.html'), 'utf-8');
 
   // 确保输出目录
