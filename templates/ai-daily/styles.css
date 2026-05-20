@@ -317,7 +317,7 @@ body {
   text-shadow: 0 0 30px var(--glow);
 }
 .cover-title .line-2 {
-  font-size: 52px;
+  font-size: 45px;
   color: var(--fg);
   letter-spacing: 0.05em;
 }
@@ -366,10 +366,10 @@ body {
   overflow: hidden;
 }
 .preview-card .preview-title {
-  font-size: 45px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--fg);
-  line-height: 1.2;
+  line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -413,7 +413,7 @@ body {
 .cover-previews[data-count="3"] .preview-card .preview-title,
 .cover-previews[data-count="4"] .preview-card .preview-title,
 .cover-previews[data-count="5"] .preview-card .preview-title {
-  font-size: 48px;
+  font-size: 32px;
 }
 .cover-previews[data-count="3"] .preview-card .preview-source,
 .cover-previews[data-count="4"] .preview-card .preview-source,
