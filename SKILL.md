@@ -71,6 +71,8 @@ STEP 3 · 执行 ainews render 生成图片
 | title | 【厂商】+ 核心动作（≤20字） | 【Google】发布 Gemini 3.5 Flash |
 | keyFact | 一句话关键事实（≤50字） | 推理速度提升4倍，API成本降低50% |
 | impact | 影响分析（≤30字） | 价格战加剧，中小厂商压力增大 |
+| category | 新闻来源网站名（≤6字） | TechCrunch、量子位、36氪 |
+| source (previews) | 新闻来源网站名（≤6字） | The Verge、机器之心 |
 
 ### JSON 结构（严格遵守）
 
@@ -114,7 +116,7 @@ STEP 3 · 执行 ainews render 生成图片
       "type": "ending",
       "slogan": "AI大模型早报 · 每日精选Top 10",
       "cta": "关注获取每日推送",
-      "meta": "数据来源：量子位 / 36氪 / 机器之心"
+      "meta": "数据来源：公开报道与行业资讯"
     }
   ]
 }
