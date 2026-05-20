@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily · Ending</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="canvas scanline">
+    <!-- 装饰 -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <!-- 状态条 -->
+    <div class="status-bar">
+      <div class="status-bar-left">
+        <div class="pulse-dot"></div>
+        <span class="mono" style="font-size:16px; color:var(--fg-2);">AI_DAILY</span>
+        <span class="mono" style="font-size:14px; color:var(--fg-3);">{{issue}}</span>
+      </div>
+      <div class="status-bar-right">{{date}}</div>
+    </div>
+
+    <!-- 末页内容 -->
+    <div class="ending-content">
+      <div class="ending-slogan">{{slogan}}</div>
+      {{#if cta}}
+      <div class="ending-cta">{{cta}}</div>
+      {{/if}}
+      {{#if meta}}
+      <div class="ending-meta">{{meta}}</div>
+      {{/if}}
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer-bar">
+      <span>AI Daily · {{dateShort}}</span>
+      <span>{{pageNum}}/{{totalPages}}</span>
+    </div>
+  </div>
+</body>
+</html>
