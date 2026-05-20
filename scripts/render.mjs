@@ -108,29 +108,26 @@ function renderTemplate(html, data) {
 }
 
 // ── 自适应分页逻辑 ───────────────────────────────
-// 根据新闻条目数量和内容长度自动拆页
-// 画布可用高度 ≈ 1200 - 70(状态条) - 60(底部) - 80(标题区) = ~990px
-// 每个卡片高度：基础100px + 每个要点30px
+// 概要卡片模式：每条新闻只占一行（rank+标题+来源）
+// 画布可用高度 ≈ 1200 - 70(状态条) - 60(底部) = ~1070px
+// 每个概要卡片高度约 72px（含padding+gap）
 function splitNewsIntoPages(items) {
-  const MAX_HEIGHT = 900; // 留足余量的可用像素
-  const CARD_BASE = 120;  // 卡片基础高度(含padding+gap)
-  const POINT_HEIGHT = 32; // 每条要点高度
-  const GAP = 20;          // 卡片间距
+  const MAX_HEIGHT = 1000; // 留足余量的可用像素
+  const CARD_HEIGHT = 72;  // 概要卡片高度（单行标题+来源）
+  const GAP = 12;          // 卡片间距
 
   const pages = [];
   let current = [];
   let currentHeight = 0;
 
   for (const item of items) {
-    const cardHeight = CARD_BASE + (item.points?.length || 0) * POINT_HEIGHT;
-
-    if (current.length > 0 && currentHeight + GAP + cardHeight > MAX_HEIGHT) {
+    if (current.length > 0 && currentHeight + GAP + CARD_HEIGHT > MAX_HEIGHT) {
       pages.push(current);
       current = [];
       currentHeight = 0;
     }
     current.push(item);
-    currentHeight += (current.length > 1 ? GAP : 0) + cardHeight;
+    currentHeight += (current.length > 1 ? GAP : 0) + CARD_HEIGHT;
   }
   if (current.length > 0) pages.push(current);
   return pages;
@@ -190,29 +187,29 @@ async function main() {
     .filter(p => p.type === 'news')
     .flatMap(p => p.items || []);
 
-  // 自适应分页
-  const newsPages = splitNewsIntoPages(newsItems);
-
-  // 计算总页数：封面 + 新闻页 + 末页
-  const totalPages = 1 + newsPages.length + 1;
-
   // 共享数据
   const shared = {
     date: rawData.date || new Date().toISOString().slice(0, 10).replace(/-/g, '.'),
     dateShort: rawData.date ? rawData.date.slice(0, 7).replace('.', ' ') : new Date().toISOString().slice(0, 7),
     issue: rawData.issue || `#${new Date().toISOString().slice(0, 7).replace('-', '')}`,
-    totalPages: totalPages,
+    totalPages: 0, // 后面会更新
   };
 
   // 1. 封面
   const coverData = rawData.pages.find(p => p.type === 'cover') || {};
-  // 构建预览卡片 HTML（封面展示全部新闻摘要）
+  // 构建统一的新闻概要列表（一句话标题），用于封面和新闻页
   const previews = coverData.previews || newsItems.map((item, i) => ({
     rank: i + 1,
     title: item.title,
     source: item.category || '',
     icon: 'zap',
   }));
+
+  // 自适应分页（基于概要卡片）
+  const newsPages = splitNewsIntoPages(previews);
+  // 重新计算总页数
+  const totalPages = 1 + newsPages.length + 1;
+  shared.totalPages = totalPages;
   const previewCount = previews.length;
   const previewsHtml = `<div class="cover-previews" data-count="${previewCount}">
       ${previews.map(p => {
@@ -263,22 +260,16 @@ async function main() {
     </div>`;
     }
 
-    // 构建新闻卡片 HTML
+    // 构建新闻卡片 HTML（使用封面同款概要风格）
     const cardsHtml = items.map(item => {
-      const summaryHtml = item.summary
-        ? `<div class="card-summary">${escapeHtml(item.summary)}</div>`
-        : '';
-      const pointsHtml = item.points?.length
-        ? `<div class="card-points">${item.points.map(p => `<div class="point">${escapeHtml(p)}</div>`).join('\n              ')}</div>`
-        : '';
-      return `<div class="news-card">
-          <div class="rank">${escapeHtml(item.rank)}</div>
-          <div class="card-body">
-            <div class="category">${escapeHtml(item.category)}</div>
-            <div class="card-title">${escapeHtml(item.title)}</div>
-            ${summaryHtml}
-            ${pointsHtml}
+      const iconSvg = getCoverIcon(item.icon || 'zap');
+      return `<div class="preview-card">
+          <div class="preview-rank">${escapeHtml(item.rank)}</div>
+          <div class="preview-body">
+            <div class="preview-title">${escapeHtml(item.title)}</div>
+            <div class="preview-source">${escapeHtml(item.source || item.category || '')}</div>
           </div>
+          <div class="preview-icon">${iconSvg}</div>
         </div>`;
     }).join('\n        ');
 
