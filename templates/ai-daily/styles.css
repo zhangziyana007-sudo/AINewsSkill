@@ -365,13 +365,14 @@ body {
   overflow: hidden;
 }
 .preview-card .preview-title {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--fg);
-  line-height: 1.25;
-  white-space: nowrap;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 .preview-card .preview-source {
   font-family: 'JetBrains Mono', monospace;
@@ -424,18 +425,9 @@ body {
   gap: 10px;
 }
 
-/* ── 新闻页概要卡片覆盖（标题可换行） ── */
+/* ── 新闻概要卡片间距 ── */
 .content-area .cover-previews {
   gap: 10px;
-}
-.content-area .cover-previews .preview-title {
-  white-space: normal;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  line-height: 1.3;
-  font-size: 24px;
 }
 
 /* ── 封面底部 ─────────────────────────────────── */

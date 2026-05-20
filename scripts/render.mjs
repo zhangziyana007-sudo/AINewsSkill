@@ -108,13 +108,13 @@ function renderTemplate(html, data) {
 }
 
 // ── 自适应分页逻辑 ───────────────────────────────
-// 概要卡片模式：一句话摘要标题（可能占2行）+ 来源
-// 画布可用高度 ≈ 1200 - 70(状态条) - 60(底部) = ~1070px
+// 封面概要模式：封面标题区 ~300px，剩余空间放新闻摘要
+// 画布高度 1200px - 状态条70 - 标题区250 - 底部50 = ~830px 可用
 // 每个概要卡片高度约 90px（含2行标题+来源+padding）
 function splitNewsIntoPages(items) {
-  const MAX_HEIGHT = 1000; // 留足余量的可用像素
+  const MAX_HEIGHT = 780; // 封面可用高度（留足余量）
   const CARD_HEIGHT = 90;  // 概要卡片高度（2行标题+来源）
-  const GAP = 12;          // 卡片间距
+  const GAP = 8;           // 卡片间距
 
   const pages = [];
   let current = [];
@@ -192,107 +192,58 @@ async function main() {
     date: rawData.date || new Date().toISOString().slice(0, 10).replace(/-/g, '.'),
     dateShort: rawData.date ? rawData.date.slice(0, 7).replace('.', ' ') : new Date().toISOString().slice(0, 7),
     issue: rawData.issue || `#${new Date().toISOString().slice(0, 7).replace('-', '')}`,
-    totalPages: 0, // 后面会更新
+    totalPages: 0,
   };
 
-  // 1. 封面
+  // 所有新闻合并为统一列表（一句话摘要）
   const coverData = rawData.pages.find(p => p.type === 'cover') || {};
-  // 封面用短标题预览
-  const coverPreviews = coverData.previews || newsItems.map((item, i) => ({
-    rank: i + 1,
-    title: item.title,
-    source: item.category || '',
-    icon: 'zap',
-  }));
-
-  // 新闻页用完整标题（一句话摘要）
-  const newsPageItems = newsItems.map((item, i) => ({
+  const allItems = newsItems.map((item, i) => ({
     rank: i + 1,
     title: item.title,
     source: item.category || '',
     icon: item.icon || 'zap',
   }));
 
-  // 自适应分页（基于概要卡片，允许2行标题）
-  const newsPages = splitNewsIntoPages(newsPageItems);
-  // 计算总页数
-  const totalPages = 1 + newsPages.length + 1;
+  // 总页数：封面页(们) + 末页
+  const coverPages = splitNewsIntoPages(allItems);
+  const totalPages = coverPages.length + 1;
   shared.totalPages = totalPages;
-  const previewCount = coverPreviews.length;
-  const previewsHtml = `<div class="cover-previews" data-count="${previewCount}">
-      ${coverPreviews.map(p => {
-    const rankStr = String(p.rank).padStart(2, '0');
-    const iconSvg = getCoverIcon(p.icon || 'zap');
-    return `<div class="preview-card">
-        <div class="preview-rank">${escapeHtml(rankStr)}</div>
+
+  // 生成封面页（每页都是封面样式+新闻摘要列表）
+  let rankOffset = 0;
+  for (let i = 0; i < coverPages.length; i++) {
+    const items = coverPages[i].map((item, idx) => ({
+      ...item,
+      rank: String(rankOffset + idx + 1).padStart(2, '0'),
+    }));
+    rankOffset += coverPages[i].length;
+
+    const previewCount = items.length;
+    const previewsHtml = `<div class="cover-previews" data-count="${previewCount}">
+      ${items.map(p => {
+      const iconSvg = getCoverIcon(p.icon || 'zap');
+      return `<div class="preview-card">
+        <div class="preview-rank">${escapeHtml(p.rank)}</div>
         <div class="preview-body">
           <div class="preview-title">${escapeHtml(p.title)}</div>
           <div class="preview-source">${escapeHtml(p.source)}</div>
         </div>
         <div class="preview-icon">${iconSvg}</div>
       </div>`;
-  }).join('\n      ')}
+    }).join('\n      ')}
     </div>`;
 
-  let coverHtml = renderTemplate(coverTpl, {
-    ...shared,
-    titleLines: coverData.title || ['AI', '日报'],
-    subtitle: coverData.subtitle || '',
-    pageNum: 1,
-  });
-  coverHtml = coverHtml.replace(/\s*<div class="cover-previews">\s*%%SLOT_COVER_PREVIEWS%%\s*<\/div>/, previewsHtml);
-  pages.push(coverHtml);
-
-  // 2. 新闻页（自动分页）
-  let rankOffset = 0;
-  for (let i = 0; i < newsPages.length; i++) {
-    const items = newsPages[i].map((item, idx) => ({
-      ...item,
-      rank: String(rankOffset + idx + 1).padStart(2, '0'),
-    }));
-    rankOffset += newsPages[i].length;
-
-    // 如果原始数据中有新闻页的 header 信息
-    const originalNewsPage = rawData.pages.filter(p => p.type === 'news')[i];
-    const pageHeader = originalNewsPage?.header || null;
-
-    // 构建页面标题区 HTML
-    let headerHtml = '';
-    if (pageHeader) {
-      headerHtml = `<div class="content-area" style="flex:0; padding-top:24px;">
-      <div class="page-header">
-        ${pageHeader.tag ? `<div class="tag">${escapeHtml(pageHeader.tag)}</div>` : ''}
-        ${pageHeader.title ? `<div class="title">${escapeHtml(pageHeader.title)}</div>` : ''}
-        ${pageHeader.subtitle ? `<div class="subtitle">${escapeHtml(pageHeader.subtitle)}</div>` : ''}
-      </div>
-    </div>`;
-    }
-
-    // 构建新闻卡片 HTML（使用封面同款概要风格）
-    const cardsHtml = items.map(item => {
-      const iconSvg = getCoverIcon(item.icon || 'zap');
-      return `<div class="preview-card">
-          <div class="preview-rank">${escapeHtml(item.rank)}</div>
-          <div class="preview-body">
-            <div class="preview-title">${escapeHtml(item.title)}</div>
-            <div class="preview-source">${escapeHtml(item.source || item.category || '')}</div>
-          </div>
-          <div class="preview-icon">${iconSvg}</div>
-        </div>`;
-    }).join('\n        ');
-
-    // 注入到模板
-    let newsHtml = renderTemplate(newsTpl, {
+    let coverHtml = renderTemplate(coverTpl, {
       ...shared,
-      itemCount: items.length,
-      pageNum: 2 + i,
+      titleLines: coverData.title || ['AI', '日报'],
+      subtitle: coverData.subtitle || '',
+      pageNum: i + 1,
     });
-    newsHtml = newsHtml.replace('%%SLOT_PAGE_HEADER%%', headerHtml);
-    newsHtml = newsHtml.replace('%%SLOT_NEWS_CARDS%%', cardsHtml);
-    pages.push(newsHtml);
+    coverHtml = coverHtml.replace(/\s*<div class="cover-previews">\s*%%SLOT_COVER_PREVIEWS%%\s*<\/div>/, previewsHtml);
+    pages.push(coverHtml);
   }
 
-  // 3. 末页
+  // 末页
   const endingData = rawData.pages.find(p => p.type === 'ending') || {};
   const endingHtml = renderTemplate(endingTpl, {
     ...shared,
