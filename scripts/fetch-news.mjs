@@ -38,59 +38,28 @@ const AI_KEYWORDS_EN = [
 ];
 
 const RSS_SOURCES = [
-  // 中文源
   {
-    name: '36氪快讯',
-    url: 'https://rsshub.ktachibana.party/36kr/newsflashes',
+    name: '量子位',
+    url: 'https://rsshub.ktachibana.party/qbitai/category/资讯',
     lang: 'zh',
     keywords: AI_KEYWORDS_ZH,
   },
   {
-    name: '雷峰网AI',
+    name: '36氪',
+    url: 'https://rsshub.ktachibana.party/36kr/information/technology',
+    lang: 'zh',
+    keywords: AI_KEYWORDS_ZH,
+  },
+  {
+    name: '机器之心',
     url: 'https://rsshub.ktachibana.party/leiphone/category/ai',
     lang: 'zh',
     keywords: AI_KEYWORDS_ZH,
   },
-  {
-    name: 'IT之家AI',
-    url: 'https://rsshub.ktachibana.party/ithome/tag/AI',
-    lang: 'zh',
-    keywords: AI_KEYWORDS_ZH,
-  },
-  {
-    name: 'AI前线',
-    url: 'https://rsshub.ktachibana.party/infoq/recommend',
-    lang: 'zh',
-    keywords: AI_KEYWORDS_ZH,
-  },
-  // 英文源
-  {
-    name: 'TechCrunch AI',
-    url: 'https://techcrunch.com/category/artificial-intelligence/feed/',
-    lang: 'en',
-    keywords: AI_KEYWORDS_EN,
-  },
-  {
-    name: 'The Verge AI',
-    url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml',
-    lang: 'en',
-    keywords: AI_KEYWORDS_EN,
-  },
-  {
-    name: 'Ars Technica',
-    url: 'https://feeds.arstechnica.com/arstechnica/technology-lab',
-    lang: 'en',
-    keywords: AI_KEYWORDS_EN,
-  },
 ];
 
-// RSSHub 镜像（按可用性排序，失败时自动切换下一个）
-const RSSHUB_MIRRORS = [
-  'https://rsshub.ktachibana.party',
-  'https://hub.slarker.me',
-  'https://rsshub.app',
-  'https://rsshub.rssforever.com',
-];
+// RSSHub 主实例
+const RSSHUB_BASE = 'https://rsshub.ktachibana.party';
 
 // ────────────────────────────────────────────
 // 参数解析
@@ -106,7 +75,7 @@ const args = Object.fromEntries(
 
 const LIMIT = parseInt(args.limit || '10', 10);
 const OUTPUT_PATH = args.output || `./output/raw-news-${formatDate(new Date())}.md`;
-const TIMEOUT_MS = 6000;
+const TIMEOUT_MS = 30000;
 
 // ────────────────────────────────────────────
 // 工具函数
@@ -188,41 +157,23 @@ async function fetchWithTimeout(url, timeoutMs) {
 // 主流程
 // ────────────────────────────────────────────
 async function fetchSource(source) {
-  const urls = [source.url];
+  try {
+    const xml = await fetchWithTimeout(source.url, TIMEOUT_MS);
+    const items = extractItems(xml);
 
-  // 如果是 RSSHub 源，添加所有镜像作为备选
-  const rsshubDomain = RSSHUB_MIRRORS.find(m => source.url.includes(new URL(m).hostname));
-  if (rsshubDomain) {
-    const path = source.url.replace(rsshubDomain, '');
-    for (const mirror of RSSHUB_MIRRORS) {
-      if (mirror !== rsshubDomain) {
-        urls.push(mirror + path);
-      }
-    }
+    // 按关键词过滤
+    const filtered = items.filter(item =>
+      matchesKeywords(item.title + ' ' + item.description, source.keywords)
+    );
+
+    return {
+      source: source.name,
+      lang: source.lang,
+      items: filtered,
+    };
+  } catch (err) {
+    console.warn(`  ⚠ ${source.name}：获取失败 (${err.message})`);
   }
-
-  for (const url of urls) {
-    try {
-      const xml = await fetchWithTimeout(url, TIMEOUT_MS);
-      const items = extractItems(xml);
-
-      // 按关键词过滤
-      const filtered = items.filter(item =>
-        matchesKeywords(item.title + ' ' + item.description, source.keywords)
-      );
-
-      return {
-        source: source.name,
-        lang: source.lang,
-        items: filtered,
-      };
-    } catch (err) {
-      // 尝试下一个镜像
-      continue;
-    }
-  }
-
-  console.warn(`  ⚠ ${source.name}：所有源均失败`);
   return { source: source.name, lang: source.lang, items: [] };
 }
 
