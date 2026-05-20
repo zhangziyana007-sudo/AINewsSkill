@@ -2,7 +2,7 @@
 /**
  * generate.mjs — AI 新闻结构化生成器
  *
- * 读取 raw-news.md → 调用 DeepSeek API → 输出 data.json
+ * 调用 DeepSeek API → 输出 data.json（基于模型知识直接生成）
  *
  * 环境变量：
  *   DEEPSEEK_API_KEY  — DeepSeek API 密钥（必需）
@@ -10,7 +10,7 @@
  *   AI_MODEL          — 模型名称（默认 deepseek-chat）
  *
  * 用法：
- *   node scripts/generate.mjs --input=output/raw-news.md --output=output/ai-daily-0520/data.json
+ *   node scripts/generate.mjs --output=output/ai-daily-0520/data.json
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -37,42 +37,37 @@ const args = Object.fromEntries(
     })
 );
 
-const inputPath = resolve(args.input || './output/raw-news.md');
 const outputPath = resolve(args.output || './output/data.json');
 
-// ── 读取素材 ─────────────────────────────────────
-let rawNews;
-try {
-  rawNews = readFileSync(inputPath, 'utf-8');
-} catch (e) {
-  console.error(`❌ 无法读取素材文件: ${inputPath}`);
-  process.exit(1);
-}
-
-console.log(`📖 读取素材: ${inputPath}`);
-console.log(`🤖 调用 ${MODEL} 生成结构化数据...\n`);
+console.log(`🤖 调用 ${MODEL} 生成今日AI早报...\n`);
 
 // ── 构建 Prompt ─────────────────────────────────────
 const today = new Date();
 const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
 const issueStr = `#${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
 
-const systemPrompt = `你是一位资深AI大模型行业分析师，负责制作"每日AI大模型早报"小红书图文。
+const systemPrompt = `你是一位资深AI大模型行业分析师，负责制作"每日AI大模型早报（Top 10）"小红书图文。
 
-## 筛选标准
-- 仅保留影响力最大、确定性高的核心动态，剔除传闻和琐碎更新
+## 推送要求
+- 条数：必须精确输出10条，不能多也不能少
+- 筛选：仅保留影响力最大、确定性高的核心动态，剔除传闻和琐碎更新
+
+## 内容偏好
 - 核心关注：国内外主流AI公司的大模型版本更新与API/订阅价格变动
 - 重点监控厂商：
   - 国际：OpenAI (GPT系列)、Google (Gemini系列)、Microsoft (Copilot)、Anthropic (Claude系列)、Meta (Llama系列)、xAI (Grok系列)
   - 国内：DeepSeek、智谱AI (GLM)、月之暗面 (Kimi)、阿里巴巴 (通义千问)、百度 (文心一言)、字节跳动 (豆包)、腾讯 (混元)、小米 (MiMo)
 
-## 每条新闻格式
-- title：【厂商】+ 核心动作（不超过25字）
-- keyFact：一句话或数据点陈述最核心的变化
-- impact：简短评语，点明对行业/开发者/用户的潜在影响
+## 信息卡片格式（每条新闻固定结构）
+- title：【厂商】+ 核心动作（不超过20字）
+  例：【Google】发布 Gemini 3.5 Flash 并调整API价格
+- keyFact：用一句话或数据点陈述最核心的变化
+  例：新模型推理速度提升4倍，API成本较前代降低50%；新增$100/月套餐。
+- impact：简短评语，点明该事件对行业、竞争对手、开发者或用户的潜在影响
+  例：价格战加剧，中小模型厂商压力增大；为高并发应用提供了高性价比选择。
 
 ## 输出要求
-从素材中精选10条最重要的动态，严格输出以下JSON格式（不要输出其他任何内容）：
+严格输出以下JSON格式（不要输出markdown代码块，不要输出其他任何内容）：
 
 {
   "date": "${dateStr}",
@@ -80,43 +75,52 @@ const systemPrompt = `你是一位资深AI大模型行业分析师，负责制�
   "pages": [
     {
       "type": "cover",
-      "title": ["${dateStr}", "AI日报"],
-      "subtitle": "三个关键词概括 · 用中间点分隔",
+      "title": ["${dateStr}", "AI早报"],
+      "subtitle": "三个关键词 · 用中间点分隔",
       "previews": [
         {"rank": 1, "title": "【厂商】核心动作", "source": "来源", "icon": "zap"},
-        {"rank": 2, "title": "【厂商】核心动作", "source": "来源", "icon": "cpu"}
+        {"rank": 2, "title": "【厂商】核心动作", "source": "来源", "icon": "cpu"},
+        {"rank": 3, "title": "【厂商】核心动作", "source": "来源", "icon": "rocket"},
+        {"rank": 4, "title": "【厂商】核心动作", "source": "来源", "icon": "brain"}
       ]
     },
     {
       "type": "news",
       "items": [
-        {
-          "title": "【厂商】核心动作",
-          "keyFact": "一句话关键事实",
-          "impact": "一句话影响分析",
-          "category": "来源",
-          "icon": "zap"
-        }
+        {"title": "【厂商】核心动作", "keyFact": "关键事实一句话", "impact": "影响分析一句话", "category": "来源", "icon": "zap"},
+        {"title": "【厂商】核心动作", "keyFact": "关键事实一句话", "impact": "影响分析一句话", "category": "来源", "icon": "cpu"},
+        {"title": "【厂商】核心动作", "keyFact": "关键事实一句话", "impact": "影响分析一句话", "category": "来源", "icon": "rocket"},
+        {"title": "【厂商】核心动作", "keyFact": "关键事实一句话", "impact": "影响分析一句话", "category": "来源", "icon": "brain"},
+        {"title": "【厂商】核心动作", "keyFact": "关键事实一句话", "impact": "影响分析一句话", "category": "来源", "icon": "sparkles"}
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {"title": "【厂商】核心动作", "keyFact": "关键事实一句话", "impact": "影响分析一句话", "category": "来源", "icon": "globe"},
+        {"title": "【厂商】核心动作", "keyFact": "关键事实一句话", "impact": "影响分析一句话", "category": "来源", "icon": "code"},
+        {"title": "【厂商】核心动作", "keyFact": "关键事实一句话", "impact": "影响分析一句话", "category": "来源", "icon": "robot"},
+        {"title": "【厂商】核心动作", "keyFact": "关键事实一句话", "impact": "影响分析一句话", "category": "来源", "icon": "zap"},
+        {"title": "【厂商】核心动作", "keyFact": "关键事实一句话", "impact": "影响分析一句话", "category": "来源", "icon": "cpu"}
       ]
     },
     {
       "type": "ending",
-      "slogan": "让 AI 赋能每一天",
+      "slogan": "AI大模型早报 · 每日精选Top 10",
       "cta": "关注获取每日推送",
-      "meta": "AI Daily · 每日精选"
+      "meta": "数据来源：量子位 / 36氪 / 机器之心"
     }
   ]
 }
 
-注意：
-- previews 放封面上展示的精简标题（最多显示5条）
-- news items 每页最多4条（因为每条有3行内容），超过4条请分成多个 news 页面
+关键约束：
+- previews 固定4条（封面展示的前4条摘要）
+- news 第1页5条 + 第2页5条 = 必须总共10条
 - icon 可选：zap, cpu, robot, code, sparkles, globe, rocket, brain
-- 如果素材中没有足够的AI大模型相关新闻，可以包含AI应用、AI芯片、AI融资等相关动态补足10条`;
+- 如果素材中AI大模型新闻不足10条，可包含AI应用、AI芯片、AI融资、AI政策等相关动态补足
+- title 不超过20字，keyFact 不超过50字，impact 不超过30字`;
 
-const userPrompt = `以下是今天获取的AI新闻素材，请精选6-10条最有价值的，生成结构化JSON：
-
-${rawNews}`;
+const userPrompt = `请根据你所知道的最新AI大模型行业动态，生成今日（${dateStr}）的AI早报Top 10。要求输出严格符合 system prompt 中定义的JSON格式。`;
 
 // ── 调用 API ─────────────────────────────────────
 async function callAI() {

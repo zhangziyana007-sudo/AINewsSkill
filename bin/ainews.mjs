@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * ainews — AI 日报小红书图文自动化 CLI
+ * ainews — 每日AI大模型早报 · 小红书图文自动化 CLI
  *
  * 命令：
- *   ainews fetch [--limit=N] [--output=PATH]    获取新闻素材
+ *   ainews generate [--output=PATH]             AI 生成结构化 JSON
  *   ainews render --input=<json> [--project=X]  渲染 JSON → HTML → PNG
- *   ainews run [--limit=N] [--project=X]        全流程（fetch + 等待JSON + render）
+ *   ainews run [--project=X]                    全流程（AI生成 → render）
  *   ainews help                                 显示帮助
  */
 
@@ -32,9 +32,6 @@ const flags = Object.fromEntries(
 
 // ── 命令路由 ─────────────────────────────────────
 switch (command) {
-  case 'fetch':
-    await cmdFetch();
-    break;
   case 'generate':
     await cmdGenerate();
     break;
@@ -58,28 +55,11 @@ switch (command) {
 
 // ── 命令实现 ─────────────────────────────────────
 
-async function cmdFetch() {
-  const limit = flags.limit || 10;
-  const output = flags.output || join(ROOT, 'output', 'raw-news.md');
-
-  console.log('📡 获取新闻素材...');
-  console.log(`   源数量: 3 | 每源限制: ${limit} 条`);
-  console.log(`   输出: ${output}\n`);
-
-  execSync(`node ${join(SCRIPTS, 'fetch-news.mjs')} --limit=${limit} --output=${output}`, {
-    cwd: ROOT,
-    stdio: 'inherit',
-  });
-
-  console.log(`\n✅ 素材已保存到: ${output}`);
-}
-
 async function cmdGenerate() {
-  const input = flags.input || join(ROOT, 'output', 'raw-news.md');
   const output = flags.output || join(ROOT, 'output', 'data.json');
 
   console.log('🤖 AI 生成结构化数据...');
-  execSync(`node ${join(SCRIPTS, 'generate.mjs')} --input=${input} --output=${output}`, {
+  execSync(`node ${join(SCRIPTS, 'generate.mjs')} --output=${output}`, {
     cwd: ROOT,
     stdio: 'inherit',
   });
@@ -117,26 +97,14 @@ async function cmdRender() {
 }
 
 async function cmdRun() {
-  const limit = flags.limit || 10;
   const project = flags.project || `ai-daily-${todayStr()}`;
-  const outputMd = join(ROOT, 'output', 'raw-news.md');
   const dataJson = join(ROOT, 'output', project, 'data.json');
 
-  console.log('🚀 AI 日报全流程启动');
+  console.log('🚀 AI 早报全流程启动');
   console.log('═══════════════════════════════════════\n');
 
-  // 阶段 1：获取新闻
-  if (!flags['skip-fetch']) {
-    console.log('── 阶段① 获取新闻 ──────────────────────');
-    execSync(`node ${join(SCRIPTS, 'fetch-news.mjs')} --limit=${limit} --output=${outputMd}`, {
-      cwd: ROOT,
-      stdio: 'inherit',
-    });
-    console.log(`✅ 素材: ${outputMd}\n`);
-  }
-
-  // 阶段 2：AI 结构化生成
-  console.log('── 阶段② AI 结构化 ─────────────────────');
+  // 阶段 1：AI 结构化生成
+  console.log('── 阶段① AI 生成 ──────────────────────');
   if (existsSync(dataJson) && !flags['force']) {
     console.log(`✅ 发现已有 JSON: ${dataJson}`);
   } else {
@@ -145,15 +113,15 @@ async function cmdRun() {
       console.error('   export DEEPSEEK_API_KEY="sk-xxx"');
       process.exit(1);
     }
-    execSync(`node ${join(SCRIPTS, 'generate.mjs')} --input=${outputMd} --output=${dataJson}`, {
+    execSync(`node ${join(SCRIPTS, 'generate.mjs')} --output=${dataJson}`, {
       cwd: ROOT,
       stdio: 'inherit',
     });
     console.log('');
   }
 
-  // 阶段 3：渲染
-  console.log('\n── 阶段③ 渲染出图 ─────────────────────');
+  // 阶段 2：渲染
+  console.log('\n── 阶段② 渲染出图 ─────────────────────');
   execSync(`node ${join(SCRIPTS, 'pipeline.mjs')} --input=${dataJson} --project=${project}`, {
     cwd: ROOT,
     stdio: 'inherit',
@@ -165,21 +133,15 @@ async function cmdRun() {
 
 function showHelp() {
   console.log(`
-ainews — AI 日报小红书图文自动化 CLI
+ainews — 每日AI大模型早报 · 小红书图文自动化 CLI
 
 命令:
-  ainews fetch [选项]         获取新闻素材（RSS聚合）
-  ainews generate --input=X  AI 生成结构化 JSON
+  ainews generate [选项]     AI 生成结构化 JSON（基于模型知识）
   ainews render --input=X    渲染 JSON → HTML → PNG
-  ainews run [选项]           全流程（fetch → AI生成 → render）
+  ainews run [选项]           全流程（AI生成 → render）
   ainews help                显示本帮助
 
-fetch 选项:
-  --limit=N                  每个源获取条数（默认 10）
-  --output=PATH              输出文件路径（默认 output/raw-news.md）
-
 generate 选项:
-  --input=PATH               素材文件路径（默认 output/raw-news.md）
   --output=PATH              输出 JSON 路径
 
 render 选项:
@@ -187,9 +149,7 @@ render 选项:
   --project=NAME             项目名（默认从 JSON 读取）
 
 run 选项:
-  --limit=N                  每个源获取条数（默认 10）
   --project=NAME             项目名（默认 ai-daily-MMDD）
-  --skip-fetch               跳过新闻获取，直接用已有素材
   --force                    强制重新生成 JSON（即使已存在）
 
 环境变量:
@@ -198,8 +158,7 @@ run 选项:
   AI_MODEL                   模型名称（默认 deepseek-chat）
 
 示例:
-  ainews fetch --limit=15
-  ainews generate --input=./output/raw-news.md --output=./output/ai-daily-0521/data.json
+  ainews generate --output=./output/ai-daily-0521/data.json
   ainews render --input=./output/ai-daily-0521/data.json
   ainews run                 # 一键全流程
 `);

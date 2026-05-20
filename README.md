@@ -1,128 +1,116 @@
-# AINewsSkill — AI 日报自动化流水线
+# AINewsSkill — 每日AI大模型早报（Top 10）
 
-> 场景化固定工作流：AI 只负责提取内容数据，样式/排版/截图全部由脚本确定性完成。
+> 一键生成小红书图文：DeepSeek AI 直接生成结构化数据 → 渲染截图。
 
 ## 架构
 
 ```
-RSS 源 → [fetch-news.mjs] → 素材.md → [AI 提取] → data.json → [render.mjs] → page*.html → [screenshot] → page*.png
-                                            ↑                         ↑                            ↑
-                                      SKILL.md 指导            固定 HTML 模板                  Playwright 截图
-                                      (只输出 JSON)        (样式锁死,永不变)              (1800×2400 @2x)
+[DeepSeek API] → data.json → [render.mjs] → page*.html → [screenshot] → page*.png
+       ↑                          ↑                            ↑
+ AI基于模型知识              固定 HTML 模板                 Playwright 截图
+ 直接生成10条              (样式锁死,永不变)              (1800×2400 @2x)
 ```
 
 ## 目录结构
 
 ```
 AINewsSkill/
+├── bin/ainews.mjs          ← CLI 入口（全局命令 ainews）
 ├── templates/ai-daily/     ← 固定模板（CSS + HTML 骨架）
 │   ├── styles.css          ← 共享样式（字体、变量、装饰）
 │   ├── cover.html          ← 封面模板
-│   ├── news.html           ← 新闻页模板
+│   ├── cover-cont.html     ← 续页模板
 │   └── ending.html         ← 末页模板
 ├── scripts/
-│   ├── fetch-news.mjs      ← 新闻获取（RSS → Markdown 素材）
+│   ├── generate.mjs        ← AI生成（DeepSeek API → JSON）
 │   ├── render.mjs          ← 渲染器（JSON → HTML）
 │   ├── pipeline.mjs        ← 统一入口（渲染 + 截图）
-│   └── screenshot.mjs      ← → 链接到 VIbeUI 截图脚本
-├── skills/xhs-ai-daily/
-│   └── SKILL.md            ← Hermes skill（教 AI 输出 JSON）
-├── fonts/                  ← → 链接到 XHSVibeUISkill/fonts
+│   └── screenshot.mjs      ← Playwright 截图
+├── fonts/                  ← 本地字体（得意黑、Orbitron等）
+├── SKILL.md                ← 完整规格文档
 └── output/                 ← 产出目录
+```
+
+## 快速开始
+
+```bash
+# 安装
+git clone https://github.com/zhangziyana007-sudo/AINewsSkill.git
+cd AINewsSkill
+npm install && npx playwright install chromium
+npm link
+
+# 设置密钥
+export DEEPSEEK_API_KEY="sk-xxx"
+
+# 一键运行
+ainews run
 ```
 
 ## 使用方式
 
-### 完整流程（推荐）
-
 ```bash
-cd /home/ts/AINewsSkill
+# 全流程（推荐）
+ainews run                          # AI生成 → 渲染 → 截图
+ainews run --force                  # 强制重新生成
+ainews run --project=ai-daily-0520  # 指定项目名
 
-# 第 1 步：自动获取最新 AI 新闻素材
-node scripts/fetch-news.mjs --limit=15
+# 分步执行
+ainews generate --output=./output/ai-daily-0520/data.json
+ainews render --input=./output/ai-daily-0520/data.json
 
-# 第 2 步：让 AI 根据素材生成结构化数据（使用 Hermes skill）
-hermes chat "根据以下素材生成AI日报" --skill xhs-ai-daily --file ./output/raw-news-YYYYMMDD.md
-
-# 第 3 步：渲染 + 截图
-node scripts/pipeline.mjs --input=./output/{topic}/data.json --project={topic}
-# 产出 → output/{topic}/images/page*.png
+# 帮助
+ainews help
 ```
 
-### fetch-news.mjs 参数
+## 产出格式
 
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `--limit=N` | 获取条数上限 | 15 |
-| `--output=PATH` | 输出文件路径 | `./output/raw-news-YYYYMMDD.md` |
+- 3张图片：封面（4条预览）+ 续页（5+5条新闻）+ 结尾页
+- 尺寸：1800×2400px（@2x，适合小红书3:4比例）
+- 格式：PNG
 
-**数据源**：36氪、机器之心、量子位、InfoQ、TechCrunch、The Verge、Ars Technica（RSSHub + 直连 RSS）
-
-### 方式 B：已有素材直接生成
-
-```bash
-# 准备好 data.json 后直接渲染：
-node scripts/pipeline.mjs --input=./output/{topic}/data.json --project={topic}
-```
-
-### 方式 C：分步执行
-```bash
-# 1. 渲染
-node scripts/render.mjs --input=./data.json --output=./pages
-
-# 2. 截图
-node /home/ts/VIbeUI/scripts/screenshot-xhs.mjs --input=./pages --output=./images
-```
-
-## data.json 格式
+## data.json 结构
 
 ```json
 {
-  "topic": "ai-daily-0521",
-  "date": "2025.05.21",
-  "issue": "#202505",
+  "date": "2026.05.20",
+  "issue": "#20260520",
   "pages": [
     {
       "type": "cover",
-      "title": ["2025.05.21", "AI日报"],
-      "subtitle": "一分钟速览全球 AI 动态",
+      "title": ["2026.05.20", "AI早报"],
+      "subtitle": "关键词A · 关键词B · 关键词C",
       "previews": [
-        { "rank": 1, "title": "新闻摘要标题", "source": "来源", "icon": "brain" }
+        {"rank": 1, "title": "【厂商】核心动作", "source": "来源", "icon": "zap"}
       ]
     },
     {
       "type": "news",
       "items": [
-        {
-          "rank": 1,
-          "category": "分类",
-          "title": "标题（≤15字）",
-          "summary": "一句话摘要（≤40字）",
-          "points": ["要点一", "要点二"]
-        }
+        {"title": "【厂商】核心动作", "keyFact": "关键事实", "impact": "影响分析", "category": "来源", "icon": "zap"}
       ]
     },
     {
       "type": "ending",
-      "slogan": "结束语",
-      "cta": "点赞 + 关注",
-      "meta": ""
+      "slogan": "AI大模型早报 · 每日精选Top 10",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：AI行业动态"
     }
   ]
 }
 ```
 
-**关键字段说明**：
-- `cover.title[0]`：日期（Orbitron 科技字体渲染）
-- `cover.title[1]`：固定为 `"AI日报"`（得意黑字体渲染）
-- `cover.previews`：必须包含全部新闻条目，封面会展示完整列表
-- `news.items[].summary`：新闻摘要，一句话描述核心内容
-- `cover.previews[].icon`：可选值 `brain/code/sparkles/monitor/smartphone/zap/globe/cpu/robot/rocket/star`
+## 环境变量
+
+| 变量 | 必需 | 说明 |
+|------|------|------|
+| DEEPSEEK_API_KEY | ✅ | DeepSeek API 密钥 |
+| AI_BASE_URL | ❌ | 自定义API地址（默认 https://api.deepseek.com） |
+| AI_MODEL | ❌ | 模型名称（默认 deepseek-chat） |
 
 ## 设计原则
 
-- **AI 零设计责任**：AI 只输出结构化文本数据，不碰 HTML/CSS
-- **100% 确定性渲染**：同一份 JSON 永远输出相同的 HTML
-- **自适应分页**：内容多则自动拆页，少则增大间距
+- **AI 零设计责任**：AI 只输出结构化 JSON，不碰 HTML/CSS
+- **100% 确定性渲染**：同一份 JSON 永远输出相同的图片
 - **本地字体**：不依赖任何 CDN，字体文件全部本地加载
-- **固定装饰**：扫描线、发光球、脉冲点等写死在模板中
+- **固定装饰**：扫描线、发光球等写死在模板中
