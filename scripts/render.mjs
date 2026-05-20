@@ -112,10 +112,11 @@ function renderTemplate(html, data) {
 // 画布高度 1200px - 状态条70 - 标题区250 - 底部50 = ~830px 可用
 // 每个概要卡片高度约 110px（含2行28px标题+来源+padding）
 function splitNewsIntoPages(items) {
-  const MAX_HEIGHT_FIRST = 550;  // 第1页可用高度（有标题区）
-  const MAX_HEIGHT_CONT = 900;   // 续页可用高度（无标题区）
-  const CARD_HEIGHT = 110;       // 概要卡片高度（2行标题+来源）
-  const GAP = 8;                 // 卡片间距
+  const MAX_HEIGHT_FIRST = 620;  // 第1页可用高度（有标题区）
+  const MAX_HEIGHT_CONT = 940;   // 续页可用高度（无标题区）
+  const CARD_HEIGHT_SIMPLE = 110;  // 简单卡片（标题+来源）
+  const CARD_HEIGHT_RICH = 170;    // 富文本卡片（标题+事实+影响+来源）
+  const GAP = 8;                   // 卡片间距
 
   const pages = [];
   let current = [];
@@ -123,15 +124,16 @@ function splitNewsIntoPages(items) {
   let isFirst = true;
 
   for (const item of items) {
+    const cardH = item.keyFact ? CARD_HEIGHT_RICH : CARD_HEIGHT_SIMPLE;
     const maxH = isFirst ? MAX_HEIGHT_FIRST : MAX_HEIGHT_CONT;
-    if (current.length > 0 && currentHeight + GAP + CARD_HEIGHT > maxH) {
+    if (current.length > 0 && currentHeight + GAP + cardH > maxH) {
       pages.push(current);
       current = [];
       currentHeight = 0;
       isFirst = false;
     }
     current.push(item);
-    currentHeight += (current.length > 1 ? GAP : 0) + CARD_HEIGHT;
+    currentHeight += (current.length > 1 ? GAP : 0) + cardH;
   }
   if (current.length > 0) pages.push(current);
   return pages;
@@ -200,11 +202,13 @@ async function main() {
     totalPages: 0,
   };
 
-  // 所有新闻合并为统一列表（一句话摘要）
+  // 所有新闻合并为统一列表
   const coverData = rawData.pages.find(p => p.type === 'cover') || {};
   const allItems = newsItems.map((item, i) => ({
     rank: i + 1,
     title: item.title,
+    keyFact: item.keyFact || '',
+    impact: item.impact || '',
     source: item.category || '',
     icon: item.icon || 'zap',
   }));
@@ -227,10 +231,12 @@ async function main() {
     const previewsHtml = `<div class="cover-previews${i > 0 ? ' cover-previews-cont' : ''}" data-count="${previewCount}">
       ${items.map(p => {
       const iconSvg = getCoverIcon(p.icon || 'zap');
-      return `<div class="preview-card">
+      const keyFactHtml = p.keyFact ? `\n          <div class="preview-fact">${escapeHtml(p.keyFact)}</div>` : '';
+      const impactHtml = p.impact ? `\n          <div class="preview-impact">${escapeHtml(p.impact)}</div>` : '';
+      return `<div class="preview-card${p.keyFact ? ' preview-card--rich' : ''}">
         <div class="preview-rank">${escapeHtml(p.rank)}</div>
         <div class="preview-body">
-          <div class="preview-title">${escapeHtml(p.title)}</div>
+          <div class="preview-title">${escapeHtml(p.title)}</div>${keyFactHtml}${impactHtml}
           <div class="preview-source">${escapeHtml(p.source)}</div>
         </div>
         <div class="preview-icon">${iconSvg}</div>
