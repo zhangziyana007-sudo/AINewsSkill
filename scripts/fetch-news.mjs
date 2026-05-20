@@ -106,7 +106,7 @@ const args = Object.fromEntries(
 
 const LIMIT = parseInt(args.limit || '10', 10);
 const OUTPUT_PATH = args.output || `./output/raw-news-${formatDate(new Date())}.md`;
-const TIMEOUT_MS = 10000;
+const TIMEOUT_MS = 6000;
 
 // ────────────────────────────────────────────
 // 工具函数

@@ -67,9 +67,8 @@ async function screenshotPages(files) {
     deviceScaleFactor: scale,
   });
 
-  const results = [];
-
-  for (const file of files) {
+  // 并行截图所有页面（共享 browser context）
+  const results = await Promise.all(files.map(async (file) => {
     const name = basename(file, '.html');
     const outFile = join(outputPath, `${name}.png`);
     const page = await context.newPage();
@@ -79,8 +78,8 @@ async function screenshotPages(files) {
       const fileUrl = `file://${resolve(file)}`;
       await page.goto(fileUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
 
-      // 等待字体渲染（本地字体无需长时间等待）
-      await page.waitForTimeout(1500);
+      // 等待字体渲染（本地字体+内联CSS，500ms足够）
+      await page.waitForTimeout(500);
 
       // 强制解决字体加载：移除所有不可达的外部样式表 + 清除卡住的字体
       await page.evaluate(async () => {
@@ -123,15 +122,14 @@ async function screenshotPages(files) {
         await page.screenshot({ path: outFile, type: 'png', clip: { x: 0, y: 0, width, height } });
       }
 
-      results.push({ file: name, output: outFile, status: 'ok' });
       console.log(`✓ ${name}.png (${scale}x → ${width * scale}×${height * scale})`);
+      return { file: name, output: outFile, status: 'ok' };
     } catch (err) {
-      results.push({ file: name, output: null, status: 'error', error: err.message });
-      console.error(`✗ ${name}: ${err.message}`);
+      return { file: name, output: null, status: 'error', error: err.message };
     } finally {
       await page.close();
     }
-  }
+  }));
 
   await browser.close();
   return results;
