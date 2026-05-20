@@ -2,7 +2,8 @@
 /**
  * generate.mjs — AI 新闻结构化生成器
  *
- * 调用 DeepSeek API → 输出 data.json（基于模型知识直接生成）
+ * 调用 DeepSeek API → 输出 data.json
+ * 可选接收搜索结果作为上下文（--context=search-results.json）
  *
  * 环境变量：
  *   DEEPSEEK_API_KEY  — DeepSeek API 密钥（必需）
@@ -11,10 +12,12 @@
  *
  * 用法：
  *   node scripts/generate.mjs --output=output/ai-daily-0520/data.json
+ *   node scripts/generate.mjs --output=output/ai-daily-0520/data.json --context=output/ai-daily-0520/search-results.json
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
+import { existsSync } from 'node:fs';
 
 // ── 配置 ─────────────────────────────────────
 const API_KEY = process.env.DEEPSEEK_API_KEY || process.env.AI_API_KEY;
@@ -38,6 +41,16 @@ const args = Object.fromEntries(
 );
 
 const outputPath = resolve(args.output || './output/data.json');
+const contextPath = args.context ? resolve(args.context) : null;
+
+// 加载搜索上下文（如果提供）
+let searchContext = '';
+if (contextPath && existsSync(contextPath)) {
+  const searchData = JSON.parse(readFileSync(contextPath, 'utf-8'));
+  const items = (searchData.results || []).slice(0, 15);
+  searchContext = items.map((r, i) => `[${i + 1}] ${r.title}\n    ${r.content?.slice(0, 200) || ''}\n    来源: ${r.url}`).join('\n\n');
+  console.log(`📰 已加载 ${items.length} 条搜索结果作为上下文\n`);
+}
 
 console.log(`🤖 调用 ${MODEL} 生成今日AI早报...\n`);
 
@@ -121,7 +134,9 @@ const systemPrompt = `你是一位资深AI大模型行业分析师，负责制�
 - 如果素材中AI大模型新闻不足10条，可包含AI应用、AI芯片、AI融资、AI政策等相关动态补足
 - title 不超过20字，keyFact 不超过50字，impact 不超过30字`;
 
-const userPrompt = `请根据你所知道的最新AI大模型行业动态，生成今日（${dateStr}）的AI早报Top 10。要求输出严格符合 system prompt 中定义的JSON格式。`;
+const userPrompt = searchContext
+  ? `以下是今日（${dateStr}）通过联网搜索获取的AI行业新闻素材：\n\n${searchContext}\n\n请基于以上素材，精选最重要的10条，生成今日AI早报。严格输出 system prompt 中定义的JSON格式。`
+  : `请根据你所知道的最新AI大模型行业动态，生成今日（${dateStr}）的AI早报Top 10。要求输出严格符合 system prompt 中定义的JSON格式。`;
 
 // ── 调用 API ─────────────────────────────────────
 async function callAI() {

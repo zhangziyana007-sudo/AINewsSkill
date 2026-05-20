@@ -99,9 +99,22 @@ async function cmdRender() {
 async function cmdRun() {
   const project = flags.project || `ai-daily-${todayStr()}`;
   const dataJson = join(ROOT, 'output', project, 'data.json');
+  const searchJson = join(ROOT, 'output', project, 'search-results.json');
 
   console.log('🚀 AI 早报全流程启动');
   console.log('═══════════════════════════════════════\n');
+
+  // 阶段 0：联网搜索（可选，有 TAVILY_API_KEY 时自动启用）
+  let contextFlag = '';
+  if (process.env.TAVILY_API_KEY) {
+    console.log('── 阶段⓪ 联网搜索 ──────────────────────');
+    execSync(`node ${join(SCRIPTS, 'search-news.mjs')} --output=${searchJson}`, {
+      cwd: ROOT,
+      stdio: 'inherit',
+    });
+    contextFlag = ` --context=${searchJson}`;
+    console.log('');
+  }
 
   // 阶段 1：AI 结构化生成
   console.log('── 阶段① AI 生成 ──────────────────────');
@@ -113,7 +126,7 @@ async function cmdRun() {
       console.error('   export DEEPSEEK_API_KEY="sk-xxx"');
       process.exit(1);
     }
-    execSync(`node ${join(SCRIPTS, 'generate.mjs')} --output=${dataJson}`, {
+    execSync(`node ${join(SCRIPTS, 'generate.mjs')} --output=${dataJson}${contextFlag}`, {
       cwd: ROOT,
       stdio: 'inherit',
     });
@@ -136,13 +149,14 @@ function showHelp() {
 ainews — 每日AI大模型早报 · 小红书图文自动化 CLI
 
 命令:
-  ainews generate [选项]     AI 生成结构化 JSON（基于模型知识）
+  ainews generate [选项]     AI 生成结构化 JSON
   ainews render --input=X    渲染 JSON → HTML → PNG
-  ainews run [选项]           全流程（AI生成 → render）
+  ainews run [选项]           全流程（搜索 → AI生成 → render）
   ainews help                显示本帮助
 
 generate 选项:
   --output=PATH              输出 JSON 路径
+  --context=PATH             搜索结果 JSON（可选，提供实时新闻上下文）
 
 render 选项:
   --input=PATH               JSON 数据文件路径（必需）
@@ -156,6 +170,7 @@ run 选项:
   DEEPSEEK_API_KEY           DeepSeek API 密钥（必需）
   AI_BASE_URL                自定义 API 地址（默认 https://api.deepseek.com）
   AI_MODEL                   模型名称（默认 deepseek-chat）
+  TAVILY_API_KEY             Tavily 搜索 API 密钥（可选，有则自动联网搜索）
 
 示例:
   ainews generate --output=./output/ai-daily-0521/data.json
