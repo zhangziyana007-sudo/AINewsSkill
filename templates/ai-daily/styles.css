@@ -365,7 +365,7 @@ body {
   overflow: hidden;
 }
 .preview-card .preview-title {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--fg);
   line-height: 1.3;
@@ -412,7 +412,7 @@ body {
 .cover-previews[data-count="3"] .preview-card .preview-title,
 .cover-previews[data-count="4"] .preview-card .preview-title,
 .cover-previews[data-count="5"] .preview-card .preview-title {
-  font-size: 28px;
+  font-size: 32px;
 }
 .cover-previews[data-count="3"] .preview-card .preview-source,
 .cover-previews[data-count="4"] .preview-card .preview-source,
