@@ -91,5 +91,43 @@ ainews help                             # 帮助
 |------|------|--------|
 | `DEEPSEEK_API_KEY` | ✅ | — |
 | `TAVILY_API_KEY` | 可选 | —（无则跳过搜索） |
+| `FEISHU_WEBHOOK_URL` | 可选 | —（有则自动推送飞书） |
+| `FEISHU_APP_ID` | 可选 | —（有则上传图片到飞书） |
+| `FEISHU_APP_SECRET` | 可选 | —（配合 APP_ID） |
 | `AI_MODEL` | ❌ | `deepseek-chat` |
 | `AI_BASE_URL` | ❌ | `https://api.deepseek.com` |
+
+## 飞书推送
+
+配置 `FEISHU_WEBHOOK_URL` 后，`ainews run` 完成会自动推送到飞书群。
+
+### 配置步骤
+
+1. 飞书群 → 设置 → 群机器人 → 添加机器人 → 自定义机器人
+2. 复制 Webhook 地址
+3. 设置环境变量：
+   ```bash
+   export FEISHU_WEBHOOK_URL="https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
+   ```
+
+### 发送图片（可选）
+
+纯 Webhook 只能发文字摘要。如需发送图片，需额外创建飞书应用：
+
+1. 访问 [飞书开放平台](https://open.feishu.cn/app) → 创建企业自建应用
+2. 获取 App ID 和 App Secret
+3. 应用权限中添加 `im:resource`（上传图片）
+4. 设置环境变量：
+   ```bash
+   export FEISHU_APP_ID="cli_xxx"
+   export FEISHU_APP_SECRET="xxx"
+   ```
+
+### 定时任务（cron）
+
+```bash
+# 每天早上 8:00 自动运行并推送
+crontab -e
+# 添加：
+0 8 * * * cd /home/ts/AINewsSkill && source ~/.zshrc && ainews run --force >> /tmp/ainews.log 2>&1
+```

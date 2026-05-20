@@ -142,6 +142,15 @@ async function cmdRun() {
 
   const outputDir = join(ROOT, 'output', project, 'images');
   console.log(`\n✅ 全流程完成！图片: ${outputDir}`);
+
+  // 阶段 3：飞书推送（可选）
+  if (process.env.FEISHU_WEBHOOK_URL) {
+    console.log('\n── 阶段③ 飞书推送 ─────────────────────');
+    execSync(`node ${join(SCRIPTS, 'push-feishu.mjs')} --input=${join(ROOT, 'output', project)}`, {
+      cwd: ROOT,
+      stdio: 'inherit',
+    });
+  }
 }
 
 function showHelp() {
@@ -171,6 +180,9 @@ run 选项:
   AI_BASE_URL                自定义 API 地址（默认 https://api.deepseek.com）
   AI_MODEL                   模型名称（默认 deepseek-chat）
   TAVILY_API_KEY             Tavily 搜索 API 密钥（可选，有则自动联网搜索）
+  FEISHU_WEBHOOK_URL         飞书机器人 Webhook（可选，有则自动推送）
+  FEISHU_APP_ID              飞书应用 ID（可选，有则上传图片到飞书）
+  FEISHU_APP_SECRET          飞书应用密钥（可选，配合 APP_ID 使用）
 
 示例:
   ainews generate --output=./output/ai-daily-0521/data.json
