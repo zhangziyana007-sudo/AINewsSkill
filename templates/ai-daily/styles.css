@@ -432,6 +432,11 @@ body {
   gap: 10px;
 }
 
+/* ── 续页样式（无标题区，更多内容空间）── */
+.cover-previews-cont {
+  padding-top: 24px;
+}
+
 /* ── 封面底部 ─────────────────────────────────── */
 .cover-footer {
   display: flex;

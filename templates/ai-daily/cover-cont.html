@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily · Cover</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="canvas scanline">
+    <!-- 装饰 -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <!-- 顶部状态条 -->
+    <div class="status-bar">
+      <div class="status-bar-left">
+        <div class="pulse-dot"></div>
+        <span class="mono" style="font-size:16px; color:var(--fg-2);">LIVE · AI NEWS</span>
+      </div>
+      <div class="status-bar-right">
+        <span class="cover-badge">⚡ {{date}}</span>
+      </div>
+    </div>
+
+    <!-- 新闻预览列表（续页无标题区） -->
+    <div class="cover-previews cover-previews-cont">
+      %%SLOT_COVER_PREVIEWS%%
+    </div>
+
+    <!-- 底部 -->
+    <div class="cover-footer">
+      <span class="cover-footer-left">• 数据来源：公开报道综合</span>
+      <span class="cover-footer-right">(( )) @AI日报</span>
+    </div>
+  </div>
+</body>
+</html>

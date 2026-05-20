@@ -112,19 +112,23 @@ function renderTemplate(html, data) {
 // 画布高度 1200px - 状态条70 - 标题区250 - 底部50 = ~830px 可用
 // 每个概要卡片高度约 110px（含2行28px标题+来源+padding）
 function splitNewsIntoPages(items) {
-  const MAX_HEIGHT = 550; // 封面可用高度（头部占1/3后的剩余空间）
-  const CARD_HEIGHT = 110; // 概要卡片高度（2行标题+来源）
-  const GAP = 8;           // 卡片间距
+  const MAX_HEIGHT_FIRST = 550;  // 第1页可用高度（有标题区）
+  const MAX_HEIGHT_CONT = 900;   // 续页可用高度（无标题区）
+  const CARD_HEIGHT = 110;       // 概要卡片高度（2行标题+来源）
+  const GAP = 8;                 // 卡片间距
 
   const pages = [];
   let current = [];
   let currentHeight = 0;
+  let isFirst = true;
 
   for (const item of items) {
-    if (current.length > 0 && currentHeight + GAP + CARD_HEIGHT > MAX_HEIGHT) {
+    const maxH = isFirst ? MAX_HEIGHT_FIRST : MAX_HEIGHT_CONT;
+    if (current.length > 0 && currentHeight + GAP + CARD_HEIGHT > maxH) {
       pages.push(current);
       current = [];
       currentHeight = 0;
+      isFirst = false;
     }
     current.push(item);
     currentHeight += (current.length > 1 ? GAP : 0) + CARD_HEIGHT;
@@ -159,6 +163,7 @@ async function main() {
 
   // 读取模板
   const coverTpl = await readFile(join(templateDir, 'cover.html'), 'utf-8');
+  const coverContTpl = await readFile(join(templateDir, 'cover-cont.html'), 'utf-8');
   const newsTpl = await readFile(join(templateDir, 'news.html'), 'utf-8');
   const endingTpl = await readFile(join(templateDir, 'ending.html'), 'utf-8');
 
@@ -209,7 +214,7 @@ async function main() {
   const totalPages = coverPages.length + 1;
   shared.totalPages = totalPages;
 
-  // 生成封面页（每页都是封面样式+新闻摘要列表）
+  // 生成封面页（第1页有标题区，续页无标题区）
   let rankOffset = 0;
   for (let i = 0; i < coverPages.length; i++) {
     const items = coverPages[i].map((item, idx) => ({
@@ -219,7 +224,7 @@ async function main() {
     rankOffset += coverPages[i].length;
 
     const previewCount = items.length;
-    const previewsHtml = `<div class="cover-previews" data-count="${previewCount}">
+    const previewsHtml = `<div class="cover-previews${i > 0 ? ' cover-previews-cont' : ''}" data-count="${previewCount}">
       ${items.map(p => {
       const iconSvg = getCoverIcon(p.icon || 'zap');
       return `<div class="preview-card">
@@ -233,13 +238,15 @@ async function main() {
     }).join('\n      ')}
     </div>`;
 
-    let coverHtml = renderTemplate(coverTpl, {
+    // 第1页用完整封面模板，续页用无标题模板
+    const tpl = i === 0 ? coverTpl : coverContTpl;
+    let coverHtml = renderTemplate(tpl, {
       ...shared,
       titleLines: coverData.title || ['AI', '日报'],
       subtitle: coverData.subtitle || '',
       pageNum: i + 1,
     });
-    coverHtml = coverHtml.replace(/\s*<div class="cover-previews">\s*%%SLOT_COVER_PREVIEWS%%\s*<\/div>/, previewsHtml);
+    coverHtml = coverHtml.replace(/\s*<div class="cover-previews[^"]*">\s*%%SLOT_COVER_PREVIEWS%%\s*<\/div>/, previewsHtml);
     pages.push(coverHtml);
   }
 
