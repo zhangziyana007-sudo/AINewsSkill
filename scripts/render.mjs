@@ -108,12 +108,12 @@ function renderTemplate(html, data) {
 }
 
 // ── 自适应分页逻辑 ───────────────────────────────
-// 概要卡片模式：每条新闻只占一行（rank+标题+来源）
+// 概要卡片模式：一句话摘要标题（可能占2行）+ 来源
 // 画布可用高度 ≈ 1200 - 70(状态条) - 60(底部) = ~1070px
-// 每个概要卡片高度约 72px（含padding+gap）
+// 每个概要卡片高度约 90px（含2行标题+来源+padding）
 function splitNewsIntoPages(items) {
   const MAX_HEIGHT = 1000; // 留足余量的可用像素
-  const CARD_HEIGHT = 72;  // 概要卡片高度（单行标题+来源）
+  const CARD_HEIGHT = 90;  // 概要卡片高度（2行标题+来源）
   const GAP = 12;          // 卡片间距
 
   const pages = [];
@@ -197,22 +197,30 @@ async function main() {
 
   // 1. 封面
   const coverData = rawData.pages.find(p => p.type === 'cover') || {};
-  // 构建统一的新闻概要列表（一句话标题），用于封面和新闻页
-  const previews = coverData.previews || newsItems.map((item, i) => ({
+  // 封面用短标题预览
+  const coverPreviews = coverData.previews || newsItems.map((item, i) => ({
     rank: i + 1,
     title: item.title,
     source: item.category || '',
     icon: 'zap',
   }));
 
-  // 自适应分页（基于概要卡片）
-  const newsPages = splitNewsIntoPages(previews);
-  // 重新计算总页数
+  // 新闻页用完整标题（一句话摘要）
+  const newsPageItems = newsItems.map((item, i) => ({
+    rank: i + 1,
+    title: item.title,
+    source: item.category || '',
+    icon: item.icon || 'zap',
+  }));
+
+  // 自适应分页（基于概要卡片，允许2行标题）
+  const newsPages = splitNewsIntoPages(newsPageItems);
+  // 计算总页数
   const totalPages = 1 + newsPages.length + 1;
   shared.totalPages = totalPages;
-  const previewCount = previews.length;
+  const previewCount = coverPreviews.length;
   const previewsHtml = `<div class="cover-previews" data-count="${previewCount}">
-      ${previews.map(p => {
+      ${coverPreviews.map(p => {
     const rankStr = String(p.rank).padStart(2, '0');
     const iconSvg = getCoverIcon(p.icon || 'zap');
     return `<div class="preview-card">
