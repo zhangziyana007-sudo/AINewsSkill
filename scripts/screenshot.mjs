@@ -63,12 +63,13 @@ async function screenshotPages(files) {
   });
 
   const context = await browser.newContext({
-    viewport: { width, height },
+    viewport: { width, height: height + 80 },  // 额外空间容纳 body padding
     deviceScaleFactor: scale,
   });
 
-  // 并行截图所有页面（共享 browser context）
-  const results = await Promise.all(files.map(async (file) => {
+  const results = [];
+
+  for (const file of files) {
     const name = basename(file, '.html');
     const outFile = join(outputPath, `${name}.png`);
     const page = await context.newPage();
@@ -122,14 +123,15 @@ async function screenshotPages(files) {
         await page.screenshot({ path: outFile, type: 'png', clip: { x: 0, y: 0, width, height } });
       }
 
+      results.push({ file: name, output: outFile, status: 'ok' });
       console.log(`✓ ${name}.png (${scale}x → ${width * scale}×${height * scale})`);
-      return { file: name, output: outFile, status: 'ok' };
     } catch (err) {
-      return { file: name, output: null, status: 'error', error: err.message };
+      results.push({ file: name, output: null, status: 'error', error: err.message });
+      console.error(`✗ ${name}: ${err.message}`);
     } finally {
       await page.close();
     }
-  }));
+  }
 
   await browser.close();
   return results;
