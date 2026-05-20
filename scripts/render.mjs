@@ -112,8 +112,8 @@ function renderTemplate(html, data) {
 // 画布高度 1200px - 状态条70 - 标题区250 - 底部50 = ~830px 可用
 // 每个概要卡片高度约 110px（含2行28px标题+来源+padding）
 function splitNewsIntoPages(items) {
-  const MAX_HEIGHT_FIRST = 620;  // 第1页可用高度（有标题区）
-  const MAX_HEIGHT_CONT = 940;   // 续页可用高度（无标题区）
+  const MAX_HEIGHT_FIRST = 740;  // 第1页可用高度（有标题区）
+  const MAX_HEIGHT_CONT = 1080;  // 续页可用高度（无标题区）
   const CARD_HEIGHT_SIMPLE = 110;  // 简单卡片（标题+来源）
   const CARD_HEIGHT_RICH = 170;    // 富文本卡片（标题+事实+影响+来源）
   const GAP = 8;                   // 卡片间距
