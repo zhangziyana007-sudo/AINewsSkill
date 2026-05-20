@@ -292,11 +292,11 @@ body {
   display: inline-block;
 }
 .cover-header {
-  padding: 32px 48px 24px;
+  padding: 24px 48px 16px;
   position: relative;
   z-index: 1;
   flex-shrink: 0;
-  min-height: 360px;
+  min-height: 280px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -423,33 +423,7 @@ body {
   stroke-width: 1.5;
   fill: none;
 }
-/* 少于6条时卡片更宽松 */
-.cover-previews[data-count="3"] .preview-card,
-.cover-previews[data-count="4"] .preview-card,
-.cover-previews[data-count="5"] .preview-card {
-  padding: 14px 20px;
-}
-.cover-previews[data-count="3"] .preview-card .preview-rank,
-.cover-previews[data-count="4"] .preview-card .preview-rank,
-.cover-previews[data-count="5"] .preview-card .preview-rank {
-  font-size: 30px;
-  min-width: 48px;
-}
-.cover-previews[data-count="3"] .preview-card .preview-title,
-.cover-previews[data-count="4"] .preview-card .preview-title,
-.cover-previews[data-count="5"] .preview-card .preview-title {
-  font-size: 32px;
-}
-.cover-previews[data-count="3"] .preview-card .preview-source,
-.cover-previews[data-count="4"] .preview-card .preview-source,
-.cover-previews[data-count="5"] .preview-card .preview-source {
-  font-size: 18px;
-}
-.cover-previews[data-count="3"],
-.cover-previews[data-count="4"],
-.cover-previews[data-count="5"] {
-  gap: 10px;
-}
+/* 卡片统一样式（所有页面一致） */
 
 /* ── 新闻概要卡片间距 ── */
 .content-area .cover-previews {
