@@ -1,0 +1,23 @@
+{
+  "name": "ainews",
+  "version": "3.1.0",
+  "description": "AI 日报小红书图文自动化 CLI — RSS获取+AI结构化+渲染截图流水线",
+  "type": "module",
+  "bin": {
+    "ainews": "./bin/ainews.mjs"
+  },
+  "scripts": {
+    "fetch": "node bin/ainews.mjs fetch",
+    "render": "node bin/ainews.mjs render",
+    "run": "node bin/ainews.mjs run"
+  },
+  "keywords": ["ai", "news", "xiaohongshu", "xhs", "automation", "rss"],
+  "author": "zizaya",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "playwright": "^1.45.0"
+  }
+}

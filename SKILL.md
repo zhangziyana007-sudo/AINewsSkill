@@ -25,23 +25,22 @@ metadata:
 ## 使用方式
 
 提供素材（或让脚本自动获取），自动执行：
-1. 获取新闻素材 → `output/raw-news.md`
+1. `ainews fetch` → 获取素材到 `output/raw-news.md`
 2. AI 结构化处理 → `output/{topic}/data.json`（暂停确认）
-3. 渲染截图出图 → `output/{topic}/images/*.png`
+3. `ainews render` → 渲染出图到 `output/{topic}/images/*.png`
 
 ---
 
 ## 阶段① · 获取新闻素材
 
-### 方式 A：脚本自动获取（推荐）
+### 方式 A：CLI 自动获取（推荐）
 
 ```bash
-cd {{project_dir}}
-node scripts/fetch-news.mjs --limit=10 --output=./output/raw-news.md
+ainews fetch --limit=10
 ```
 
 支持 7 个新闻源：36氪、机器之心、量子位、InfoQ、TechCrunch、The Verge、Ars Technica。
-脚本自动聚合去重，输出 Markdown 文件。
+自动聚合去重，输出到 `output/raw-news.md`。
 
 ### 方式 B：用户手动提供
 
@@ -124,11 +123,10 @@ node scripts/fetch-news.mjs --limit=10 --output=./output/raw-news.md
 JSON 确认后执行：
 
 ```bash
-cd {{project_dir}}
-node scripts/pipeline.mjs --input=./output/{topic}/data.json --project={topic}
+ainews render --input=./output/{topic}/data.json
 ```
 
-自动完成：render.mjs（JSON→HTML）→ screenshot.mjs（HTML→PNG @2x 1800×2400px）
+自动完成：JSON → HTML → PNG（1800×2400px @2x）
 
 产出：`output/{topic}/images/*.png`
 
@@ -139,8 +137,9 @@ node scripts/pipeline.mjs --input=./output/{topic}/data.json --project={topic}
 ```bash
 git clone https://github.com/zhangziyana007-sudo/AINewsSkill.git
 cd AINewsSkill
-npm init -y && npm install playwright
+npm install
 npx playwright install chromium
+npm link   # 注册全局 ainews 命令
 
 # 字体准备（放入 fonts/ 目录）
 mkdir -p fonts
@@ -155,12 +154,12 @@ mkdir -p fonts
 ```
 AINewsSkill/
 ├── SKILL.md                    ← 本文件（AI 技能指南）
-├── README.md
-├── LICENSE
+├── package.json                ← npm 配置 + bin 注册
+├── bin/ainews.mjs              ← CLI 入口（ainews 命令）
 ├── scripts/
 │   ├── fetch-news.mjs          ← RSS 新闻获取（7源）
 │   ├── render.mjs              ← JSON → HTML
-│   ├── pipeline.mjs            ← 一键管线
+│   ├── pipeline.mjs            ← 渲染+截图管线
 │   └── screenshot.mjs          ← HTML → PNG
 ├── templates/ai-daily/
 │   ├── cover.html / news.html / ending.html
