@@ -1,60 +1,88 @@
 ---
 name: ai-news-daily
-description: AI 日报小红书图文自动化 — RSS获取+AI结构化+渲染截图完整流水线
-version: 3.1.0
+description: AI 日报小红书图文自动化 — 从新闻获取到出图的完整工作流
+version: 4.0.0
 author: zizaya
 license: MIT
 platforms: [linux, macos]
 prerequisites:
-  commands: [node]
+  commands: [node, ainews]
   packages: [playwright]
 metadata:
   hermes:
     tags: [小红书, XHS, AI日报, 新闻, 自动化, RSS]
     category: social-media
-    config:
-      project_dir: AINewsSkill 项目根目录路径
 ---
 
-# AI 日报 · 小红书图文自动化
+# AI 日报 · 小红书图文工作流
 
-> 黑底终端风 + 荧光绿强调色 + Orbitron/得意黑科技字体。适合：AI/科技新闻日报。
-
----
-
-## 使用方式
-
-提供素材（或让脚本自动获取），自动执行：
-1. `ainews fetch` → 获取素材到 `output/raw-news.md`
-2. AI 结构化处理 → `output/{topic}/data.json`（暂停确认）
-3. `ainews render` → 渲染出图到 `output/{topic}/images/*.png`
+> 接收素材或自动获取 → AI 结构化 → 自动渲染出图。全程 CLI 驱动。
 
 ---
 
-## 阶段① · 获取新闻素材
+## 工作流总览
 
-### 方式 A：CLI 自动获取（推荐）
+```
+用户触发
+  │
+  ▼
+┌─────────────────────────────────────────────┐
+│ STEP 1 · 执行 ainews fetch                  │
+│ → 自动获取7源RSS新闻 → output/raw-news.md   │
+└─────────────────────────────────────────────┘
+  │
+  ▼
+┌─────────────────────────────────────────────┐
+│ STEP 2 · 阅读素材，输出 JSON                 │
+│ → 读取 output/raw-news.md                   │
+│ → 提取+结构化                                │
+│ → 写入 output/{topic}/data.json             │
+│ → ⏸ 暂停，展示给用户确认                     │
+└─────────────────────────────────────────────┘
+  │ 用户确认
+  ▼
+┌─────────────────────────────────────────────┐
+│ STEP 3 · 执行 ainews render                  │
+│ → JSON → HTML → PNG（1800×2400px）           │
+│ → output/{topic}/images/*.png               │
+└─────────────────────────────────────────────┘
+  │
+  ▼
+完成 · 告知用户图片位置
+```
 
+---
+
+## STEP 1 · 获取素材
+
+**执行命令：**
 ```bash
 ainews fetch --limit=10
 ```
 
-支持 7 个新闻源：36氪、机器之心、量子位、InfoQ、TechCrunch、The Verge、Ars Technica。
-自动聚合去重，输出到 `output/raw-news.md`。
+**结果**：`output/raw-news.md`（Markdown 格式新闻列表）
 
-### 方式 B：用户手动提供
+**新闻源**：36氪 · 机器之心 · 量子位 · InfoQ · TechCrunch · The Verge · Ars Technica
 
-接受任意格式：文字新闻、多条摘要、文章内容、口述信息。
+> 如用户已提供素材（文字/链接/文件），跳过此步，直接进入 STEP 2。
 
 ---
 
-## 阶段② · AI 结构化（核心任务）
+## STEP 2 · 结构化（AI 核心任务）
 
-阅读素材 → 输出结构化 JSON 到 `output/{topic}/data.json`。
+### 动作
 
-`{topic}` 命名：`ai-daily-MMDD`（如 `ai-daily-0521`）
+1. 读取 `output/raw-news.md`（或用户提供的素材）
+2. 筛选 AI 相关的重要新闻
+3. 按下方格式输出 JSON
+4. 保存到 `output/ai-daily-{MMDD}/data.json`
+5. **暂停**，将 JSON 摘要展示给用户确认
 
-### JSON 格式
+### topic 命名
+
+`ai-daily-MMDD`，如今天是 5月21日 → `ai-daily-0521`
+
+### JSON 结构
 
 ```json
 {
@@ -62,125 +90,122 @@ ainews fetch --limit=10
   "date": "2025.05.21",
   "issue": "#202505",
   "pages": [
+    { "type": "cover", ... },
+    { "type": "news", ... },
+    { "type": "ending", ... }
+  ]
+}
+```
+
+### cover 页（必须 1 个）
+
+```json
+{
+  "type": "cover",
+  "title": ["2025.05.21", "AI日报"],
+  "subtitle": "一句话主题（≤20字）",
+  "previews": [
+    { "rank": 1, "title": "新闻简述（≤18字）", "source": "来源（≤6字）", "icon": "brain" }
+  ]
+}
+```
+
+规则：
+- `title[0]` 固定为当天日期 `YYYY.MM.DD`
+- `title[1]` 固定为 `"AI日报"`
+- `previews` **必须覆盖全部新闻**，数量 = news items 总数
+
+### news 页（至少 1 个）
+
+```json
+{
+  "type": "news",
+  "items": [
     {
-      "type": "cover",
-      "title": ["2025.05.21", "AI日报"],
-      "subtitle": "≤20字总结",
-      "previews": [
-        { "rank": 1, "title": "≤18字", "source": "≤6字", "icon": "brain" }
-      ]
-    },
-    {
-      "type": "news",
-      "items": [
-        {
-          "rank": 1,
-          "category": "2-4字标签",
-          "title": "≤15字标题",
-          "summary": "≤40字摘要",
-          "points": ["≤20字要点"]
-        }
-      ]
-    },
-    {
-      "type": "ending",
-      "slogan": "≤20字结束语",
-      "cta": "≤10字号召",
-      "meta": ""
+      "rank": 1,
+      "category": "标签（2-4字）",
+      "title": "标题（≤15字）",
+      "summary": "摘要（≤40字）",
+      "points": ["要点（≤20字）", "要点（≤20字）"]
     }
   ]
 }
 ```
 
-### 字段约束
+规则：
+- 所有新闻放在一个 `news` 页中，脚本自动分页
+- `category`：大模型 / 硬件 / 融资 / 开源 / 应用 / 人才 / 政策…
+- `points`：0-3 条补充要点
 
-**封面 cover**：
-- `title[0]`：日期 `YYYY.MM.DD`（Orbitron 字体）
-- `title[1]`：固定 `"AI日报"`（得意黑字体）
-- `previews`：**必须包含全部新闻**，与 news items 一一对应
+### ending 页（必须 1 个）
 
-**新闻 news**：
-- `category`：2-4 字（大模型/硬件/融资/开源…）
-- `title`：≤ 15 字，动词开头或名词短语
-- `summary`：≤ 40 字，一句话讲清"谁做了什么"
-- `points`：0-3 条，每条 ≤ 20 字
+```json
+{
+  "type": "ending",
+  "slogan": "结束语（≤20字）",
+  "cta": "号召（≤10字）",
+  "meta": ""
+}
+```
 
-**可用 icon**：`brain` / `code` / `sparkles` / `monitor` / `smartphone` / `zap` / `globe` / `cpu` / `robot` / `rocket` / `star`
+### icon 可选值
 
-### 数量指南
+`brain` · `code` · `sparkles` · `monitor` · `smartphone` · `zap` · `globe` · `cpu` · `robot` · `rocket` · `star`
 
-| 素材量 | 方案 |
-|--------|------|
-| 3-5 条 | 全部收录，3-4 张图 |
-| 6-8 条 | 全部收录，4-5 张图 |
-| 9-12 条 | 全部收录，5-6 张图 |
-| 12+ 条 | 精选 Top 10 |
+### 写作规范
+
+| 元素 | 风格 |
+|------|------|
+| 标题 | 动词开头 / 名词短语，信息密度高 |
+| 摘要 | 一句话讲清"谁做了什么" |
+| 要点 | 补充关键数字或细节 |
+| 分类 | 统一 2-4 字中文 |
+
+### 数量对照
+
+| 素材条数 | 处理方式 |
+|---------|---------|
+| ≤12 | 全部收录 |
+| >12 | 精选 Top 10，按重要性排序 |
 
 ---
 
-## 阶段③ · 渲染出图
+## STEP 3 · 渲染出图
 
-JSON 确认后执行：
-
+**用户确认 JSON 后执行：**
 ```bash
-ainews render --input=./output/{topic}/data.json
+ainews render --input=./output/ai-daily-0521/data.json
 ```
 
-自动完成：JSON → HTML → PNG（1800×2400px @2x）
+**结果**：`output/ai-daily-0521/images/` 目录下生成多张 PNG（1800×2400px @2x）
 
-产出：`output/{topic}/images/*.png`
+**最后**：告知用户图片路径，任务完成。
 
 ---
 
-## 安装
+## 快捷模式
 
+如果用户说"做今天的AI日报"且无特殊要求，可用一键命令：
 ```bash
-git clone https://github.com/zhangziyana007-sudo/AINewsSkill.git
-cd AINewsSkill
-npm install
-npx playwright install chromium
-npm link   # 注册全局 ainews 命令
-
-# 字体准备（放入 fonts/ 目录）
-mkdir -p fonts
-# 下载 SmileySans-Oblique.ttf：https://github.com/atelier-anchor/smiley-sans/releases
-# 下载 Orbitron-Bold.ttf：https://fonts.google.com/specimen/Orbitron
+ainews run
 ```
+该命令会自动执行 STEP 1，然后提示需要 AI 完成 STEP 2 的 JSON。
 
 ---
 
-## 项目结构
+## 约束清单
 
-```
-AINewsSkill/
-├── SKILL.md                    ← 本文件（AI 技能指南）
-├── package.json                ← npm 配置 + bin 注册
-├── bin/ainews.mjs              ← CLI 入口（ainews 命令）
-├── scripts/
-│   ├── fetch-news.mjs          ← RSS 新闻获取（7源）
-│   ├── render.mjs              ← JSON → HTML
-│   ├── pipeline.mjs            ← 渲染+截图管线
-│   └── screenshot.mjs          ← HTML → PNG
-├── templates/ai-daily/
-│   ├── cover.html / news.html / ending.html
-│   └── styles.css
-├── fonts/                      ← 本地字体（不提交）
-└── output/                     ← 产出（不提交）
-```
+- ❌ 不输出 HTML / CSS / 任何渲染代码
+- ❌ 不讨论排版、字体、配色选择
+- ❌ 不在内容中添加 emoji
+- ❌ 不超出字数限制（标题15/摘要40/要点20/source6）
+- ❌ 不遗漏任何新闻的封面 preview
+- ❌ 不修改模板文件或脚本代码
+- ✅ 只做两件事：执行 CLI 命令 + 输出 JSON
 
 ---
 
-## 约束
-
-- ❌ 不输出 HTML/CSS/渲染代码
-- ❌ 不讨论排版/字体/颜色
-- ❌ 不添加 emoji
-- ❌ 标题 ≤ 15 字，摘要 ≤ 40 字，要点 ≤ 20 字
-- ❌ 不遗漏任何新闻的封面预览
-
----
-
-## 完整示例
+## 完整 JSON 示例
 
 ```json
 {
@@ -193,8 +218,8 @@ AINewsSkill/
       "title": ["2025.05.21", "AI日报"],
       "subtitle": "一分钟速览全球 AI 动态",
       "previews": [
-        { "rank": 1, "title": "Karpathy 官宣加入 Anthropic", "source": "Anthropic", "icon": "brain" },
-        { "rank": 2, "title": "Google I/O 发布 Gemini 3.5", "source": "Google", "icon": "sparkles" },
+        { "rank": 1, "title": "Karpathy 加入 Anthropic", "source": "Anthropic", "icon": "brain" },
+        { "rank": 2, "title": "I/O 大会发布 Gemini 3.5", "source": "Google", "icon": "sparkles" },
         { "rank": 3, "title": "H200 涨价 30% 算力告急", "source": "NVIDIA", "icon": "cpu" }
       ]
     },
@@ -205,22 +230,22 @@ AINewsSkill/
           "rank": 1,
           "category": "人才",
           "title": "Karpathy 加入 Anthropic",
-          "summary": "OpenAI 联合创始人正式宣布加入 Anthropic，震动整个 AI 圈。",
-          "points": ["OpenAI 前核心研究员正式官宣", "华尔街看不懂大模型但看得懂人"]
+          "summary": "OpenAI 联合创始人正式宣布加入 Anthropic，震动 AI 圈。",
+          "points": ["前 OpenAI 核心成员正式官宣", "市场解读为 Anthropic 重大利好"]
         },
         {
           "rank": 2,
-          "category": "Google",
+          "category": "大模型",
           "title": "I/O 大会发布 Gemini 3.5",
-          "summary": "搜索框变身智能体，Agent 产品全线上线，重塑搜索体验。",
-          "points": ["搜索框变智能体，重塑 50 亿人上网方式", "Agent 产品全线上线"]
+          "summary": "搜索框变身智能体，Agent 产品全线上线。",
+          "points": ["重塑 50 亿人上网方式", "端侧模型首次集成到搜索"]
         },
         {
           "rank": 3,
           "category": "算力",
           "title": "硅谷深陷算力荒",
-          "summary": "H200 一夜涨价 30%，H100 全球抢购一空，研究员为算力卡离职。",
-          "points": ["H200 一夜涨价 30%，H100 抢到缺货", "DeepMind 研究员为算力卡离职创业"]
+          "summary": "H200 一夜涨价 30%，研究员为拿到算力卡选择离职创业。",
+          "points": ["H100 全球抢购一空", "多家实验室被迫推迟训练计划"]
         }
       ]
     },
@@ -232,4 +257,19 @@ AINewsSkill/
     }
   ]
 }
+```
+
+---
+
+## 安装（首次使用）
+
+```bash
+git clone https://github.com/zhangziyana007-sudo/AINewsSkill.git
+cd AINewsSkill
+npm install && npx playwright install chromium
+npm link  # 注册全局 ainews 命令
+
+# 字体（放入 fonts/ 目录）
+# 得意黑：https://github.com/atelier-anchor/smiley-sans/releases
+# Orbitron：https://fonts.google.com/specimen/Orbitron
 ```
