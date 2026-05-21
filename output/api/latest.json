@@ -1,0 +1,88 @@
+{
+  "version": "1.0",
+  "date": "2026.05.21",
+  "generatedAt": "2026-05-21T06:56:02.999Z",
+  "title": [
+    "2026.05.21",
+    "AI早报"
+  ],
+  "subtitle": "Anthropic新模型警报·Google巨额投资·中美模型对抗",
+  "items": [
+    {
+      "title": "【Anthropic】Mythos模型引发全球安全警报",
+      "keyFact": "Anthropic发布新模型Mythos，被认为过于强大，引发全球对AI安全的担忧。",
+      "impact": "可能加速全球AI监管立法，影响模型发布节奏。",
+      "category": "纽约时报",
+      "icon": "zap"
+    },
+    {
+      "title": "【Google】拟向Anthropic投资400亿美元",
+      "keyFact": "Google计划向Anthropic投资高达400亿美元，扩大AI战略布局。",
+      "impact": "加剧AI巨头资本竞赛，Anthropic估值或超千亿。",
+      "category": "CNBC",
+      "icon": "cpu"
+    },
+    {
+      "title": "【OpenAI/Google/Anthropic】联手打击中国模型抄袭",
+      "keyFact": "三家竞争对手合作，共同遏制中国公司提取和复制其AI模型的行为。",
+      "impact": "中美AI技术脱钩加剧，中国模型厂商面临更大外部压力。",
+      "category": "彭博社",
+      "icon": "rocket"
+    },
+    {
+      "title": "【DeepSeek】新模型MODEL1曝光",
+      "keyFact": "DeepSeek在GitHub更新中曝光新模型MODEL1，与V32作为不同分支开发。",
+      "impact": "国产模型持续迭代，或将在推理能力上对标国际前沿。",
+      "category": "量子位",
+      "icon": "brain"
+    },
+    {
+      "title": "【联想】发布天禧AI4.0及AI主机",
+      "keyFact": "联想发布天禧AI4.0及行业首创品类“AI主机”，推动AI与硬件深度融合。",
+      "impact": "AI PC概念落地，终端硬件厂商加速AI化转型。",
+      "category": "CNMO",
+      "icon": "sparkles"
+    },
+    {
+      "title": "【OpenAI】发布o3和o4-mini模型",
+      "keyFact": "OpenAI推出新款AI模型o3和o4-mini，进一步提升推理能力。",
+      "impact": "巩固OpenAI在推理模型领域的领先地位，竞争加剧。",
+      "category": "世界互联网大会",
+      "icon": "globe"
+    },
+    {
+      "title": "【Google】发布Gemini 2.5 Flash Preview",
+      "keyFact": "Google发布Gemini 2.5 Flash Preview，主打快速推理和低成本。",
+      "impact": "为开发者提供高性价比选择，或引发API价格战。",
+      "category": "世界互联网大会",
+      "icon": "code"
+    },
+    {
+      "title": "【Anthropic】Opus模型更新，强化编码与Agent能力",
+      "keyFact": "Anthropic更新Opus模型，在编码、智能体、视觉和多步骤任务上性能更强。",
+      "impact": "提升企业级应用竞争力，与OpenAI和Google正面交锋。",
+      "category": "Anthropic",
+      "icon": "robot"
+    },
+    {
+      "title": "【中国联通】新研究解决长文本图像检索痛点",
+      "keyFact": "中国联通在AAAI 2026发表Oral论文，让大模型学会“高维找茬”。",
+      "impact": "推动多模态检索技术突破，提升长文档处理效率。",
+      "category": "量子位",
+      "icon": "zap"
+    },
+    {
+      "title": "【北京人形】开源最新VLM模型",
+      "keyFact": "北京人形机器人公司开源最新VLM模型，推动具身智能发展。",
+      "impact": "降低具身智能研发门槛，加速机器人产业生态建设。",
+      "category": "量子位",
+      "icon": "cpu"
+    }
+  ],
+  "imageUrls": [
+    "https://iili.io/C9WTup9.png",
+    "https://iili.io/C9WT5hu.png",
+    "https://iili.io/C9WTaBj.png"
+  ],
+  "totalItems": 10
+}
