@@ -58,7 +58,6 @@ async function screenshotPages(files) {
   }
 
   const browser = await chromium.launch({
-    executablePath: '/home/ts/.cache/ms-playwright/chromium-1217/chrome-linux64/chrome',
     args: ['--no-sandbox', '--disable-gpu'],
   });
 
