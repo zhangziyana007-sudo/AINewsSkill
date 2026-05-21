@@ -41,6 +41,9 @@ switch (command) {
   case 'run':
     await cmdRun();
     break;
+  case 'serve':
+    cmdServe();
+    break;
   case 'help':
   case '--help':
   case '-h':
@@ -151,6 +154,13 @@ async function cmdRun() {
       stdio: 'inherit',
     });
   }
+
+  // 阶段 4：发布 API JSON（自动执行）
+  console.log('\n── 阶段④ 发布 API ─────────────────────');
+  execSync(`node ${join(SCRIPTS, 'publish-api.mjs')} --input=${join(ROOT, 'output', project)}`, {
+    cwd: ROOT,
+    stdio: 'inherit',
+  });
 }
 
 function showHelp() {
@@ -160,7 +170,8 @@ ainews — 每日AI大模型早报 · 小红书图文自动化 CLI
 命令:
   ainews generate [选项]     AI 生成结构化 JSON
   ainews render --input=X    渲染 JSON → HTML → PNG
-  ainews run [选项]           全流程（搜索 → AI生成 → render）
+  ainews run [选项]           全流程（搜索 → AI生成 → render → 推送 → API）
+  ainews serve               启动 HTTP API 服务
   ainews help                显示本帮助
 
 generate 选项:
@@ -183,12 +194,22 @@ run 选项:
   FEISHU_WEBHOOK_URL         飞书机器人 Webhook（可选，有则自动推送）
   FEISHU_APP_ID              飞书应用 ID（可选，有则上传图片到飞书）
   FEISHU_APP_SECRET          飞书应用密钥（可选，配合 APP_ID 使用）
+  PORT                       API 服务端口（默认 3721）
+  API_TOKEN                  POST /api/generate 鉴权 token
 
 示例:
   ainews generate --output=./output/ai-daily-0521/data.json
   ainews render --input=./output/ai-daily-0521/data.json
   ainews run                 # 一键全流程
+  ainews serve               # 启动 API 服务
 `);
+}
+
+function cmdServe() {
+  execSync(`node ${join(SCRIPTS, 'server.mjs')}`, {
+    cwd: ROOT,
+    stdio: 'inherit',
+  });
 }
 
 function todayStr() {
