@@ -1,5 +1,5 @@
 # 产出目录（每次生成不同）
-output/
+output/*
 !output/api/
 
 # 字体文件（软链接，不提交）
