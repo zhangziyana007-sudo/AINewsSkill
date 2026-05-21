@@ -49,7 +49,7 @@ async function main() {
 
   // 第二步：截图
   console.log('\n▶ 第二步：截图...');
-  const screenshotScript = resolve('/home/ts/VIbeUI/scripts/screenshot-xhs.mjs');
+  const screenshotScript = join(__dirname, 'screenshot.mjs');
   execSync(
     `node "${screenshotScript}" --input="${pagesDir}" --output="${outputDir}"`,
     { stdio: 'inherit' }
