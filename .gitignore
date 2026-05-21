@@ -1,5 +1,6 @@
 # 产出目录（每次生成不同）
 output/
+!output/api/
 
 # 字体文件（软链接，不提交）
 fonts
@@ -14,4 +15,3 @@ Thumbs.db
 # 环境变量（密钥）
 .env
 .env.*
-output/api/
