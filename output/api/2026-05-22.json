@@ -1,88 +1,151 @@
 {
   "version": "1.0",
   "date": "2026.05.22",
-  "generatedAt": "2026-05-22T02:39:25.050Z",
+  "generatedAt": "2026-05-22T18:19:49.997Z",
   "title": [
     "2026.05.22",
-    "AI早报"
+    "AI 大模型新闻早报"
   ],
-  "subtitle": "Google发布Ultra模型·Anthropic收购Stainless·中国模型使用量首超美国",
+  "subtitle": "智能体 · 开源 · 多模态",
   "items": [
     {
-      "title": "【Google】发布Ultra及Spark等新AI模型",
-      "keyFact": "推出Gemini Ultra、Spark及Omni系列，强化推理与多模态能力，追赶OpenAI和Anthropic。",
-      "impact": "加剧顶级模型竞争，推动多模态和代理应用发展。",
-      "category": "CNBC",
+      "title": "【阿里】Qwen3.7-Max发布，专为Agent设计",
+      "keyFact": "100万上下文，智能指数56.6，幻觉率降至22.9%；上线Model Studio、千问App。",
+      "impact": "Agent能力跃升，与国际前沿差距缩小，重构开发范式。",
+      "category": "IT之家",
       "icon": "zap"
     },
     {
-      "title": "【Anthropic】收购Stainless强化开发者工具",
-      "keyFact": "收购为OpenAI、Google等提供API工具的Stainless，整合开发者生态。",
-      "impact": "增强Anthropic开发者粘性，间接削弱竞争对手生态优势。",
-      "category": "TechCrunch",
+      "title": "【智谱】GLM-5.1-Highspeed刷新API速度纪录",
+      "keyFact": "输出速度达400 tokens/s，首token延迟1秒，较标准版提升约10倍。",
+      "impact": "打破高速即轻量定势，推动AI编程、实时语音等应用。",
+      "category": "IT之家",
       "icon": "cpu"
     },
     {
-      "title": "【OpenAI】成立40亿美元AI服务公司",
-      "keyFact": "与Bain、Capgemini合作成立AI服务公司，对标Anthropic类似布局。",
-      "impact": "加速企业级AI落地，服务化竞争白热化。",
-      "category": "CRN",
+      "title": "【字节】开源原生统一多模态模型Lance",
+      "keyFact": "激活参数3B，统一处理图像视频理解、生成与编辑，仅需128张GPU训练。",
+      "impact": "轻量模型统一多任务，降低端侧部署门槛。",
+      "category": "IT之家",
       "icon": "rocket"
     },
     {
-      "title": "【腾讯】混元模型蝉联全球调用量冠军",
-      "keyFact": "OpenRouter数据显示，腾讯混元模型连续多周全球调用量第一，中国规模是美国的2.11倍。",
-      "impact": "凸显中国模型规模化优势，腾讯巩固B端市场地位。",
-      "category": "Yahoo",
+      "title": "【网易有道】开源“子曰4”双子模型",
+      "keyFact": "27B多模态模型数理准确率81.4%；语音合成支持14语种，3秒零样本克隆。",
+      "impact": "教育场景性能领先，开源加速行业落地。",
+      "category": "IT之家",
       "icon": "brain"
     },
     {
-      "title": "【DeepSeek】新模型MODEL1曝光",
-      "keyFact": "DeepSeek在GitHub更新FlashMLA代码，28处提及MODEL1，或为R1继任者。",
-      "impact": "预示DeepSeek将推出更强推理模型，开源生态竞争升级。",
-      "category": "量子位",
-      "icon": "sparkles"
-    },
-    {
-      "title": "【阿里云】开源QwQ-32B推理模型",
-      "keyFact": "320亿参数模型性能比肩DeepSeek-R1，部署成本大幅降低。",
-      "impact": "降低高性能推理门槛，推动开源模型普惠化。",
-      "category": "AIHub",
+      "title": "【腾讯】推出翻译专用模型，30B-A3B超DeepSeek",
+      "keyFact": "Hy-MT2-30B-A3B在金融、法律等领域翻译超越DeepSeek-V4-Pro。",
+      "impact": "垂直领域专用模型显性价比优势，挑战通用模型。",
+      "category": "X",
       "icon": "globe"
     },
     {
-      "title": "【联想】发布天禧AI4.0及AI主机",
-      "keyFact": "联想推出AI主机新品类，标志AI与终端硬件深度融合进入新阶段。",
-      "impact": "开启AI硬件新赛道，刺激PC与终端设备升级需求。",
-      "category": "CNMO",
+      "title": "【微软】发布Fara1.5浏览器操作智能体",
+      "keyFact": "27B模型在Online-Mind2Web达72%准确率，超OpenAI Operator。",
+      "impact": "企业浏览器自动化再进化，冲击RPA市场。",
+      "category": "MarkTechPost",
+      "icon": "monitor"
+    },
+    {
+      "title": "【Cohere】开源218B稀疏MoE模型Command A+",
+      "keyFact": "支持48种语言及多模态推理，W4A4量化仅需两块H100 GPU运行。",
+      "impact": "开源生态获高能效模型，或对标LLaMA。",
+      "category": "MarkTechPost",
+      "icon": "sparkles"
+    },
+    {
+      "title": "【Runway】发布Aleph 2.0视频编辑模型",
+      "keyFact": "支持单帧编辑并应用全片，最长30秒1080p，集成Edit Studio。",
+      "impact": "视频编辑精细化提升，专业创作门槛降低。",
+      "category": "X",
       "icon": "code"
     },
     {
-      "title": "【中国联通】长文本图像检索突破",
-      "keyFact": "AAAI 2026 Oral论文，让大模型学会高维找茬，解决长文本图像检索痛点。",
-      "impact": "提升多模态检索精度，赋能文档与图像分析场景。",
-      "category": "量子位",
-      "icon": "robot"
+      "title": "【美团】开源数字人视频生成模型LongCat-Avatar 1.5",
+      "keyFact": "10秒视频生成仅1分钟，唇形同步、长视频稳定性升级，DMD蒸馏加速15倍。",
+      "impact": "数字人视频迈向实用，速度达商业可用水平。",
+      "category": "IT之家",
+      "icon": "smartphone"
     },
     {
-      "title": "【全球】AI大模型调用量连涨三周",
-      "keyFact": "OpenRouter数据：全球周调用量达25.7兆Token，周增7.5%。",
-      "impact": "AI应用需求持续爆发，算力与模型服务市场扩容。",
-      "category": "Yahoo",
+      "title": "【Stability AI】Stable Audio 3登陆Mac，59倍实时生成",
+      "keyFact": "针对Apple MLX优化，M5 Pro上59倍实时生成，支持1小时LoRA微调。",
+      "impact": "本地音乐生成效率飞跃，激发社区创新。",
+      "category": "X",
+      "icon": "star"
+    },
+    {
+      "title": "【清华/ModelBest】发布昇腾910B训练的1.58比特模型",
+      "keyFact": "全栈基于华为NPU，内存占用降约6倍，0.5B-8B保持高精度。",
+      "impact": "国产算力全栈方案突破，边缘部署成本大降。",
+      "category": "X",
+      "icon": "cpu"
+    },
+    {
+      "title": "【Google】Gemini 3.5 Flash正式发布",
+      "keyFact": "新一代Flash轻量模型已可用，进一步降低推理成本。",
+      "impact": "低延迟模型竞争加剧，Google巩固轻量市场。",
+      "category": "X",
       "icon": "zap"
     },
     {
-      "title": "【Anthropic】发布Mythos模型引关注",
-      "keyFact": "Mythos模型被指发现数千个未知漏洞，推理能力惊人。",
-      "impact": "提升AI安全应用价值，或改变漏洞发现行业格局。",
-      "category": "CNBC",
-      "icon": "cpu"
+      "title": "【OpenAI】即将推出通用型大语言模型",
+      "keyFact": "通过增加测试时计算资源显著提升性能，快速发布供探索。",
+      "impact": "Scaling Law新范式，计算驱动推理能力。",
+      "category": "X",
+      "icon": "rocket"
+    },
+    {
+      "title": "【阿里云】Qwen3.7-Max Model Studio 五折优惠",
+      "keyFact": "即日起至6月22日，100万上下文旗舰模型API限时半价。",
+      "impact": "降低开发者试用门槛，刺激Agent应用开发。",
+      "category": "X",
+      "icon": "sparkles"
+    },
+    {
+      "title": "【阿里云】Qwen3.7-Max上线OpenRouter",
+      "keyFact": "通过OpenRouter提供，支持显式提示缓存处理重复上下文。",
+      "impact": "扩展分发渠道，简化开发者集成流程。",
+      "category": "X",
+      "icon": "globe"
+    },
+    {
+      "title": "【阿里】千问App接入Qwen3.7-Max免费体验",
+      "keyFact": "App更新至6.9.7版即可免费使用，覆盖编程、办公自动化。",
+      "impact": "C端用户直接触及旗舰能力，提升产品粘性。",
+      "category": "IT之家",
+      "icon": "smartphone"
+    },
+    {
+      "title": "【阿里云&Novita AI】合作首发Qwen3.7-Max",
+      "keyFact": "双方共同推进Agent时代，模型强调从“回答”到“执行”的跃升。",
+      "impact": "生态合作扩大模型触达面，共建Agent生态。",
+      "category": "X",
+      "icon": "robot"
+    },
+    {
+      "title": "【Artificial Analysis】评测：Qwen3.7 Max幻觉率降半",
+      "keyFact": "因主动选择不回答，幻觉率从44.2%降至22.9%，可靠性提升。",
+      "impact": "降低幻觉是Agent可靠性的关键一步。",
+      "category": "X",
+      "icon": "brain"
+    },
+    {
+      "title": "【腾讯】Hy-MT2 1.8B翻译模型可手机端部署",
+      "keyFact": "仅440MB存储，可在主流手机芯片本地运行，推理速度提升1.5倍。",
+      "impact": "高质量翻译下沉至移动端，拓宽应用场景。",
+      "category": "X",
+      "icon": "smartphone"
     }
   ],
   "imageUrls": [
-    "https://iili.io/C9D45MX.png",
-    "https://iili.io/C9D47Pn.png",
-    "https://iili.io/C9D4aFs.png"
+    "https://iili.io/CH5EoAl.png",
+    "https://iili.io/CH5EztS.png",
+    "https://iili.io/CH5E7cb.png"
   ],
-  "totalItems": 10
+  "totalItems": 19
 }
