@@ -459,21 +459,7 @@ body {
   padding: 16px 22px;
 }
 .preview-card .preview-icon {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  opacity: 0.6;
-}
-.preview-card .preview-icon svg {
-  width: 22px;
-  height: 22px;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  fill: none;
+  display: none;
 }
 /* 卡片统一样式（所有页面一致） */
 
