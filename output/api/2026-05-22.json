@@ -1,88 +1,88 @@
 {
   "version": "1.0",
   "date": "2026.05.22",
-  "generatedAt": "2026-05-22T01:31:02.265Z",
+  "generatedAt": "2026-05-22T02:39:25.050Z",
   "title": [
     "2026.05.22",
     "AI早报"
   ],
-  "subtitle": "Anthropic新模型·DeepSeek曝光·腾讯调用量冠军",
+  "subtitle": "Google发布Ultra模型·Anthropic收购Stainless·中国模型使用量首超美国",
   "items": [
     {
-      "title": "【Anthropic】发布最新Claude模型",
-      "keyFact": "Anthropic发布新版本Claude，性能超越OpenAI和Google竞品，加剧竞争。",
-      "impact": "AI模型竞赛白热化，推动行业整体推理能力提升。",
-      "category": "NDTV",
+      "title": "【Google】发布Ultra及Spark等新AI模型",
+      "keyFact": "推出Gemini Ultra、Spark及Omni系列，强化推理与多模态能力，追赶OpenAI和Anthropic。",
+      "impact": "加剧顶级模型竞争，推动多模态和代理应用发展。",
+      "category": "CNBC",
       "icon": "zap"
     },
     {
-      "title": "【DeepSeek】新模型MODEL1曝光",
-      "keyFact": "DeepSeek在GitHub更新中28次提及MODEL1，或为R1后继者。",
-      "impact": "开源社区期待新标杆，可能引发新一轮推理模型竞争。",
-      "category": "量子位",
+      "title": "【Anthropic】收购Stainless强化开发者工具",
+      "keyFact": "收购为OpenAI、Google等提供API工具的Stainless，整合开发者生态。",
+      "impact": "增强Anthropic开发者粘性，间接削弱竞争对手生态优势。",
+      "category": "TechCrunch",
       "icon": "cpu"
     },
     {
-      "title": "【腾讯】混元模型蝉联调用量冠军",
-      "keyFact": "全球AI大模型调用量连三周上涨，腾讯混元模型蝉联冠军，中国规模是美国的2.11倍。",
-      "impact": "中国AI应用生态持续繁荣，腾讯巩固领先地位。",
-      "category": "雅虎财经",
+      "title": "【OpenAI】成立40亿美元AI服务公司",
+      "keyFact": "与Bain、Capgemini合作成立AI服务公司，对标Anthropic类似布局。",
+      "impact": "加速企业级AI落地，服务化竞争白热化。",
+      "category": "CRN",
       "icon": "rocket"
     },
     {
-      "title": "【阿里】开源通义千问QwQ-32B",
-      "keyFact": "阿里云开源320亿参数推理模型QwQ-32B，性能比肩DeepSeek-R1，成本大幅降低。",
-      "impact": "开源生态再添猛将，降低企业部署门槛，加速AI普惠。",
-      "category": "AIHub",
+      "title": "【腾讯】混元模型蝉联全球调用量冠军",
+      "keyFact": "OpenRouter数据显示，腾讯混元模型连续多周全球调用量第一，中国规模是美国的2.11倍。",
+      "impact": "凸显中国模型规模化优势，腾讯巩固B端市场地位。",
+      "category": "Yahoo",
       "icon": "brain"
     },
     {
-      "title": "【联想】发布天禧AI4.0及AI主机",
-      "keyFact": "联想发布天禧AI4.0及行业首创品类“AI主机”，推动AI与硬件深度融合。",
-      "impact": "AI终端硬件创新加速，开启个人AI计算新形态。",
-      "category": "CNMO",
+      "title": "【DeepSeek】新模型MODEL1曝光",
+      "keyFact": "DeepSeek在GitHub更新FlashMLA代码，28处提及MODEL1，或为R1继任者。",
+      "impact": "预示DeepSeek将推出更强推理模型，开源生态竞争升级。",
+      "category": "量子位",
       "icon": "sparkles"
     },
     {
-      "title": "【OpenAI】o3和o4-mini模型发布",
-      "keyFact": "OpenAI推出新款AI模型o3和o4-mini，推理能力再翻倍。",
-      "impact": "强化OpenAI在推理领域的领先地位，给竞品带来压力。",
-      "category": "世界互联网大会",
+      "title": "【阿里云】开源QwQ-32B推理模型",
+      "keyFact": "320亿参数模型性能比肩DeepSeek-R1，部署成本大幅降低。",
+      "impact": "降低高性能推理门槛，推动开源模型普惠化。",
+      "category": "AIHub",
       "icon": "globe"
     },
     {
-      "title": "【Google】发布Gemini 2.5 Flash Preview",
-      "keyFact": "Google推出Gemini 2.5 Flash Preview，主打快速推理与高效能。",
-      "impact": "丰富Gemini产品线，满足低延迟应用需求。",
-      "category": "世界互联网大会",
+      "title": "【联想】发布天禧AI4.0及AI主机",
+      "keyFact": "联想推出AI主机新品类，标志AI与终端硬件深度融合进入新阶段。",
+      "impact": "开启AI硬件新赛道，刺激PC与终端设备升级需求。",
+      "category": "CNMO",
       "icon": "code"
     },
     {
-      "title": "【中国AI】模型使用量首超美国",
-      "keyFact": "报道称中国AI模型使用量首次超越美国，其中一款发布仅两周获单月冠军。",
-      "impact": "中国AI产业崛起，全球AI格局正在重塑。",
-      "category": "TVB",
+      "title": "【中国联通】长文本图像检索突破",
+      "keyFact": "AAAI 2026 Oral论文，让大模型学会高维找茬，解决长文本图像检索痛点。",
+      "impact": "提升多模态检索精度，赋能文档与图像分析场景。",
+      "category": "量子位",
       "icon": "robot"
     },
     {
-      "title": "【北京人形】开源最新VLM模型",
-      "keyFact": "北京人形机器人公司开源最新VLM模型，推动具身智能发展。",
-      "impact": "具身智能领域开源加速，促进机器人感知与交互能力。",
-      "category": "量子位",
+      "title": "【全球】AI大模型调用量连涨三周",
+      "keyFact": "OpenRouter数据：全球周调用量达25.7兆Token，周增7.5%。",
+      "impact": "AI应用需求持续爆发，算力与模型服务市场扩容。",
+      "category": "Yahoo",
       "icon": "zap"
     },
     {
-      "title": "【中国联通】新研究解决长文本图像检索痛点",
-      "keyFact": "中国联通在AAAI 2026发表Oral论文，让大模型学会“高维找茬”。",
-      "impact": "多模态检索技术突破，提升AI在复杂场景下的应用效果。",
-      "category": "量子位",
+      "title": "【Anthropic】发布Mythos模型引关注",
+      "keyFact": "Mythos模型被指发现数千个未知漏洞，推理能力惊人。",
+      "impact": "提升AI安全应用价值，或改变漏洞发现行业格局。",
+      "category": "CNBC",
       "icon": "cpu"
     }
   ],
   "imageUrls": [
-    "https://iili.io/C9D9vzg.png",
-    "https://iili.io/C9D9SLJ.png",
-    "https://iili.io/C9D9gqv.png"
+    "https://iili.io/C9D45MX.png",
+    "https://iili.io/C9D47Pn.png",
+    "https://iili.io/C9D4aFs.png"
   ],
   "totalItems": 10
 }
