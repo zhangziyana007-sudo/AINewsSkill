@@ -414,14 +414,14 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 10px;
   overflow: hidden;
 }
 .preview-card .preview-title {
   font-size: 34px;
   font-weight: 700;
   color: var(--fg);
-  line-height: 1.3;
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -432,11 +432,12 @@ body {
   font-size: 18px;
   color: var(--accent);
   opacity: 0.75;
+  margin-top: 2px;
 }
 .preview-card .preview-fact {
   font-size: 20px;
   color: var(--fg-2);
-  line-height: 1.45;
+  line-height: 1.6;
   margin-top: 4px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -446,8 +447,8 @@ body {
 .preview-card .preview-impact {
   font-size: 18px;
   color: var(--fg-3);
-  line-height: 1.35;
-  margin-top: 2px;
+  line-height: 1.55;
+  margin-top: 6px;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -455,7 +456,7 @@ body {
   font-style: italic;
 }
 .preview-card--rich {
-  padding: 16px 22px;
+  padding: 20px 22px;
 }
 .preview-card .preview-icon {
   width: 28px;
