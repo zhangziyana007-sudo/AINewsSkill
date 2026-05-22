@@ -180,9 +180,15 @@ async function main() {
   const summary = extractSummary(data);
   console.log(`📤 推送飞书: ${data.date} AI早报（${summary.count} 条）\n`);
 
-  const imageFiles = ['page1.png', 'page2.png', 'page3.png']
+  // 自动扫描 images/ 下全部 page*.png（按数字升序）
+  const { readdirSync } = await import('node:fs');
+  const imageFiles = readdirSync(imagesDir)
+    .filter(f => /^page\d+\.png$/.test(f))
+    .sort((a, b) => parseInt(a.match(/\d+/)[0]) - parseInt(b.match(/\d+/)[0]))
     .map(f => join(imagesDir, f))
     .filter(f => existsSync(f));
+
+  console.log(`🖼️  发现 ${imageFiles.length} 张图片待推送`);
 
   // 策略 1：有飞书应用凭证 → 上传到飞书
   if (APP_ID && APP_SECRET) {
