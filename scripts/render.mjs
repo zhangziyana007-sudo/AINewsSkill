@@ -108,34 +108,18 @@ function renderTemplate(html, data) {
 }
 
 // ── 自适应分页逻辑 ───────────────────────────────
-// 封面概要模式：封面标题区 ~300px，剩余空间放新闻摘要
-// 画布高度 1200px - 状态条70 - 标题区250 - 底部50 = ~830px 可用
-// 每个概要卡片高度约 110px（含2行28px标题+来源+padding）
+// 灵活密度：封面 3 条，续页 4 条（卡片高度由 CSS flex 自适应）
 function splitNewsIntoPages(items) {
-  const MAX_HEIGHT_FIRST = 600;   // 封面页可用高度（装 2 条 RICH，2*280+22=582）
-  const MAX_HEIGHT_CONT = 900;    // 续页可用高度（装 3 条 RICH，3*280+44=884）
-  const CARD_HEIGHT_SIMPLE = 140; // 简单卡片
-  const CARD_HEIGHT_RICH = 280;   // 富文本卡片真实高度（行距宽松后）
-  const GAP = 22;                 // 卡片间距
+  const COVER_FIRST = 3;  // 封面页卡片数
+  const COVER_CONT = 4;   // 续页卡片数
 
   const pages = [];
-  let current = [];
-  let currentHeight = 0;
-  let isFirst = true;
-
-  for (const item of items) {
-    const cardH = item.keyFact ? CARD_HEIGHT_RICH : CARD_HEIGHT_SIMPLE;
-    const maxH = isFirst ? MAX_HEIGHT_FIRST : MAX_HEIGHT_CONT;
-    if (current.length > 0 && currentHeight + GAP + cardH > maxH) {
-      pages.push(current);
-      current = [];
-      currentHeight = 0;
-      isFirst = false;
-    }
-    current.push(item);
-    currentHeight += (current.length > 1 ? GAP : 0) + cardH;
+  for (let i = 0; i < items.length; ) {
+    const isFirst = pages.length === 0;
+    const size = isFirst ? COVER_FIRST : COVER_CONT;
+    pages.push(items.slice(i, i + size));
+    i += size;
   }
-  if (current.length > 0) pages.push(current);
   return pages;
 }
 
@@ -227,7 +211,9 @@ async function main() {
     rankOffset += coverPages[i].length;
 
     const previewCount = items.length;
-    const previewsHtml = `<div class="cover-previews${i > 0 ? ' cover-previews-cont' : ''}" data-count="${previewCount}">
+    const isSparse = i > 0 && previewCount < 4; // 续页满载 4 条，否则视为稀疏末页
+    const sparseClass = isSparse ? ' cover-previews--sparse' : '';
+    const previewsHtml = `<div class="cover-previews${i > 0 ? ' cover-previews-cont' : ''}${sparseClass}" data-count="${previewCount}">
       ${items.map(p => {
       const iconSvg = getCoverIcon(p.icon || 'zap');
       const keyFactHtml = p.keyFact ? `\n          <div class="preview-fact">${escapeHtml(p.keyFact)}</div>` : '';
