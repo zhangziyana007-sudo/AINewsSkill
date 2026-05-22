@@ -219,7 +219,7 @@ cp -r AINewsSkill ~/.claude/skills/
 ## 📦 GitHub Actions 自动化
 
 `.github/workflows/daily.yml` 已配置每日定时任务：
-- 北京时间 8:00 自动 `ainews run`
+- 北京时间 9:30 自动 `ainews run`
 - 产物提交到仓库 `output/`
 - 飞书推送结果到群
 
