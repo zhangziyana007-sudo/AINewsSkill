@@ -1,133 +1,266 @@
-# AINewsSkill — 每日AI大模型早报
+# AINewsSkill · 每日 AI 大模型新闻早报
 
-> 联网搜索 → DeepSeek V3 结构化生成 → 渲染截图，一键产出小红书图文。
+> 把"今日 AI 大模型行业动态"自动加工成小红书 3:4 图文，支持飞书推送和对外 REST API。
+> 适用于 Hermes / OpenClaw / Claude Code 等 Skill 体系，也可独立 CLI 使用。
 
-## 项目介绍
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Node](https://img.shields.io/badge/node-%E2%89%A518-brightgreen)
 
-AINewsSkill 是一个自动化 AI 新闻早报生成工具，每天自动抓取全球 AI 行业最新动态，通过大模型筛选整理为 Top 10 新闻摘要，并渲染为精美的小红书图文卡片。
+---
 
-**核心特点：**
-- 🔍 **联网搜索** — 通过 Tavily API 自动获取当日真实 AI 新闻
-- 🤖 **AI 结构化** — DeepSeek V3 精选 10 条新闻并输出标准 JSON
-- 🎨 **自动渲染** — 固定模板 + Playwright 截图，视觉效果一致
-- 📱 **小红书适配** — 3:4 竖版高清图（1800×2400px），开箱即发
-- 💰 **极低成本** — 每次不到 3 分钱，月更不到 1 块钱
+## 📖 项目是做什么的
 
-**工作流程：**
+一条命令产出"今日 AI 大模型早报"小红书图文：
 
 ```
-Tavily 搜索今日新闻 → DeepSeek V3 结构化生成 → HTML 模板渲染 → Playwright 截图输出 PNG
+AI HOT 抓真实新闻
+     ↓
+DeepSeek 结构化为 20 条精选
+     ↓
+HTML + Playwright 渲染成 3:4 PNG（≈6 张）
+     ↓
+(可选) 飞书群推送 + 对外 REST API
 ```
 
-## 快速开始
+**核心特性**：
+- 🎯 真实数据源（AI HOT 免费 API）+ DeepSeek 兜底
+- 🎨 科技感设计（Orbitron + 创客贴金刚体 + 荧光绿 + 立体卡片）
+- 🧩 工作流式 CLI（每个环节独立命令，可分步可一键）
+- 🔌 双输出（小红书图片 + JSON API）
+
+---
+
+## ⚡ 5 秒上手
 
 ```bash
-git clone https://github.com/zhangziyana007-sudo/AINewsSkill.git
-cd AINewsSkill && npm install && npx playwright install chromium && npm link
+# 安装
+git clone https://github.com/zhangziyana007-sudo/AINewsSkill
+cd AINewsSkill
+npm install
+npx playwright install chromium
 
-# 配置密钥
-export DEEPSEEK_API_KEY="sk-xxx"       # 必需 — DeepSeek V3 (deepseek-chat)
-export TAVILY_API_KEY="tvly-xxx"       # 可选 — 有则联网搜索真实新闻
+# 配置必需密钥
+export DEEPSEEK_API_KEY="sk-xxxxxxxx"
 
-# 运行
-ainews run --force
+# 一键全流程出图
+node bin/ainews.mjs run
+# 或全局：npm link 后直接 ainews run
 ```
 
-## API 配置
+产物：`output/ai-daily-MMDD/images/page*.png`
 
-### DeepSeek（必需）
+---
 
-| 项目 | 说明 |
+## 🏗️ 项目架构
+
+### 设计哲学：「一个脚本 = 一个 CLI 命令 = 一个工作流环节」
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                     bin/ainews.mjs (CLI 入口)                 │
+│  路由 8 条命令到 scripts/* 实现，并提供 run 编排              │
+└────────────┬─────────────────────────────────────────────────┘
+             │
+             ↓
+┌────────────────────────────────────────────────────────────────────┐
+│                          工作流 6 大环节                            │
+├────────────────────────────────────────────────────────────────────┤
+│ ⓪ ainews fetch    → scripts/search-news.mjs                       │
+│                    AI HOT API + Tavily 兜底                        │
+│                    → output/<项目>/search-results.json             │
+│                                                                    │
+│ ① ainews generate → scripts/generate.mjs                          │
+│                    DeepSeek v4-pro 结构化（JSON 输出）             │
+│                    → output/<项目>/data.json                       │
+│                                                                    │
+│ ② ainews render   → scripts/render.mjs                            │
+│                    模板填充 + 自动分页                              │
+│                    → output/<项目>/pages/page*.html                │
+│                                                                    │
+│ ③ ainews shot     → scripts/screenshot.mjs                        │
+│                    Playwright @2x 截图 3:4                         │
+│                    → output/<项目>/images/page*.png                │
+│                                                                    │
+│ ④ ainews feishu   → scripts/push-feishu.mjs                       │
+│                    Webhook 推送（可选）                             │
+│                                                                    │
+│ ⑤ ainews publish  → scripts/publish-api.mjs                       │
+│                    → output/api/latest.json                        │
+└────────────────────────────────────────────────────────────────────┘
+
+编排命令：
+  ainews run       一键 ⓪→⑤ 全流程
+  ainews serve     → scripts/server.mjs (HTTP API)
+```
+
+### 目录结构
+
+```
+AINewsSkill/
+├── bin/
+│   └── ainews.mjs              ⭐ CLI 唯一入口，命令分发
+├── scripts/                    ⭐ 每个脚本对应一条 CLI 命令
+│   ├── search-news.mjs         ⓪ AI HOT 抓取 + Tavily 兜底
+│   ├── generate.mjs            ① DeepSeek 结构化
+│   ├── render.mjs              ② HTML 渲染 + 分页
+│   ├── screenshot.mjs          ③ Playwright 截图
+│   ├── push-feishu.mjs         ④ 飞书推送
+│   ├── publish-api.mjs         ⑤ 发布 API JSON
+│   ├── server.mjs              HTTP API 服务
+│   └── pipeline.mjs            （遗留，被 ainews run 替代）
+├── templates/
+│   └── ai-daily/
+│       ├── cover.html          封面页模板
+│       ├── cover-cont.html     续页模板
+│       └── styles.css          ⭐ 视觉设计核心（改样式看这里）
+├── fonts/                      自带字体
+│   ├── Orbitron-VariableFont_wght.ttf
+│   ├── ChuangKeTieJinGang.otf  （中文科技感）
+│   ├── NotoSansSC-Black.otf
+│   └── JetBrainsMono-*.ttf
+├── output/                     产物根目录（每日一个子目录）
+│   ├── ai-daily-MMDD/
+│   │   ├── search-results.json
+│   │   ├── data.json
+│   │   ├── pages/
+│   │   └── images/
+│   └── api/
+│       └── latest.json
+├── SKILL.md                    ⭐ 给智能体读的 Skill 文档
+├── README.md                   本文件
+└── package.json
+```
+
+---
+
+## 🛠️ 常见任务速查
+
+### 用户场景 → 该跑的命令
+
+| 用户想做 | 命令 |
+|----------|------|
+| 出今天的早报 | `ainews run` |
+| 改了样式重新出图 | `ainews render && ainews shot` |
+| 只想发飞书 | `ainews feishu --project=ai-daily-0523` |
+| 启动对外 API | `ainews serve` |
+| 抓素材但不出图 | `ainews fetch` |
+| 用历史素材重生 JSON | `ainews generate --force` |
+| 看完整命令帮助 | `ainews help` |
+
+### 改样式 / 改设计
+
+- **配色 / 字体 / 卡片样式** → `templates/ai-daily/styles.css`
+- **页面布局 / 分页阈值** → `scripts/render.mjs` 顶部常量
+  ```js
+  const MAX_HEIGHT_FIRST = 800;   // 封面页可用高度
+  const MAX_HEIGHT_CONT  = 1070;  // 续页可用高度
+  const CARD_HEIGHT_RICH = 250;   // 每张新闻卡片高度
+  const GAP              = 22;    // 卡片间距
+  ```
+- **截图比例 / 分辨率** → `scripts/screenshot.mjs` 顶部 `width / height / scale`
+- **HTML 模板结构** → `templates/ai-daily/cover.html` / `cover-cont.html`
+
+### 改 AI 生成逻辑
+
+- **模型 / 条数 / 提示词** → `scripts/generate.mjs`
+  ```js
+  const MODEL = 'deepseek-v4-pro';
+  const TARGET_COUNT = 20;
+  // 提示词搜索 buildPrompt
+  ```
+
+### 改新闻来源
+
+- **AI HOT 抓取参数** → `scripts/search-news.mjs`（分类、时间窗口）
+- **加新的数据源** → 在 `search-news.mjs` 仿照 `fetchFromAIHot` 增加 `fetchFromXxx`，按顺序兜底
+
+---
+
+## 🔐 环境变量
+
+| 变量 | 必需 | 用途 |
+|------|------|------|
+| `DEEPSEEK_API_KEY` | ✅ | DeepSeek API 密钥 |
+| `AI_BASE_URL` | ⛔ | 默认 `https://api.deepseek.com/v1` |
+| `AI_MODEL` | ⛔ | 默认 `deepseek-v4-pro` |
+| `AI_TARGET_COUNT` | ⛔ | 精选条数，默认 20 |
+| `TAVILY_API_KEY` | ⛔ | Tavily 兜底搜索（AI HOT 失败时） |
+| `AIHOT_CATEGORY` | ⛔ | AI HOT 分类，默认 `ai-models` |
+| `AIHOT_SINCE_HOURS` | ⛔ | 时间窗口（小时），默认 24，量少时自动扩到 48 |
+| `FEISHU_WEBHOOK_URL` | ⛔ | 飞书机器人 Webhook |
+| `FEISHU_APP_ID` / `FEISHU_APP_SECRET` | ⛔ | 飞书应用凭证（启用图片上传） |
+
+`.env` 模板：
+
+```bash
+DEEPSEEK_API_KEY=sk-xxxxxxxx
+FEISHU_WEBHOOK_URL=https://open.feishu.cn/open-apis/bot/v2/hook/xxx
+```
+
+---
+
+## 🤖 给智能体用（Skill 模式）
+
+把本项目作为 Skill 注册到 Hermes / OpenClaw / Claude Code：
+
+```bash
+ln -s /path/to/AINewsSkill ~/.hermes/skills/ai-news-daily
+# 或
+cp -r AINewsSkill ~/.claude/skills/
+```
+
+智能体读到 `SKILL.md` 后会自动学会：
+- 按用户意图选用 `ainews run` 还是分步命令
+- 缺密钥时提示用户配置
+- 改样式时知道修改 `styles.css` 而不是改脚本
+
+---
+
+## 📦 GitHub Actions 自动化
+
+`.github/workflows/daily.yml` 已配置每日定时任务：
+- 北京时间 8:00 自动 `ainews run`
+- 产物提交到仓库 `output/`
+- 飞书推送结果到群
+
+启用前需要在仓库 Settings → Secrets 配置：`DEEPSEEK_API_KEY`、`FEISHU_WEBHOOK_URL` 等。
+
+---
+
+## 🧰 技术栈
+
+| 模块 | 技术 |
 |------|------|
-| 注册地址 | [platform.deepseek.com](https://platform.deepseek.com/) |
-| 密钥格式 | `sk-xxxxxxxxxxxxxxxx` |
-| 使用模型 | `deepseek-chat`（DeepSeek V3） |
-| 单次费用 | ≈ ¥0.025（6500 tokens） |
+| 运行时 | Node.js ≥18 (ESM) |
+| AI 模型 | DeepSeek v4-pro (JSON Output) |
+| 新闻源 | AI HOT REST API（免费）+ Tavily 兜底 |
+| 截图 | Playwright + Chromium |
+| 字体 | Orbitron + 创客贴金刚体 + Noto Sans CJK + JetBrains Mono |
+| 推送 | 飞书 Webhook + 应用上传 |
 
-### Tavily 搜索（可选，推荐）
+---
 
-| 项目 | 说明 |
+## ⚠️ 已知限制 & 常见问题
+
+| 问题 | 解决 |
 |------|------|
-| 注册地址 | [tavily.com](https://tavily.com/) |
-| 密钥格式 | `tvly-xxxxxxxx` |
-| 免费额度 | 1000 次/月（日更仅用 60 次） |
-| 作用 | 自动搜索当日真实 AI 新闻作为生成上下文 |
+| `❌ 缺少 API 密钥` | `export DEEPSEEK_API_KEY=...` |
+| 飞书图片不显示 | 配置 `FEISHU_APP_ID` + `FEISHU_APP_SECRET` 启用上传 |
+| Playwright 报浏览器不存在 | `npx playwright install chromium` |
+| 字体不渲染 | 确认 `fonts/` 目录完整（含 OTF/TTF 文件） |
+| 分页数量异常 | 调整 `scripts/render.mjs` 顶部 `MAX_HEIGHT_*` 常量 |
 
-### 持久化配置
+---
 
-```bash
-# 写入 ~/.zshrc 或 ~/.bashrc
-echo 'export DEEPSEEK_API_KEY="sk-你的密钥"' >> ~/.zshrc
-echo 'export TAVILY_API_KEY="tvly-你的密钥"' >> ~/.zshrc
-source ~/.zshrc
-```
+## 📄 License
 
-> ⚠️ 也可创建项目根目录 `.env` 文件（已被 .gitignore 排除，不会泄露）。
+MIT © zizaya
 
-## 命令
+---
 
-```bash
-ainews run [--force] [--project=NAME]   # 全流程：搜索→生成→渲染→截图
-ainews generate [--output=PATH]         # 仅生成 data.json
-ainews render [--input=PATH]            # 仅渲染+截图
-ainews help                             # 帮助
-```
+## 🔗 相关
 
-**两种模式**：有 `TAVILY_API_KEY` → 联网搜索真实新闻；无 → 基于模型知识生成。
-
-## 产出
-
-- 3 张 PNG：封面 + 新闻×2 + 结尾
-- 尺寸：1800×2400px @2x（小红书 3:4）
-- 路径：`output/ai-daily-MMDD/images/`
-
-## 费用
-
-每次运行 ≈ **¥0.025**，月更 30 天 ≈ **¥0.75**。Tavily 免费额度内无额外费用。
-
-## 环境变量
-
-| 变量 | 必需 | 默认值 |
-|------|------|--------|
-| `DEEPSEEK_API_KEY` | ✅ | — |
-| `TAVILY_API_KEY` | 可选 | —（无则跳过搜索） |
-| `FEISHU_WEBHOOK_URL` | 可选 | —（有则自动推送飞书） |
-| `FEISHU_APP_ID` | 可选 | —（有则上传图片到飞书） |
-| `FEISHU_APP_SECRET` | 可选 | —（配合 APP_ID） |
-| `AI_MODEL` | ❌ | `deepseek-chat` |
-| `AI_BASE_URL` | ❌ | `https://api.deepseek.com` |
-
-## 飞书推送
-
-配置 `FEISHU_WEBHOOK_URL` 后，`ainews run` 完成会自动推送到飞书群。
-
-### 配置步骤
-
-1. 飞书群 → 设置 → 群机器人 → 添加机器人 → 自定义机器人
-2. 复制 Webhook 地址
-3. 设置环境变量：
-   ```bash
-   export FEISHU_WEBHOOK_URL="https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
-   ```
-
-### 发送图片（可选）
-
-纯 Webhook 只能发文字摘要。如需发送图片，需额外创建飞书应用：
-
-1. 访问 [飞书开放平台](https://open.feishu.cn/app) → 创建企业自建应用
-2. 获取 App ID 和 App Secret
-3. 应用权限中添加 `im:resource`（上传图片）
-4. 设置环境变量：
-   ```bash
-   export FEISHU_APP_ID="cli_xxx"
-   export FEISHU_APP_SECRET="xxx"
-   ```
-
-### 定时任务（cron）
-
-```bash
-# 每天早上 8:00 自动运行并推送
-crontab -e
-# 添加：
-0 8 * * * cd /home/ts/AINewsSkill && source ~/.zshrc && ainews run --force >> /tmp/ainews.log 2>&1
-```
+- DeepSeek API: https://platform.deepseek.com
+- AI HOT: https://aihot.virxact.com
+- Playwright: https://playwright.dev
+- 设计风格参考：linear.app · vercel.com

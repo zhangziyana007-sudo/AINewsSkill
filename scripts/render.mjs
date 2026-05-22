@@ -112,11 +112,11 @@ function renderTemplate(html, data) {
 // 画布高度 1200px - 状态条70 - 标题区250 - 底部50 = ~830px 可用
 // 每个概要卡片高度约 110px（含2行28px标题+来源+padding）
 function splitNewsIntoPages(items) {
-  const MAX_HEIGHT_FIRST = 750;  // 第1页可用高度（有标题区，留出footer空间）
-  const MAX_HEIGHT_CONT = 1060;  // 续页可用高度（无标题区）
-  const CARD_HEIGHT_SIMPLE = 110;  // 简单卡片（标题+来源）
-  const CARD_HEIGHT_RICH = 170;    // 富文本卡片（标题+事实+影响+来源）
-  const GAP = 8;                   // 卡片间距
+  const MAX_HEIGHT_FIRST = 800;   // 第1页可用高度（封面装 3 条 RICH，3*250+2*22=794）
+  const MAX_HEIGHT_CONT = 1070;   // 续页可用高度（4 条 RICH）
+  const CARD_HEIGHT_SIMPLE = 140; // 简单卡片
+  const CARD_HEIGHT_RICH = 250;   // 富文本卡片真实高度
+  const GAP = 22;                 // 卡片间距
 
   const pages = [];
   let current = [];
@@ -166,7 +166,7 @@ async function main() {
   // 读取模板
   const coverTpl = await readFile(join(templateDir, 'cover.html'), 'utf-8');
   const coverContTpl = await readFile(join(templateDir, 'cover-cont.html'), 'utf-8');
-  const endingTpl = await readFile(join(templateDir, 'ending.html'), 'utf-8');
+  // ending 模板已不再使用
 
   // 确保输出目录
   await mkdir(outputDir, { recursive: true });
@@ -214,7 +214,7 @@ async function main() {
 
   // 总页数：封面页(们) + 末页
   const coverPages = splitNewsIntoPages(allItems);
-  const totalPages = coverPages.length + 1;
+  const totalPages = coverPages.length;
   shared.totalPages = totalPages;
 
   // 生成封面页（第1页有标题区，续页无标题区）
@@ -255,18 +255,7 @@ async function main() {
     pages.push(coverHtml);
   }
 
-  // 末页
-  const endingData = rawData.pages.find(p => p.type === 'ending') || {};
-  const metaRaw = endingData.meta || '';
-  const metaStr = typeof metaRaw === 'object' ? Object.entries(metaRaw).map(([k, v]) => `${k}: ${v}`).join(' · ') : metaRaw;
-  const endingHtml = renderTemplate(endingTpl, {
-    ...shared,
-    slogan: endingData.slogan || '关注 AI Daily · 不错过每一条前沿动态',
-    cta: endingData.cta || '点赞 + 关注',
-    meta: metaStr,
-    pageNum: totalPages,
-  });
-  pages.push(endingHtml);
+  // 末页已按用户要求移除
 
   // 写入文件
   for (let i = 0; i < pages.length; i++) {

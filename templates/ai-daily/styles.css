@@ -34,6 +34,24 @@
   font-weight: 400;
   font-display: swap;
 }
+@font-face {
+  font-family: 'K8x12 Pixel';
+  src: url('../../fonts/K8x12-Pixel.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'WenQuan Dot Matrix';
+  src: url('../../fonts/WenQuanDotMatrix.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ChuangKe JinGang';
+  src: url('../../fonts/ChuangKeTieJinGang.otf') format('opentype');
+  font-weight: 700 900;
+  font-display: swap;
+}
 
 /* ── CSS 变量 ─────────────────────────────────── */
 :root {
@@ -83,15 +101,19 @@ body {
     0 30px 60px -20px rgba(0,0,0,0.6);
 }
 
-/* 60px 网格背景 */
+/* 60px 网格背景（加强可见性，主网格 + 细分格）*/
 .canvas::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+    /* 主网格 60px，颜色更亮 */
+    linear-gradient(rgba(0,255,136,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,0.08) 1px, transparent 1px),
+    /* 细分格 15px，染出点阵质感 */
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px, 15px 15px, 15px 15px;
   pointer-events: none;
   z-index: 0;
 }
@@ -292,11 +314,11 @@ body {
   display: inline-block;
 }
 .cover-header {
-  padding: 24px 48px 16px;
+  padding: 20px 48px 8px;
   position: relative;
   z-index: 1;
   flex-shrink: 0;
-  min-height: 280px;
+  min-height: 260px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -304,28 +326,33 @@ body {
 .cover-title {
   font-family: 'Smiley Sans', 'Noto Sans SC', sans-serif;
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.05;
   margin-bottom: 4px;
 }
 .cover-title .line {
   display: block;
 }
 .cover-title .line-1 {
-  font-family: 'Orbitron', monospace;
-  font-size: 64px;
+  font-family: 'Orbitron', 'JetBrains Mono', monospace;
+  font-weight: 900;
+  font-size: 92px;
   color: var(--accent);
   letter-spacing: 0.05em;
-  text-shadow: 0 0 30px var(--glow);
+  text-shadow: 0 0 28px var(--glow), 0 0 12px var(--glow);
 }
 .cover-title .line-2 {
-  font-size: 80px;
+  font-family: 'ChuangKe JinGang', 'Noto Sans SC', sans-serif;
+  font-weight: 900;
+  font-size: 70px;
   color: var(--fg);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
+  margin-top: 10px;
+  text-shadow: 0 0 24px rgba(0, 255, 136, 0.2);
 }
 .cover-subtitle {
-  font-size: 22px;
+  font-size: 26px;
   color: var(--fg-2);
-  margin-top: 8px;
+  margin-top: 14px;
 }
 
 /* ── 封面预览卡片列表 ─────────────────────────── */
@@ -333,43 +360,55 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 12px 48px;
+  gap: 22px;
+  padding: 8px 48px;
   justify-content: flex-start;
-  padding-top: 40px;
+  padding-top: 16px;
   position: relative;
   z-index: 1;
 }
 .preview-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  gap: 18px;
+  padding: 18px 22px;
+  background: linear-gradient(180deg, #181818 0%, #0e0e0e 100%);
+  border: 1px solid rgba(0, 255, 136, 0.12);
+  border-radius: 18px;
   transition: all 200ms ease-in-out;
   position: relative;
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.55),
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(0, 255, 136, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
 }
 .preview-card::after {
   content: '';
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 6px;
-  height: 6px;
+  top: 14px;
+  right: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--accent);
-  opacity: 0.7;
+  opacity: 0.95;
+  box-shadow:
+    0 0 18px var(--glow),
+    0 0 8px var(--glow),
+    0 0 0 3px rgba(0, 255, 136, 0.18);
 }
 .preview-card .preview-rank {
   font-family: 'Orbitron', monospace;
-  font-size: 28px;
-  font-weight: 700;
+  font-weight: 900;
+  font-size: 36px;
   color: var(--accent);
-  opacity: 0.9;
-  min-width: 44px;
+  opacity: 0.95;
+  min-width: 52px;
   flex-shrink: 0;
+  text-shadow: 0 0 12px var(--glow);
+  letter-spacing: 0.02em;
 }
 .preview-card .preview-body {
   flex: 1;
@@ -379,7 +418,7 @@ body {
   overflow: hidden;
 }
 .preview-card .preview-title {
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 700;
   color: var(--fg);
   line-height: 1.3;
@@ -390,14 +429,14 @@ body {
 }
 .preview-card .preview-source {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 18px;
   color: var(--accent);
-  opacity: 0.7;
+  opacity: 0.75;
 }
 .preview-card .preview-fact {
-  font-size: 18px;
+  font-size: 20px;
   color: var(--fg-2);
-  line-height: 1.4;
+  line-height: 1.45;
   margin-top: 4px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -405,9 +444,9 @@ body {
   overflow: hidden;
 }
 .preview-card .preview-impact {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--fg-3);
-  line-height: 1.4;
+  line-height: 1.35;
   margin-top: 2px;
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -416,7 +455,7 @@ body {
   font-style: italic;
 }
 .preview-card--rich {
-  padding: 14px 16px;
+  padding: 16px 22px;
 }
 .preview-card .preview-icon {
   width: 28px;
@@ -439,7 +478,7 @@ body {
 
 /* ── 新闻概要卡片间距 ── */
 .content-area .cover-previews {
-  gap: 10px;
+  gap: 22px;
 }
 
 /* ── 续页样式（无标题区，更多内容空间）── */

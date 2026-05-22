@@ -78,30 +78,28 @@ async function screenshotPages(files) {
       const fileUrl = `file://${resolve(file)}`;
       await page.goto(fileUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
 
-      // 等待字体渲染（本地字体+内联CSS，500ms足够）
-      await page.waitForTimeout(500);
-
-      // 强制解决字体加载：移除所有不可达的外部样式表 + 清除卡住的字体
-      await page.evaluate(async () => {
-        // 移除 Google Fonts 外部链接
+      // 先移除 Google Fonts 外部链接，避免 fonts.ready 卡住
+      await page.evaluate(() => {
         document.querySelectorAll('link[rel="stylesheet"]').forEach(el => {
           const href = el.getAttribute('href') || '';
           if (href.includes('googleapis') || href.includes('gstatic')) {
             el.remove();
           }
         });
-        // 强制清除所有非 loaded 的 font face
-        if (document.fonts) {
-          const toDelete = [];
-          document.fonts.forEach(f => {
-            if (f.status !== 'loaded') toDelete.push(f);
-          });
-          toDelete.forEach(f => document.fonts.delete(f));
-        }
-        // 等待确认
-        await document.fonts.ready;
       });
-      await page.waitForTimeout(200);
+
+      // 等本地字体真正加载完（含 16MB 文泉驿点阵字、像素字体等大文件）
+      try {
+        await page.evaluate(async () => {
+          if (document.fonts) {
+            // 显式触发所有 @font-face 加载
+            const all = Array.from(document.fonts);
+            await Promise.all(all.map(f => f.status === 'loaded' ? Promise.resolve() : f.load().catch(() => {})));
+            await document.fonts.ready;
+          }
+        });
+      } catch (_) { /* fonts.ready 不可用时忽略 */ }
+      await page.waitForTimeout(300);
 
       // 隐藏工具栏（如有）
       await page.evaluate(() => {

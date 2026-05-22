@@ -1,16 +1,25 @@
 #!/usr/bin/env node
 /**
- * ainews — 每日AI大模型早报 · 小红书图文自动化 CLI
+ * ainews — 每日 AI 大模型早报 · 小红书图文自动化 CLI
  *
- * 命令：
- *   ainews generate [--output=PATH]             AI 生成结构化 JSON
- *   ainews render --input=<json> [--project=X]  渲染 JSON → HTML → PNG
- *   ainews run [--project=X]                    全流程（AI生成 → render）
- *   ainews help                                 显示帮助
+ * 编写规则：一个脚本对应一条 CLI 命令，每条命令代表工作流的一个环节。
+ *
+ * 工作流命令（按顺序执行即可完成全流程）：
+ *   ainews fetch    [选项]              ⓪ 拉取新闻素材 → search-results.json
+ *   ainews generate [选项]              ① DeepSeek 结构化 → data.json
+ *   ainews render   [选项]              ② 渲染 HTML 页面 → pages/*.html
+ *   ainews shot     [选项]              ③ Playwright 截图 → images/*.png
+ *   ainews feishu   [选项]              ④ 推送到飞书
+ *   ainews publish  [选项]              ⑤ 生成对外 API JSON
+ *
+ * 编排命令：
+ *   ainews run      [选项]              一键串联 ⓪→⑤ 全流程
+ *   ainews serve                        启动 HTTP API 服务
+ *   ainews help                         显示帮助
  */
 
 import { resolve, join, dirname } from 'node:path';
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
@@ -26,193 +35,223 @@ const flags = Object.fromEntries(
     .filter(a => a.startsWith('--'))
     .map(a => {
       const [k, v] = a.replace(/^--/, '').split('=');
-      return [k, v || true];
+      return [k, v === undefined ? true : v];
     })
 );
 
+// ── 工具函数 ─────────────────────────────────────
+function todayStr() {
+  const d = new Date();
+  return `${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function projectDir(project) {
+  return join(ROOT, 'output', project || `ai-daily-${todayStr()}`);
+}
+
+function runScript(name, extra = '') {
+  execSync(`node ${join(SCRIPTS, name)}${extra ? ' ' + extra : ''}`, {
+    cwd: ROOT,
+    stdio: 'inherit',
+  });
+}
+
 // ── 命令路由 ─────────────────────────────────────
-switch (command) {
-  case 'generate':
-    await cmdGenerate();
-    break;
-  case 'render':
-    await cmdRender();
-    break;
-  case 'run':
-    await cmdRun();
-    break;
-  case 'serve':
-    cmdServe();
-    break;
-  case 'help':
-  case '--help':
-  case '-h':
-  case undefined:
-    showHelp();
-    break;
-  default:
-    console.error(`❌ 未知命令: ${command}\n`);
-    showHelp();
-    process.exit(1);
+const COMMANDS = {
+  fetch: cmdFetch,
+  generate: cmdGenerate,
+  render: cmdRender,
+  shot: cmdShot,
+  feishu: cmdFeishu,
+  publish: cmdPublish,
+  run: cmdRun,
+  serve: cmdServe,
+  help: showHelp,
+  '--help': showHelp,
+  '-h': showHelp,
+};
+
+const handler = COMMANDS[command || 'help'];
+if (!handler) {
+  console.error(`❌ 未知命令: ${command}\n`);
+  showHelp();
+  process.exit(1);
+}
+try {
+  await handler();
+} catch (err) {
+  console.error(`\n❌ 命令执行失败: ${err.message}`);
+  process.exit(err.status || 1);
 }
 
-// ── 命令实现 ─────────────────────────────────────
+// ── ⓪ 拉取新闻素材 ─────────────────────────────────
+async function cmdFetch() {
+  const project = flags.project || `ai-daily-${todayStr()}`;
+  const out = flags.output || join(projectDir(project), 'search-results.json');
+  console.log('⓪ 拉取新闻素材 → AI HOT(主) / Tavily(备)');
+  runScript('search-news.mjs', `--output=${out}`);
+  console.log(`✅ 素材已存盘：${out}`);
+}
 
+// ── ① DeepSeek 结构化生成 ───────────────────────────
 async function cmdGenerate() {
-  const output = flags.output || join(ROOT, 'output', 'data.json');
-
-  console.log('🤖 AI 生成结构化数据...');
-  execSync(`node ${join(SCRIPTS, 'generate.mjs')} --output=${output}`, {
-    cwd: ROOT,
-    stdio: 'inherit',
-  });
+  const project = flags.project || `ai-daily-${todayStr()}`;
+  const dir = projectDir(project);
+  const out = flags.output || join(dir, 'data.json');
+  const context = flags.context || join(dir, 'search-results.json');
+  if (!process.env.DEEPSEEK_API_KEY && !process.env.AI_API_KEY) {
+    console.error('❌ 缺少 API 密钥：export DEEPSEEK_API_KEY="sk-xxx"');
+    process.exit(1);
+  }
+  const ctxFlag = existsSync(context) ? ` --context=${context}` : '';
+  console.log('① DeepSeek 结构化 → data.json');
+  runScript('generate.mjs', `--output=${out}${ctxFlag}`);
+  console.log(`✅ 结构化数据：${out}`);
 }
 
+// ── ② 渲染 HTML ──────────────────────────────────
 async function cmdRender() {
-  const input = flags.input;
-  if (!input) {
-    console.error('❌ 必须指定 --input=<json路径>');
-    console.error('   例: ainews render --input=./output/ai-daily-0521/data.json');
+  const project = flags.project || `ai-daily-${todayStr()}`;
+  const dir = projectDir(project);
+  const input = flags.input || join(dir, 'data.json');
+  const out = flags.output || join(dir, 'pages');
+  if (!existsSync(input)) {
+    console.error(`❌ 找不到数据文件：${input}\n请先 ainews generate`);
     process.exit(1);
   }
-
-  const inputPath = resolve(input);
-  if (!existsSync(inputPath)) {
-    console.error(`❌ 文件不存在: ${inputPath}`);
-    process.exit(1);
-  }
-
-  // 从 JSON 中提取 topic 或使用参数
-  const data = JSON.parse(readFileSync(inputPath, 'utf-8'));
-  const project = flags.project || data.topic || `ai-daily-${todayStr()}`;
-
-  console.log('🎨 渲染出图...');
-  console.log(`   数据: ${inputPath}`);
-  console.log(`   项目: ${project}\n`);
-
-  execSync(`node ${join(SCRIPTS, 'pipeline.mjs')} --input=${inputPath} --project=${project}`, {
-    cwd: ROOT,
-    stdio: 'inherit',
-  });
-
-  const outputDir = join(ROOT, 'output', project, 'images');
-  console.log(`\n✅ 图片已生成: ${outputDir}`);
+  console.log('② 渲染 HTML → pages/');
+  runScript('render.mjs', `--input=${input} --output=${out}`);
+  console.log(`✅ HTML 页面：${out}`);
 }
 
+// ── ③ Playwright 截图 ────────────────────────────
+async function cmdShot() {
+  const project = flags.project || `ai-daily-${todayStr()}`;
+  const dir = projectDir(project);
+  const input = flags.input || join(dir, 'pages');
+  const out = flags.output || join(dir, 'images');
+  if (!existsSync(input)) {
+    console.error(`❌ 找不到 HTML 目录：${input}\n请先 ainews render`);
+    process.exit(1);
+  }
+  console.log('③ Playwright 截图 → images/');
+  runScript('screenshot.mjs', `--input=${input} --output=${out}`);
+  console.log(`✅ PNG 图片：${out}`);
+}
+
+// ── ④ 飞书推送 ──────────────────────────────────
+async function cmdFeishu() {
+  const project = flags.project || `ai-daily-${todayStr()}`;
+  const input = flags.input || projectDir(project);
+  if (!process.env.FEISHU_WEBHOOK_URL) {
+    console.error('❌ 缺少 FEISHU_WEBHOOK_URL，跳过');
+    process.exit(1);
+  }
+  console.log('④ 飞书推送');
+  runScript('push-feishu.mjs', `--input=${input}`);
+}
+
+// ── ⑤ 发布 API JSON ─────────────────────────────
+async function cmdPublish() {
+  const project = flags.project || `ai-daily-${todayStr()}`;
+  const input = flags.input || projectDir(project);
+  console.log('⑤ 发布对外 API JSON');
+  runScript('publish-api.mjs', `--input=${input}`);
+}
+
+// ── 编排：一键全流程 ────────────────────────────
 async function cmdRun() {
   const project = flags.project || `ai-daily-${todayStr()}`;
-  const dataJson = join(ROOT, 'output', project, 'data.json');
-  const searchJson = join(ROOT, 'output', project, 'search-results.json');
+  const dir = projectDir(project);
+  const dataJson = join(dir, 'data.json');
 
   console.log('🚀 AI 早报全流程启动');
   console.log('═══════════════════════════════════════\n');
 
-  // 阶段 0：联网搜索（可选，有 TAVILY_API_KEY 时自动启用）
-  let contextFlag = '';
-  if (process.env.TAVILY_API_KEY) {
-    console.log('── 阶段⓪ 联网搜索 ──────────────────────');
-    execSync(`node ${join(SCRIPTS, 'search-news.mjs')} --output=${searchJson}`, {
-      cwd: ROOT,
-      stdio: 'inherit',
-    });
-    contextFlag = ` --context=${searchJson}`;
-    console.log('');
+  console.log('── 阶段⓪ 拉取新闻素材 ────────────────────');
+  try {
+    await cmdFetch();
+  } catch (_) {
+    console.warn('⚠️ 素材拉取失败，DeepSeek 将基于训练知识自行生成（可能不是最新内容）');
   }
+  console.log('');
 
-  // 阶段 1：AI 结构化生成
   console.log('── 阶段① AI 生成 ──────────────────────');
-  if (existsSync(dataJson) && !flags['force']) {
-    console.log(`✅ 发现已有 JSON: ${dataJson}`);
+  if (existsSync(dataJson) && !flags.force) {
+    console.log(`✅ 发现已有 JSON：${dataJson}（加 --force 强制重生）`);
   } else {
-    if (!process.env.DEEPSEEK_API_KEY && !process.env.AI_API_KEY) {
-      console.error('❌ 缺少 API 密钥，请设置环境变量：');
-      console.error('   export DEEPSEEK_API_KEY="sk-xxx"');
-      process.exit(1);
-    }
-    execSync(`node ${join(SCRIPTS, 'generate.mjs')} --output=${dataJson}${contextFlag}`, {
-      cwd: ROOT,
-      stdio: 'inherit',
-    });
-    console.log('');
+    await cmdGenerate();
   }
+  console.log('');
 
-  // 阶段 2：渲染
-  console.log('\n── 阶段② 渲染出图 ─────────────────────');
-  execSync(`node ${join(SCRIPTS, 'pipeline.mjs')} --input=${dataJson} --project=${project}`, {
-    cwd: ROOT,
-    stdio: 'inherit',
-  });
+  console.log('── 阶段② 渲染 HTML ─────────────────────');
+  await cmdRender();
+  console.log('');
 
-  const outputDir = join(ROOT, 'output', project, 'images');
-  console.log(`\n✅ 全流程完成！图片: ${outputDir}`);
+  console.log('── 阶段③ 截图出图 ──────────────────────');
+  await cmdShot();
+  console.log('');
+  console.log(`✅ 主流程完成！图片：${join(dir, 'images')}`);
 
-  // 阶段 3：飞书推送（可选）
   if (process.env.FEISHU_WEBHOOK_URL) {
-    console.log('\n── 阶段③ 飞书推送 ─────────────────────');
-    execSync(`node ${join(SCRIPTS, 'push-feishu.mjs')} --input=${join(ROOT, 'output', project)}`, {
-      cwd: ROOT,
-      stdio: 'inherit',
-    });
+    console.log('\n── 阶段④ 飞书推送 ─────────────────────');
+    await cmdFeishu();
   }
 
-  // 阶段 4：发布 API JSON（自动执行）
-  console.log('\n── 阶段④ 发布 API ─────────────────────');
-  execSync(`node ${join(SCRIPTS, 'publish-api.mjs')} --input=${join(ROOT, 'output', project)}`, {
-    cwd: ROOT,
-    stdio: 'inherit',
-  });
+  console.log('\n── 阶段⑤ 发布 API ─────────────────────');
+  await cmdPublish();
 }
 
+// ── HTTP 服务 ───────────────────────────────────
+function cmdServe() {
+  runScript('server.mjs');
+}
+
+// ── 帮助 ────────────────────────────────────────
 function showHelp() {
   console.log(`
-ainews — 每日AI大模型早报 · 小红书图文自动化 CLI
+ainews — 每日 AI 大模型早报 · 小红书图文自动化 CLI
 
-命令:
-  ainews generate [选项]     AI 生成结构化 JSON
-  ainews render --input=X    渲染 JSON → HTML → PNG
-  ainews run [选项]           全流程（搜索 → AI生成 → render → 推送 → API）
+工作流命令（每条命令对应一个环节，可独立执行也可串联）：
+  ainews fetch     [选项]    ⓪ 拉取新闻素材   → search-results.json
+  ainews generate  [选项]    ① DeepSeek 结构化 → data.json
+  ainews render    [选项]    ② 渲染 HTML 页面  → pages/*.html
+  ainews shot      [选项]    ③ Playwright 截图 → images/*.png
+  ainews feishu    [选项]    ④ 推送到飞书
+  ainews publish   [选项]    ⑤ 发布对外 API JSON
+
+编排命令：
+  ainews run       [选项]    一键串联 ⓪→⑤ 全流程
   ainews serve               启动 HTTP API 服务
   ainews help                显示本帮助
 
-generate 选项:
-  --output=PATH              输出 JSON 路径
-  --context=PATH             搜索结果 JSON（可选，提供实时新闻上下文）
-
-render 选项:
-  --input=PATH               JSON 数据文件路径（必需）
-  --project=NAME             项目名（默认从 JSON 读取）
-
-run 选项:
+通用选项：
   --project=NAME             项目名（默认 ai-daily-MMDD）
-  --force                    强制重新生成 JSON（即使已存在）
+  --input=PATH               指定输入路径（覆盖默认）
+  --output=PATH              指定输出路径（覆盖默认）
+  --force                    run 时强制重新生成已存在的 data.json
 
-环境变量:
-  DEEPSEEK_API_KEY           DeepSeek API 密钥（必需）
-  AI_BASE_URL                自定义 API 地址（默认 https://api.deepseek.com）
-  AI_MODEL                   模型名称（默认 deepseek-chat）
-  TAVILY_API_KEY             Tavily 搜索 API 密钥（可选，有则自动联网搜索）
-  FEISHU_WEBHOOK_URL         飞书机器人 Webhook（可选，有则自动推送）
-  FEISHU_APP_ID              飞书应用 ID（可选，有则上传图片到飞书）
-  FEISHU_APP_SECRET          飞书应用密钥（可选，配合 APP_ID 使用）
-  PORT                       API 服务端口（默认 3721）
-  API_TOKEN                  POST /api/generate 鉴权 token
+环境变量：
+  DEEPSEEK_API_KEY           DeepSeek 密钥（generate 必需）
+  AI_BASE_URL / AI_MODEL     模型自定义（默认 deepseek-v4-pro）
+  TAVILY_API_KEY             Tavily 备用搜索（fetch 主源是 AI HOT，无需 token）
+  AIHOT_CATEGORY             AI HOT 分类（默认 ai-models）
+  AIHOT_SINCE_HOURS          时间窗口（默认 24h，量少时自动扩到 48h）
+  AI_TARGET_COUNT            精选新闻条数（默认 20）
+  FEISHU_WEBHOOK_URL         飞书 Webhook（feishu 命令必需）
+  FEISHU_APP_ID / FEISHU_APP_SECRET  飞书应用凭证（可选，启用图片上传）
 
-示例:
-  ainews generate --output=./output/ai-daily-0521/data.json
-  ainews render --input=./output/ai-daily-0521/data.json
-  ainews run                 # 一键全流程
-  ainews serve               # 启动 API 服务
+典型用法：
+  # 一键全流程
+  ainews run
+
+  # 仅重新出图（数据已存在）
+  ainews render && ainews shot
+
+  # 只发飞书
+  ainews feishu --project=ai-daily-0523
+
+  # 指定项目目录
+  ainews run --project=ai-daily-test
 `);
-}
-
-function cmdServe() {
-  execSync(`node ${join(SCRIPTS, 'server.mjs')}`, {
-    cwd: ROOT,
-    stdio: 'inherit',
-  });
-}
-
-function todayStr() {
-  const d = new Date();
-  return `${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
 }
