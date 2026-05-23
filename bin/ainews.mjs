@@ -11,6 +11,7 @@
  *   ainews shot     [选项]              ③ Playwright 截图 → images/*.png
  *   ainews feishu   [选项]              ④ 推送到飞书
  *   ainews publish  [选项]              ⑤ 生成对外 API JSON
+ *   ainews xhs-pkg  [选项]              ⑥ 生成小红书发布素材包 → xhs-package.md/.txt
  *
  * 编排命令：
  *   ainews run      [选项]              一键串联 ⓪→⑤ 全流程
@@ -64,6 +65,8 @@ const COMMANDS = {
   shot: cmdShot,
   feishu: cmdFeishu,
   publish: cmdPublish,
+  'xhs-pkg': cmdXhsPkg,
+  'xhs-package': cmdXhsPkg,
   run: cmdRun,
   serve: cmdServe,
   help: showHelp,
@@ -158,7 +161,18 @@ async function cmdPublish() {
   console.log('⑤ 发布对外 API JSON');
   runScript('publish-api.mjs', `--input=${input}`);
 }
-
+// ── ⑥ 小红书素材包 ──────────────────────────────
+async function cmdXhsPkg() {
+  const project = flags.project || `ai-daily-${todayStr()}`;
+  const input = flags.input || projectDir(project);
+  const topN = flags.topN ? ` --topN=${flags.topN}` : '';
+  if (!existsSync(join(input, 'data.json'))) {
+    console.error(`❌ 找不到 ${input}/data.json，请先 ainews generate`);
+    process.exit(1);
+  }
+  console.log('⑥ 生成小红书发布素材包');
+  runScript('xhs-package.mjs', `--input=${input}${topN}`);
+}
 // ── 编排：一键全流程 ────────────────────────────
 async function cmdRun() {
   const project = flags.project || `ai-daily-${todayStr()}`;
@@ -200,6 +214,9 @@ async function cmdRun() {
 
   console.log('\n── 阶段⑤ 发布 API ─────────────────────');
   await cmdPublish();
+
+  console.log('\n── 阶段⑥ 小红书素材包 ─────────────────');
+  await cmdXhsPkg();
 }
 
 // ── HTTP 服务 ───────────────────────────────────
@@ -219,6 +236,7 @@ ainews — 每日 AI 大模型早报 · 小红书图文自动化 CLI
   ainews shot      [选项]    ③ Playwright 截图 → images/*.png
   ainews feishu    [选项]    ④ 推送到飞书
   ainews publish   [选项]    ⑤ 发布对外 API JSON
+  ainews xhs-pkg   [选项]    ⑥ 生成小红书发布素材包（标题/正文/话题/图片）
 
 编排命令：
   ainews run       [选项]    一键串联 ⓪→⑤ 全流程
