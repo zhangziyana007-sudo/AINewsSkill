@@ -154,7 +154,9 @@ async function broadcastToAllChats(token, summary, imageKeys) {
     return false;
   }
   console.log(`📡 机器人所在群：${chats.length} 个`);
-  const postContent = buildPostContent(summary, imageKeys);
+  // IM API 的 post 消息 content 不包 post: 层（webhook 才需要）
+  const wh = buildPostContent(summary, imageKeys);
+  const postContent = wh.post; // { zh_cn: { title, content } }
   let ok = 0;
   let fail = 0;
   for (const chat of chats) {
