@@ -10,7 +10,7 @@
  */
 
 import { chromium } from 'playwright';
-import { readdir, stat, mkdir } from 'node:fs/promises';
+import { readdir, stat, mkdir, unlink } from 'node:fs/promises';
 import { resolve, basename, extname, join } from 'node:path';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -55,6 +55,14 @@ async function collectHtmlFiles(inputPath) {
 async function screenshotPages(files) {
   if (!existsSync(outputPath)) {
     await mkdir(outputPath, { recursive: true });
+  }
+
+  // 清理旧的 page*.png，避免上一轮多余截图被混入本轮推送
+  const existing = await readdir(outputPath);
+  for (const f of existing) {
+    if (/^page\d+\.png$/.test(f)) {
+      await unlink(join(outputPath, f));
+    }
   }
 
   const browser = await chromium.launch({
