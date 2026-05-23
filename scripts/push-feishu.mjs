@@ -30,9 +30,11 @@ const WEBHOOK_URL = process.env.FEISHU_WEBHOOK_URL;
 const APP_ID = process.env.FEISHU_APP_ID;
 const APP_SECRET = process.env.FEISHU_APP_SECRET;
 
-if (!WEBHOOK_URL) {
-  console.error('❌ 缺少 FEISHU_WEBHOOK_URL 环境变量');
-  console.error('   在飞书群 → 设置 → 群机器人 → 添加自定义机器人 → 复制 Webhook 地址');
+// 没有任何凭证才报错：APP_ID + WEBHOOK 至少有一个
+if (!WEBHOOK_URL && !(APP_ID && APP_SECRET)) {
+  console.error('❌ 缺少飞书凭证');
+  console.error('   方案A: 设置 FEISHU_WEBHOOK_URL（自定义机器人，单群推送）');
+  console.error('   方案B: 设置 FEISHU_APP_ID + FEISHU_APP_SECRET（应用机器人，自动推送所在全部群）');
   process.exit(1);
 }
 
@@ -91,25 +93,88 @@ async function uploadImage(token, imagePath) {
   return json.data.image_key;
 }
 
-// ── 发送富文本消息（带图片）────────────────────────────
-async function sendWithImages(summary, imageKeys) {
+// ── 构造富文本消息体（公共）──────────────────────────
+function buildPostContent(summary, imageKeys) {
   const content = [
     [{ tag: 'text', text: `📰 ${data.date} AI早报 Top ${summary.count}\n${summary.subtitle}\n\n` }],
     ...summary.lines.map(line => [{ tag: 'text', text: line + '\n' }]),
     [{ tag: 'text', text: '\n' }],
     ...imageKeys.map(key => [{ tag: 'img', image_key: key }]),
   ];
+  return { post: { zh_cn: { title: `🤖 ${data.date} AI大模型早报`, content } } };
+}
 
+// ── 发送富文本消息到 webhook（单群）─────────────────────
+async function sendWithImages(summary, imageKeys) {
   const res = await fetch(WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      msg_type: 'post',
-      content: { post: { zh_cn: { title: `🤖 ${data.date} AI大模型早报`, content } } },
-    }),
+    body: JSON.stringify({ msg_type: 'post', content: buildPostContent(summary, imageKeys) }),
   });
-  const json = await res.json();
-  return json;
+  return await res.json();
+}
+
+// ── 飞书 API：列出机器人所在全部群 ────────────────────
+async function listBotChats(token) {
+  const chats = [];
+  let pageToken = '';
+  do {
+    const url = `https://open.feishu.cn/open-apis/im/v1/chats?page_size=100${pageToken ? `&page_token=${pageToken}` : ''}`;
+    const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
+    const json = await res.json();
+    if (json.code !== 0) throw new Error(`列群失败: ${json.msg}（需要 im:chat:readonly 权限并发布版本）`);
+    chats.push(...(json.data?.items || []));
+    pageToken = json.data?.has_more ? json.data.page_token : '';
+  } while (pageToken);
+  return chats;
+}
+
+// ── 飞书 API：以应用身份发消息到指定 chat_id ──────────
+async function sendMessageToChat(token, chatId, msgType, content) {
+  const res = await fetch(
+    'https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id',
+    {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json; charset=utf-8' },
+      body: JSON.stringify({
+        receive_id: chatId,
+        msg_type: msgType,
+        content: JSON.stringify(content),
+      }),
+    },
+  );
+  return await res.json();
+}
+
+// ── 群发：所有机器人所在群 ─────────────────────────────
+async function broadcastToAllChats(token, summary, imageKeys) {
+  const chats = await listBotChats(token);
+  if (chats.length === 0) {
+    console.log('⚠️  机器人未加入任何群，请先把机器人拉进群');
+    return false;
+  }
+  console.log(`📡 机器人所在群：${chats.length} 个`);
+  const postContent = buildPostContent(summary, imageKeys);
+  let ok = 0;
+  let fail = 0;
+  for (const chat of chats) {
+    const name = chat.name || chat.chat_id;
+    try {
+      const r = await sendMessageToChat(token, chat.chat_id, 'post', postContent);
+      if (r.code === 0) {
+        console.log(`  ✅ ${name}`);
+        ok++;
+      } else {
+        console.log(`  ❌ ${name}: [${r.code}] ${r.msg}`);
+        fail++;
+      }
+    } catch (err) {
+      console.log(`  ❌ ${name}: ${err.message}`);
+      fail++;
+    }
+  }
+  console.log(`\n📊 推送结果：成功 ${ok} / 失败 ${fail} / 总计 ${chats.length}`);
+  return ok > 0;
 }
 
 // ── 发送纯文字消息（无图片）────────────────────────────
@@ -190,26 +255,41 @@ async function main() {
 
   console.log(`🖼️  发现 ${imageFiles.length} 张图片待推送`);
 
-  // 策略 1：有飞书应用凭证 → 上传到飞书
+  // 策略 1：有飞书应用凭证 → 上传图片 + 自动群发到机器人所在所有群
   if (APP_ID && APP_SECRET) {
-    console.log('🔑 检测到飞书应用凭证，尝试上传图片到飞书...');
+    console.log('🔑 检测到飞书应用凭证，启用「自动群发到所有群」模式...');
     try {
       const token = await getTenantToken();
       const imageKeys = [];
       for (const imgPath of imageFiles) {
         const key = await uploadImage(token, imgPath);
-        console.log(`  ✅ ${imgPath.split('/').pop()} → ${key}`);
+        console.log(`  ✅ 上传 ${imgPath.split('/').pop()} → ${key}`);
         imageKeys.push(key);
       }
-      const result = await sendWithImages(summary, imageKeys);
-      if (result.code === 0 || result.StatusCode === 0) {
-        console.log('\n✅ 飞书推送成功（内嵌图片模式）');
+      const ok = await broadcastToAllChats(token, summary, imageKeys);
+      if (ok) {
+        console.log('\n✅ 飞书自动群发完成');
         return;
       }
+      // 群发未成功且配置了 webhook，则继续走 webhook 兜底
+      if (WEBHOOK_URL) {
+        console.log('↓ 回退到 webhook 模式...\n');
+        const r = await sendWithImages(summary, imageKeys);
+        if (r.code === 0 || r.StatusCode === 0) {
+          console.log('\n✅ 飞书推送成功（webhook 兜底）');
+          return;
+        }
+      }
     } catch (err) {
-      console.log(`  ⚠️  飞书图片上传失败: ${err.message}`);
+      console.log(`  ⚠️  应用机器人模式失败: ${err.message}`);
       console.log('  ↓ 尝试免费图床方案...\n');
     }
+  }
+
+  // 策略 2/3 都依赖 webhook，如果没配置则直接退出
+  if (!WEBHOOK_URL) {
+    console.error('\n❌ 应用机器人模式失败且未配置 FEISHU_WEBHOOK_URL，无法降级');
+    process.exit(1);
   }
 
   // 策略 2：上传到免费图床 + 发送链接
