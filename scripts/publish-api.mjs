@@ -62,24 +62,38 @@ async function main() {
   const data = JSON.parse(readFileSync(dataPath, 'utf-8'));
   console.log(`📦 生成 API JSON: ${data.date}`);
 
-  // 上传图片获取 URL
-  const imageFiles = ['page1.png', 'page2.png', 'page3.png']
-    .map(f => join(imagesDir, f))
-    .filter(f => existsSync(f));
+  // 收集本目录所有 page*.png（按数字升序）
+  const { readdirSync } = await import('node:fs');
+  const imageFiles = existsSync(imagesDir)
+    ? readdirSync(imagesDir)
+        .filter(f => /^page\d+\.png$/.test(f))
+        .sort((a, b) => parseInt(a.match(/\d+/)[0]) - parseInt(b.match(/\d+/)[0]))
+        .map(f => join(imagesDir, f))
+    : [];
 
-  let imageUrls = [];
-  if (imageFiles.length > 0) {
-    console.log('🌐 上传图片获取公开 URL...');
-    for (const imgPath of imageFiles) {
+  // 生成稳定的 GitHub Raw URL（仓库提交后即可访问）
+  // 仓库与分支可通过环境变量覆盖，默认指向本仓库 main
+  const repo = process.env.GITHUB_REPOSITORY || 'zhangziyana007-sudo/AINewsSkill';
+  const branch = process.env.GITHUB_REF_NAME || 'main';
+  const projectName = basename(inputDir); // ai-daily-MMDD
+  const rawBase = `https://raw.githubusercontent.com/${repo}/${branch}/output/${projectName}`;
+  const imageUrls = imageFiles.map(f => `${rawBase}/images/${basename(f)}`);
+
+  // 兜底：本地图床备份（用于本地预览或临时分享，不参与远程 Skill 调用）
+  let backupImageUrls = [];
+  if (process.env.PUBLISH_BACKUP_IMAGES === '1' && imageFiles.length > 0) {
+    console.log('🌐 上传图床备份（PUBLISH_BACKUP_IMAGES=1）...');
+    for (const imgPath of imageFiles.slice(0, 3)) {
       try {
         const url = await uploadImage(imgPath);
         console.log(`  ✅ ${basename(imgPath)} → ${url}`);
-        imageUrls.push(url);
+        backupImageUrls.push(url);
       } catch (err) {
         console.log(`  ⚠️  ${basename(imgPath)} 上传失败: ${err.message}`);
       }
     }
   }
+  console.log(`🖼️  生成 Raw URL：${imageUrls.length} 张`);
 
   // 构建 API 数据
   const apiData = {
@@ -89,7 +103,11 @@ async function main() {
     title: data.pages?.find(p => p.type === 'cover')?.title || `${data.date} AI早报`,
     subtitle: data.pages?.find(p => p.type === 'cover')?.subtitle || '',
     items: data.pages?.filter(p => p.type === 'news').flatMap(p => p.items || []) || [],
-    imageUrls,
+    imageUrls,                                                  // 稳定 raw URL
+    backupImageUrls: backupImageUrls.length > 0 ? backupImageUrls : undefined,
+    xhsPackageUrl: `${rawBase}/xhs-package.txt`,
+    xhsPackageMdUrl: `${rawBase}/xhs-package.md`,
+    dataUrl: `${rawBase}/data.json`,
     totalItems: 0,
   };
   apiData.totalItems = apiData.items.length;

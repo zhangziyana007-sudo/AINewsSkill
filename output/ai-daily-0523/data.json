@@ -1,0 +1,191 @@
+{
+  "date": "2026.05.23",
+  "issue": "#20260523",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.05.23",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "智能体时代 · 开源狂潮 · 速度纪录",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【阿里巴巴】发布Qwen3.7-Max",
+          "source": "IT之家",
+          "icon": "rocket"
+        },
+        {
+          "rank": 2,
+          "title": "【智谱】GLM-5.1高速版API发布",
+          "source": "IT之家",
+          "icon": "zap"
+        },
+        {
+          "rank": 3,
+          "title": "【Cohere】开源218B Command A+",
+          "source": "MarkTechPost",
+          "icon": "cpu"
+        },
+        {
+          "rank": 4,
+          "title": "【微软】Fara1.5浏览器智能体",
+          "source": "MarkTechPost",
+          "icon": "monitor"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【阿里巴巴】发布Qwen3.7-Max",
+          "keyFact": "专为智能体时代设计，100万Token上下文，AA智能指数56.6分，超越Gemini 3.5 Flash，支持35小时自主任务。",
+          "impact": "大模型竞争进入Agent执行阶段，100万窗口与低幻觉率推动企业级应用。",
+          "category": "IT之家",
+          "icon": "rocket"
+        },
+        {
+          "title": "【智谱】GLM-5.1高速版API发布",
+          "keyFact": "输出速度达400 tokens/s，刷新全球大模型API速度纪录，首token延迟约1秒，较标准版提升10倍。",
+          "impact": "高速推理将改变实时AI应用格局，为编程、语音交互提供极致体验。",
+          "category": "IT之家",
+          "icon": "zap"
+        },
+        {
+          "title": "【Cohere】开源218B Command A+",
+          "keyFact": "218B稀疏MoE架构，最少仅需两块H100 GPU运行，支持48语言及多模态推理，Apache 2.0开源。",
+          "impact": "高效开源旗舰模型降低大型智能体部署门槛，加速社区创新与多模态应用。",
+          "category": "MarkTechPost",
+          "icon": "cpu"
+        },
+        {
+          "title": "【微软】Fara1.5浏览器智能体",
+          "keyFact": "27B模型在Online-Mind2Web基准达72%准确率，超越OpenAI Operator与Gemini 2.5 Computer Use。",
+          "impact": "浏览器自动化工具性能突破，推动企业级Web任务自动化落地。",
+          "category": "MarkTechPost",
+          "icon": "monitor"
+        },
+        {
+          "title": "【腾讯】开源Hy-MT2翻译模型",
+          "keyFact": "30B-A3B版金融/法律翻译超越DeepSeek-V4-Pro，1.8B版仅440MB可手机本地运行，支持33语言。",
+          "impact": "专用模型在垂直领域展现统治力，手机端部署开启翻译普惠时代。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【字节跳动】开源Lance多模态模型",
+          "keyFact": "激活3B参数，统一处理图像与视频理解、生成、编辑，原生架构平衡高层语义与低层表示。",
+          "impact": "轻量原生多模态模型降低创作门槛，为内容生成应用提供高性能基础。",
+          "category": "IT之家",
+          "icon": "code"
+        },
+        {
+          "title": "【网易有道】开源子曰4多模态模型",
+          "keyFact": "27B参数专注教育，中文数理难题准确率81.4%，思维链优化输出压缩43.2%，降低推理成本。",
+          "impact": "教育垂直模型能力赶超通用模型，助力精准辅导与低成本部署。",
+          "category": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "title": "【Runway】发布Aleph 2.0视频编辑",
+          "keyFact": "可精确修改视频所需部分并全局应用，支持最长30秒1080p多镜头序列，集成于Edit Studio。",
+          "impact": "视频编辑AI进入帧级可控时代，专业创作效率大幅提升。",
+          "category": "X",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【美团】开源数字人视频模型",
+          "keyFact": "LongCat-Video-Avatar 1.5通过DMD蒸馏，10秒视频生成仅需1分钟，唇形同步与稳定性升级。",
+          "impact": "数字人技术从演示走向商用，高性价比推动直播、教育等场景落地。",
+          "category": "IT之家",
+          "icon": "robot"
+        },
+        {
+          "title": "【清华/ModelBest】昇腾BitCPM-CANN",
+          "keyFact": "首个基于华为昇腾910B NPU全栈训练的1.58比特模型，内存较BF16降6倍，性能保持95-97%。",
+          "impact": "国产芯片+极致量化突破，为边缘端大模型部署提供全国产方案。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【Stable Audio】登陆Mac本地运行",
+          "keyFact": "针对苹果MLX优化，M5 Pro上59倍实时音乐生成，支持LoRA微调，提供快速/高质量双模式。",
+          "impact": "本地化AI音乐创作达到新高度，激发社区创新并保护隐私。",
+          "category": "X",
+          "icon": "star"
+        },
+        {
+          "title": "【网易有道】开源语音合成模型",
+          "keyFact": "3秒零样本音色/情感克隆，准确度超97%，支持中英日韩等14种语言。",
+          "impact": "极高效率的语音合成将革新教育、内容领域，多语言支持扩展全球市场。",
+          "category": "IT之家",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【腾讯】推出Hy翻译小程序",
+          "keyFact": "基于1.8B模型，支持离线翻译33语言及民族方言，端侧推理速度提升1.5倍。",
+          "impact": "轻量化模型落地C端应用，离线能力极大提升用户隐私与便捷性。",
+          "category": "IT之家",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【阿里云】Qwen3.7-Max限时五折",
+          "keyFact": "通过Model Studio调用，5月22日至6月22日享半价，100万窗口，面向企业开发者。",
+          "impact": "价格优惠加速Agent生态构建，吸引开发者基于强大模型快速迭代。",
+          "category": "X",
+          "icon": "zap"
+        },
+        {
+          "title": "【阿里云】与Novita合作首发Qwen3.7",
+          "keyFact": "在Novita AI平台首发Qwen3.7-Max，强调从回答到执行的Agent能力跃升。",
+          "impact": "多渠道分发扩大模型触达，助力Agent应用在多元环境部署。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【Anthropic】Mythos模型将发布",
+          "keyFact": "开发更强安全防护后向公众开放，此前已通过Project Glasswing发现超万个软件漏洞。",
+          "impact": "安全先行策略为顶级模型商用铺路，延续负责任的AI发展路线。",
+          "category": "X",
+          "icon": "brain"
+        },
+        {
+          "title": "【智谱】高速版实测输出300+tps",
+          "keyFact": "联合TileRT重构推理链路，编译为大kernel常驻GPU，实测速度300+ tps，延迟降至1秒。",
+          "impact": "系统级优化成为高速推理的关键路径，为行业提供可借鉴的技术思路。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【OpenRouter】上线Qwen3.7-Max",
+          "keyFact": "支持显式提示缓存处理重复上下文，面向编程、办公和长周期自主执行任务。",
+          "impact": "开发者多了一个高性能Agent模型的接入渠道，加速原型验证过程。",
+          "category": "X",
+          "icon": "monitor"
+        },
+        {
+          "title": "【阿里千问】App接入Qwen3.7-Max",
+          "keyFact": "更新至6.9.7版即可免费体验全能智能体能力，覆盖编程、办公自动化等场景。",
+          "impact": "C端用户零门槛体验旗舰Agent能力，推动AI助手向执行型演进。",
+          "category": "IT之家",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【AA评测】Qwen3.7-Max幻觉大降",
+          "keyFact": "幻觉率从44.2%降至22.9%，但部分得分提升源于主动拒答增多，整体可靠性增强。",
+          "impact": "模型可信度提升利好企业级应用，但需警惕过度保守影响实用性。",
+          "category": "X",
+          "icon": "star"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}

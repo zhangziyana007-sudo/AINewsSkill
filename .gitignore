@@ -1,6 +1,16 @@
 # 产出目录（每次生成不同）
+# 仅保留对远程有用的产物：api JSON + 每日项目的 data.json + xhs-package.* + images/
 output/*
 !output/api/
+!output/ai-daily-*
+# 项目目录内：默认全部忽略，仅白名单这几项
+output/ai-daily-*/*
+!output/ai-daily-*/data.json
+!output/ai-daily-*/xhs-package.md
+!output/ai-daily-*/xhs-package.txt
+!output/ai-daily-*/images/
+output/ai-daily-*/images/*
+!output/ai-daily-*/images/page*.png
 
 # 字体文件：忽略全部，白名单核心字体（约 40MB）
 fonts/*
