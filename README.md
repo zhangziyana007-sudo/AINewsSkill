@@ -252,6 +252,32 @@ cp -r AINewsSkill ~/.claude/skills/
 
 ---
 
+## ⚠️ 内容合规与安全
+
+**AI 生成内容必须人工审核**：本项目所有文本（新闻摘要、小红书文案）由 DeepSeek 大模型生成，可能含事实错误、夸大表述、过时信息。**直接发布到公开平台前必须人工审阅一遍**，并按平台规定标注 AIGC。
+
+**不要在文案中**：
+- 承诺产品功能、给出投资建议、医疗或法律建议
+- 伪造为权威媒体或厂商官方信息
+
+**密钥安全**：
+- 所有密钥仅通过环境变量 / GitHub Secrets 传入，不要硬编码进任何代码或文档
+- `FREEIMAGE_API_KEY` 备份图床功能默认禁用，需主动启用
+- `DEEPSEEK_API_KEY`、`FEISHU_APP_SECRET` 一旦泄漏请立即在控制台 revoke 并轮换
+
+**GitHub Token 权限最小化**：远程触发 workflow 使用的 PAT 仅需 `actions: write` + `contents: read` 权限，不要使用 admin 级 token。
+
+---
+
+## 🌐 远程 Skill 模式（零部署）
+
+如果你只想让 AI 调用本项目而不想自己 clone/安装，使用 [REMOTE_SKILL.md](REMOTE_SKILL.md)：
+- AI 通过 HTTP 拉取 raw.githubusercontent.com 上的数据/图片/文案
+- 无需 Node、Playwright、API 密钥
+- 适合 ChatGPT/Claude/智能体接入
+
+---
+
 ## 🧰 技术栈
 
 | 模块 | 技术 |

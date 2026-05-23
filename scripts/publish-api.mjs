@@ -35,8 +35,12 @@ if (!existsSync(dataPath)) {
   process.exit(1);
 }
 
-// ── 上传图片到 freeimage.host ────────────────────
+// ── 备份图床上传（可选，需通过环境变量启用）─────────────────
+// 默认禁用：稳定方案是 GitHub Raw URL；备份图床仅用于历史兼容或外部预览
+// 启用：FREEIMAGE_API_KEY=xxx PUBLISH_BACKUP_IMAGES=1 node scripts/publish-api.mjs
 async function uploadImage(imagePath) {
+  const apiKey = process.env.FREEIMAGE_API_KEY;
+  if (!apiKey) throw new Error('需要设置 FREEIMAGE_API_KEY 环境变量');
   const imageData = readFileSync(imagePath);
   const blob = new Blob([imageData], { type: 'image/png' });
   const form = new FormData();
@@ -44,7 +48,7 @@ async function uploadImage(imagePath) {
   form.append('type', 'file');
   form.append('action', 'upload');
 
-  const res = await fetch('https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5', {
+  const res = await fetch(`https://freeimage.host/api/1/upload?key=${apiKey}`, {
     method: 'POST',
     body: form,
   });

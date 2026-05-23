@@ -199,8 +199,10 @@ async function sendTextOnly(summary) {
   return json;
 }
 
-// ── 上传图片到 freeimage.host 免费图床（无需注册）────────────
+// ── 上传图片到 freeimage.host 免费图床（备份方案，需 FREEIMAGE_API_KEY）──
 async function uploadToImgHost(imagePath) {
+  const apiKey = process.env.FREEIMAGE_API_KEY;
+  if (!apiKey) throw new Error('未配置 FREEIMAGE_API_KEY，无法使用免费图床方案');
   const imageData = readFileSync(imagePath);
   const blob = new Blob([imageData], { type: 'image/png' });
   const form = new FormData();
@@ -208,7 +210,7 @@ async function uploadToImgHost(imagePath) {
   form.append('type', 'file');
   form.append('action', 'upload');
 
-  const res = await fetch('https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5', {
+  const res = await fetch(`https://freeimage.host/api/1/upload?key=${apiKey}`, {
     method: 'POST',
     body: form,
   });
