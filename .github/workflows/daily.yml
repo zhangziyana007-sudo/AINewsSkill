@@ -3,7 +3,7 @@ name: 每日AI早报
 on:
   schedule:
     # 每天 UTC 1:30 = 北京时间 9:30
-    - cron: '30 1 * * *'
+    - cron: '30 0 * * *'  # UTC 00:30 = 北京 08:30（GitHub Actions 通常会延迟 30-60min，落到 9 点附近）
   workflow_dispatch: # 支持手动触发
 
 permissions:
