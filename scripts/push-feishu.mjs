@@ -258,6 +258,9 @@ async function main() {
   console.log(`🖼️  发现 ${imageFiles.length} 张图片待推送`);
 
   // 策略 1：有飞书应用凭证 → 上传图片 + 自动群发到机器人所在所有群
+  // 同时如果配置了 WEBHOOK_URL，也用 webhook 推一次（覆盖 webhook 绑定的那个群）
+  let appSucceeded = false;
+  let webhookKeys = null;
   if (APP_ID && APP_SECRET) {
     console.log('🔑 检测到飞书应用凭证，启用「自动群发到所有群」模式...');
     try {
@@ -268,27 +271,41 @@ async function main() {
         console.log(`  ✅ 上传 ${imgPath.split('/').pop()} → ${key}`);
         imageKeys.push(key);
       }
-      const ok = await broadcastToAllChats(token, summary, imageKeys);
-      if (ok) {
-        console.log('\n✅ 飞书自动群发完成');
-        return;
-      }
-      // 群发未成功且配置了 webhook，则继续走 webhook 兜底
-      if (WEBHOOK_URL) {
-        console.log('↓ 回退到 webhook 模式...\n');
-        const r = await sendWithImages(summary, imageKeys);
-        if (r.code === 0 || r.StatusCode === 0) {
-          console.log('\n✅ 飞书推送成功（webhook 兜底）');
-          return;
-        }
-      }
+      webhookKeys = imageKeys; // 上传成功的 image_key 可复用给 webhook
+      appSucceeded = await broadcastToAllChats(token, summary, imageKeys);
+      if (appSucceeded) console.log('✅ 应用机器人群发完成');
     } catch (err) {
       console.log(`  ⚠️  应用机器人模式失败: ${err.message}`);
-      console.log('  ↓ 尝试免费图床方案...\n');
     }
   }
 
-  // 策略 2/3 都依赖 webhook，如果没配置则直接退出
+  // 策略 1b（并行）：如果配置了 WEBHOOK_URL，独立推一次 webhook 绑定的群
+  // 因为应用机器人列出的群和 webhook 绑定的群通常是不同的
+  if (WEBHOOK_URL) {
+    console.log('\n📮 同时推送 webhook 绑定的群...');
+    try {
+      if (webhookKeys && webhookKeys.length > 0) {
+        // 复用应用机器人已上传的 image_key
+        const r = await sendWithImages(summary, webhookKeys);
+        if (r.code === 0 || r.StatusCode === 0) {
+          console.log('  ✅ webhook 群推送成功');
+          return; // 全部完成
+        }
+        console.log(`  ⚠️  webhook 推送失败: ${JSON.stringify(r)}`);
+      } else {
+        // 没有应用凭证或上传失败，独立走完整 webhook 流程（图床方式）
+      }
+    } catch (err) {
+      console.log(`  ⚠️  webhook 推送异常: ${err.message}`);
+    }
+  }
+
+  // 如果应用机器人已成功且没有 webhook 配置，到此就够了
+  if (appSucceeded && !WEBHOOK_URL) return;
+  // 应用机器人已成功（即使 webhook 失败也算整体成功）
+  if (appSucceeded) return;
+
+  // 以下是 webhook 完整降级流程（仅当应用机器人没配置或没成功时走）
   if (!WEBHOOK_URL) {
     console.error('\n❌ 应用机器人模式失败且未配置 FEISHU_WEBHOOK_URL，无法降级');
     process.exit(1);
