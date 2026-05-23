@@ -187,15 +187,40 @@ AINewsSkill/
 | `TAVILY_API_KEY` | ⛔ | Tavily 兜底搜索（AI HOT 失败时） |
 | `AIHOT_CATEGORY` | ⛔ | AI HOT 分类，默认 `ai-models` |
 | `AIHOT_SINCE_HOURS` | ⛔ | 时间窗口（小时），默认 24，量少时自动扩到 48 |
-| `FEISHU_WEBHOOK_URL` | ⛔ | 飞书机器人 Webhook |
-| `FEISHU_APP_ID` / `FEISHU_APP_SECRET` | ⛔ | 飞书应用凭证（启用图片上传） |
+| `FEISHU_WEBHOOK_URL` | ⛔ | 飞书自定义机器人 Webhook（推到该 webhook 绑定的单个群） |
+| `FEISHU_APP_ID` / `FEISHU_APP_SECRET` | ⛔ | 飞书应用机器人凭证（启用后自动推到机器人所在的**所有群**） |
 
 `.env` 模板：
 
 ```bash
 DEEPSEEK_API_KEY=sk-xxxxxxxx
-FEISHU_WEBHOOK_URL=https://open.feishu.cn/open-apis/bot/v2/hook/xxx
+# 两种飞书推送可同时启用，互不冲突：
+FEISHU_WEBHOOK_URL=https://open.feishu.cn/open-apis/bot/v2/hook/xxx     # 推单群
+FEISHU_APP_ID=cli_xxx                                                    # 推机器人所在所有群
+FEISHU_APP_SECRET=xxxxxxxx
 ```
+
+### 飞书多群推送说明
+
+脚本会同时走两条通道（任意一条可独立使用）：
+
+| 通道 | 机器人类型 | 推送范围 | 需要配置 |
+|---|---|---|---|
+| Webhook | 自定义机器人 | 该 webhook URL 绑定的那个群（1 个）| `FEISHU_WEBHOOK_URL` |
+| IM API | 应用机器人 | 机器人被拉进的所有群（多个，自动枚举）| `FEISHU_APP_ID` + `FEISHU_APP_SECRET` |
+
+**应用机器人使用步骤**：
+1. [飞书开放平台](https://open.feishu.cn/app) 创建“企业自建应用”
+2. 「应用功能 → 机器人」启用机器人能力
+3. 「权限管理」申请三个权限：
+   - `im:chat:readonly`（获取机器人所在群）
+   - `im:message:send_as_bot`（以应用身份发消息）
+   - `im:resource`（上传图片）
+4. 「版本管理与发布」创建版本号并发布（不发布权限不生效）
+5. 拿到 App ID + App Secret 填进环境变量
+6. 在需要推送的每个群里：群设置 → 群机器人 → 添加机器人 → 搜索并加入该应用机器人
+
+推送后日志会明确显示 `📡 机器人所在群：N 个` 和每群的 ✅/❌ 状态。
 
 ---
 

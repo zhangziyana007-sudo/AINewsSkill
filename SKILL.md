@@ -139,10 +139,12 @@ export TAVILY_API_KEY="tvly-xxx"          # fetch 兜底
 export AIHOT_CATEGORY="ai-models"
 export AIHOT_SINCE_HOURS=24
 
-export FEISHU_WEBHOOK_URL="https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
-export FEISHU_APP_ID="cli_xxx"            # 用于上传图片（可选）
-export FEISHU_APP_SECRET="xxx"
+export FEISHU_WEBHOOK_URL="https://open.feishu.cn/open-apis/bot/v2/hook/xxx"   # 推 webhook 绑定的单群
+export FEISHU_APP_ID="cli_xxx"            # 应用机器人：自动推到机器人所在的所有群
+export FEISHU_APP_SECRET="xxx"            # 需 im:chat:readonly + im:message:send_as_bot + im:resource
 ```
+
+飞书推送两条通道可同时使用：Webhook 推绑定的单群，应用机器人自动枚举推送到机器人被拉入的所有群。详见 README.
 
 ---
 
