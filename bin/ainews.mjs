@@ -166,12 +166,13 @@ async function cmdXhsPkg() {
   const project = flags.project || `ai-daily-${todayStr()}`;
   const input = flags.input || projectDir(project);
   const topN = flags.topN ? ` --topN=${flags.topN}` : '';
+  const aiFlag = flags.ai ? ' --ai' : '';
   if (!existsSync(join(input, 'data.json'))) {
     console.error(`❌ 找不到 ${input}/data.json，请先 ainews generate`);
     process.exit(1);
   }
-  console.log('⑥ 生成小红书发布素材包');
-  runScript('xhs-package.mjs', `--input=${input}${topN}`);
+  console.log('⑥ 生成小红书发布素材包' + (flags.ai ? '（AI 增强）' : ''));
+  runScript('xhs-package.mjs', `--input=${input}${topN}${aiFlag}`);
 }
 // ── 编排：一键全流程 ────────────────────────────
 async function cmdRun() {
