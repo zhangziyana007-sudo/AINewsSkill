@@ -1,158 +1,158 @@
 {
   "version": "1.0",
   "date": "2026.05.23",
-  "generatedAt": "2026-05-23T03:41:48.756Z",
+  "generatedAt": "2026-05-23T03:58:22.744Z",
   "title": [
     "2026.05.23",
     "AI 大模型新闻早报"
   ],
-  "subtitle": "Agent时代 · 速度纪录 · 开源浪潮",
+  "subtitle": "旗舰更新 · 智能体涌现 · 开源加速",
   "items": [
     {
-      "title": "【阿里】发布Qwen3.7-Max旗舰Agent模型",
-      "keyFact": "100万token上下文，AA智能指数56.6分，幻觉率降至22.9%，支持35小时自主任务执行。",
-      "impact": "树立国产Agent模型新标杆，与GPT-5.4同台竞技。",
+      "title": "【阿里巴巴】发布 Qwen3.7-Max 百万 token 智能体基座",
+      "keyFact": "模型专为智能体时代设计，支持 35 小时自主任务、100 万 token 上下文，多项评测超越 Qwen3.6，免费接入千问 App。",
+      "impact": "争夺智能体应用开发者，百万窗口和长时自主能力为复杂工作流提供新基座。",
       "category": "IT之家",
       "icon": "rocket"
     },
     {
-      "title": "【智谱】GLM-5.1-highspeed API发布",
-      "keyFact": "输出速度达400tokens/s，刷新全球API速度纪录，40B参数激活，低延迟旗舰级能力。",
-      "impact": "大模型响应进入实时时代，推动AI编程与语音交互。",
+      "title": "【智谱】GLM-5.1 高速版 API 达 400 tps 刷新纪录",
+      "keyFact": "旗舰模型高速版 API 输出速度 400 tokens/s，首 token 延迟低于 1 秒，打破“高速即轻量”传统。",
+      "impact": "为实时 AI 编程和语音交互提供生产级低延迟能力，倒逼其他厂商提速。",
       "category": "IT之家",
       "icon": "zap"
     },
     {
-      "title": "【Cohere】开源218B MoE模型Command A+",
-      "keyFact": "最少2张H100可运行，支持48种语言，首次集成多模态推理，Apache 2.0许可。",
-      "impact": "高性能混合专家架构降低硬件门槛，利好开发者。",
-      "category": "MarkTechPost",
+      "title": "【微软】Fara1.5 浏览器智能体超越 Operator",
+      "keyFact": "Fara1.5-27B 在 Online-Mind2Web 达 72% 成功率，超过 OpenAI Operator（58.3%）和 Gemini 2.5。",
+      "impact": "浏览器自动化赛道出现强力开源方案，可能削弱 Operator 的商业吸引力。",
+      "category": "IT之家",
       "icon": "cpu"
     },
     {
-      "title": "【微软】Fara1.5智能体性能超越OpenAI Operator",
-      "keyFact": "27B版本在Online-Mind2Web任务成功率72%，显著高于Operator 58.3%。",
-      "impact": "浏览器自动化智能体竞争升级，微软加入Agent战场。",
-      "category": "IT之家",
+      "title": "【Cohere】开源 Command A+ 218B 稀疏 MoE 模型",
+      "keyFact": "采取 Apache 2.0 许可，W4A4 量化仅需 2 块 H100 运行，支持 48 种语言与多模态推理。",
+      "impact": "开源大模型又多一个高性能选择，推动企业级智能体工作流低成本部署。",
+      "category": "MarkTechPost",
       "icon": "robot"
     },
     {
-      "title": "【腾讯】开源Hy-MT2翻译模型，性能领先",
-      "keyFact": "30B-A3B版在专业翻译基准超越DeepSeek-V4-Pro；1.8B版440MB可手机部署。",
-      "impact": "专用模型在垂直领域实现性能反超，端侧翻译门槛降低。",
+      "title": "【腾讯】开源 Hy-MT2 翻译模型，手机端可跑",
+      "keyFact": "30B-A3B 版本在金融法律领域超越 DeepSeek-V4-Pro；1.8B 轻量版 440MB 可在手机芯片本地运行。",
+      "impact": "垂直领域专用模型展现超通用大模型潜力，端侧翻译体验大幅提升。",
+      "category": "IT之家",
+      "icon": "globe"
+    },
+    {
+      "title": "【字节跳动】开源 Lance 轻量多模态模型",
+      "keyFact": "激活仅 3B，原生统一架构同时处理图像视频理解、生成与编辑，训练仅用 128 张 GPU。",
+      "impact": "轻量统一模型为移动端和低资源场景提供高效多模态方案。",
       "category": "IT之家",
       "icon": "sparkles"
     },
     {
-      "title": "【字节跳动】开源轻量多模态模型Lance",
-      "keyFact": "激活参数3B，统一支持图像/视频理解、生成和编辑，Apache 2.0开源。",
-      "impact": "轻量统一架构为端侧多模态应用提供新范式。",
-      "category": "IT之家",
-      "icon": "code"
-    },
-    {
-      "title": "【网易有道】开源「子曰」多模态与语音合成",
-      "keyFact": "27B多模态数学准确率81.4%；语音合成14语种3秒零样本克隆，准确度97%+。",
-      "impact": "教育垂域模型进一步开放，语音克隆助力多语种创作。",
+      "title": "【网易有道】开源子曰4多模态与语音合成模型",
+      "keyFact": "27B 多模态模型在教育高难度数理问题准确率 81.4%，输出长度压缩 43.2%；TTS 支持 14 种语言零样本克隆。",
+      "impact": "教育垂直领域模型开源降低落地成本，语音克隆技术激发多媒体应用创新。",
       "category": "IT之家",
       "icon": "brain"
     },
     {
-      "title": "【美团】开源LongCat-Video-Avatar1.5",
-      "keyFact": "音频驱动数字人，10秒视频生成仅需1分钟，推理加速15倍，支持多主体交互。",
-      "impact": "数字人商业化提速，视频生成效率大幅提升。",
-      "category": "IT之家",
+      "title": "【Runway】发布 Aleph 2.0 视频编辑模型",
+      "keyFact": "支持对视频单帧编辑并自动应用到全片，可处理最长 30 秒、1080p 的多镜头序列。",
+      "impact": "视频编辑效率大幅提升，为专业创作提供更精准的智能工具。",
+      "category": "X：Runway",
       "icon": "monitor"
     },
     {
-      "title": "【Runway】发布Aleph 2.0视频编辑模型",
-      "keyFact": "支持编辑单帧并应用于整段视频，最长30秒1080p多镜头序列。",
-      "impact": "AI视频编辑精度提升，赋能专业创作者。",
-      "category": "X：Runway",
+      "title": "【美团】开源 LongCat-Video-Avatar 1.5",
+      "keyFact": "升级唇形同步与多人互动，DMD 蒸馏技术使 10 秒视频生成仅需 1 分钟，推理提速约 15 倍。",
+      "impact": "数字人视频生成从研发走向可商用，降低直播、教育等场景成本。",
+      "category": "IT之家",
       "icon": "smartphone"
     },
     {
-      "title": "【Stability AI】Stable Audio 3登陆Mac",
-      "keyFact": "M5 Pro芯片实现59倍实时生成，支持LoRA微调，提供快速/高质量模式。",
-      "impact": "AI音乐生成本地化，创作效率飞跃。",
-      "category": "X：Berry Xia",
-      "icon": "star"
-    },
-    {
-      "title": "【华为】昇腾全栈训练1.58比特模型开源",
-      "keyFact": "BitCPM-CANN内存占用降低6倍，性能保持全精度95%+，边缘端高效部署。",
-      "impact": "突破边缘端部署瓶颈，增强国产芯片生态。",
+      "title": "【华为】昇腾基 BitCPM-CANN 1.58 比特模型开源",
+      "keyFact": "首个基于昇腾 910B 全栈训练的 1.58 比特三元模型，内存占用较 BF16 降约 6 倍，性能保持全精度 95-97%。",
+      "impact": "验证了国产 NPU 全栈训练极致压缩模型的可行性，利好边缘端部署。",
       "category": "X：Rohan Paul",
-      "icon": "globe"
+      "icon": "code"
     },
     {
-      "title": "【Anthropic】Mythos级模型强化安全后将发布",
-      "keyFact": "Project Glasswing发现超1万漏洞，模型将在更强安全防护后向公众开放。",
-      "impact": "前沿模型安全发布标准提升，或成行业参照。",
-      "category": "X：Testing Catalog",
+      "title": "【Stable Audio】3 登陆 Mac 本地运行",
+      "keyFact": "经 MLX 框架优化，在 M5 Pro 上实现 59 倍实时音乐生成，支持 1 小时内 LoRA 微调。",
+      "impact": "本地音乐生成工具迈入实用阶段，创作者无需依赖云端即获高效创作体验。",
+      "category": "X：Berry Xia",
+      "icon": "sparkles"
+    },
+    {
+      "title": "【Anthropic】Mythos 级模型强化安全后发布",
+      "keyFact": "Anthropic 宣布 Mythos 级模型待加强安全防护后向公众开放，Glasswing 项目已发现万余关键漏洞。",
+      "impact": "前沿模型发布前的安全审查成为行业常态，提升公众信任但可能延迟领先能力开放。",
+      "category": "X：TestingCatalog",
       "icon": "brain"
     },
     {
-      "title": "【阿里】千问App接入Qwen3.7-Max免费体验",
-      "keyFact": "App更新至6.9.7版本即可免费使用，覆盖编程、办公自动化等Agent能力。",
-      "impact": "大模型C端免费化加速，用户可直接体验最强Agent。",
+      "title": "【阿里千问】App 接入 Qwen3.7-Max 免费体验",
+      "keyFact": "更新至 6.9.7 以上版本即可免费使用新一代旗舰模型，覆盖编程和长周期任务。",
+      "impact": "C 端用户零门槛获得顶尖模型能力，增强千问 App 用户粘性。",
       "category": "IT之家",
-      "icon": "rocket"
+      "icon": "smartphone"
     },
     {
-      "title": "【阿里云】Qwen3.7-Max API限时五折",
-      "keyFact": "5月22日至6月22日通过Model Studio调用享五折，100万上下文窗口。",
-      "impact": "降低开发者试用门槛，价格战利好创业者。",
+      "title": "【阿里云】Qwen3.7-Max 上线 Model Studio 五折",
+      "keyFact": "5 月 22 日至 6 月 22 日限时五折，支持 100 万 token 上下文及跨框架一键部署。",
+      "impact": "API 价格战延续，五折优惠吸引开发者迁移和验证智能体应用，加速生态构建。",
       "category": "X：阿里云",
       "icon": "zap"
     },
     {
-      "title": "【阿里】Qwen3.7-Max登陆OpenRouter平台",
-      "keyFact": "已上线OpenRouter，支持提示缓存，专为Agent工作负载优化。",
-      "impact": "触达全球开发者，扩大模型生态。",
-      "category": "X：通义千问",
+      "title": "【阿里云】与 Novita AI 合作首发 Qwen3.7-Max",
+      "keyFact": "双方携手在 Novita AI 平台推出该模型，聚焦从“回答”到“执行”的能力跃升。",
+      "impact": "通过合作渠道扩大模型分发，赋能更多第三方开发环境，加速 Agent 落地。",
+      "category": "X：阿里云",
       "icon": "globe"
     },
     {
-      "title": "【阿里】Qwen3.7-Max幻觉率降至22.9%",
-      "keyFact": "通过主动拒答机制，在AA基准上幻觉率从44.2%大幅下降，提升可靠性。",
-      "impact": "模型准确性增强，提升用户信任度。",
-      "category": "Artificial Analysis",
-      "icon": "sparkles"
+      "title": "【阿里云】Qwen3.7-Max 智能指数 56.6 逼近前沿",
+      "keyFact": "Artificial Analysis 评测得分 56.6，较前代提升 4.8，超越 Gemini 3.5 Flash 和 Kimi K2.6。",
+      "impact": "国产模型在全球智能基准中持续缩小与顶尖闭源模型的差距，增强行业信心。",
+      "category": "X：TestingCatalog",
+      "icon": "star"
     },
     {
-      "title": "【腾讯】Hy翻译小程序上线",
-      "keyFact": "基于Hy-MT2支持33种语言，可自定义风格，支持离线翻译。",
-      "impact": "翻译AI落地消费场景，提升日常翻译效率。",
+      "title": "【阿里云】Qwen3.7-Max 幻觉率减半至 22.9%",
+      "keyFact": "通过在 AA-Omniscience 基准主动拒绝回答，幻觉率从 44.2% 大降至 22.9%，提升可靠性。",
+      "impact": "务实提高可信度，但过度拒答可能影响实用性，对其他厂商的降幻觉策略提供参考。",
+      "category": "X：ArtificialAnalysis",
+      "icon": "brain"
+    },
+    {
+      "title": "【腾讯混元】翻译小程序上线，支持离线及自定风格",
+      "keyFact": "基于 Hy-MT2 模型，提供中英日韩等语言离线翻译与自定义翻译风格，手机端流畅运行。",
+      "impact": "翻译功能深度融入微信生态，为普通用户提供专业级翻译工具，争夺翻译市场。",
+      "category": "IT之家",
+      "icon": "smartphone"
+    },
+    {
+      "title": "【腾讯】开源翻译指令遵循测试集 IFMTBench",
+      "keyFact": "同步开源翻译指令遵循基准，用于评估模型在特定领域遵循翻译指令的能力。",
+      "impact": "为翻译大模型提供标准化评价工具，促进专业翻译模型研发与公平对比。",
       "category": "IT之家",
       "icon": "code"
     },
     {
-      "title": "【阿里云】与Novita AI合作首发Qwen3.7-Max",
-      "keyFact": "双方共同推进从「回答」到「执行」的Agent范式转变。",
-      "impact": "渠道合作拓宽模型落地场景，加速Agent生态。",
-      "category": "X：阿里云",
-      "icon": "robot"
-    },
-    {
-      "title": "【腾讯】1.8B翻译模型实现手机本地部署",
-      "keyFact": "基于AngelSlim 1.25-bit量化，存储仅440MB，推理速度提升1.5倍。",
-      "impact": "翻译模型端侧部署标杆，离线体验升级。",
-      "category": "X：腾讯混元",
-      "icon": "smartphone"
-    },
-    {
-      "title": "【智谱】GLM-5.1高速版实测：速度提升10倍",
-      "keyFact": "实测输出300+tokens/s，首token延迟约1秒，较标准版35tps/9秒大幅优化。",
-      "impact": "交互体验大幅改善，实时应用成为可能。",
+      "title": "【智谱】GLM-5.1 高速版实测性能飙升 10 倍",
+      "keyFact": "联合 TileRT 优化推理链路，实测输出速度超 300 tps，首 token 延迟约 1 秒，较标准版提速近 10 倍。",
+      "impact": "系统级优化成果丰硕，展示国产模型可在不牺牲能力下实现极致推理速度。",
       "category": "X：karminski",
       "icon": "zap"
     }
   ],
   "imageUrls": [
-    "https://iili.io/CHE8cUF.png",
-    "https://iili.io/CHE81Ra.png",
-    "https://iili.io/CHE8EOJ.png"
+    "https://iili.io/CHEQtVe.png",
+    "https://iili.io/CHEQplj.png",
+    "https://iili.io/CHEZHHQ.png"
   ],
   "totalItems": 20
 }
