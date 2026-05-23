@@ -23,8 +23,10 @@ mode: remote
 | **历史索引** | `${BASE}/output/api/history.json` | 全部历史日期列表 |
 | **指定某天** | `${BASE}/output/api/2026-05-23.json` | 按日期归档 |
 | **小红书完整素材包** | `latest.json.xhsPackageUrl` 字段 | 一键复制：标题+正文+话题 |
-| **图片** | `latest.json.imageUrls[]` | 7 张 1080×1440 PNG，可直接展示或下载 |
+| **图片** | `latest.json.imageUrls[]` | 7 张 1080×1440 PNG（GitHub Release 托管，不占仓库体积），直接拿来用 |
 | **原始数据** | `latest.json.dataUrl` 字段 | 完整 data.json，含分页结构 |
+
+> **图片存储说明**：图片不在 git 仓库里，而是托管在 GitHub Release（tag 名 `daily-YYYY-MM-DD`），保留最近 30 天。**你不需要关心 URL 来源，直接用 `latest.json.imageUrls[]` 即可。**
 
 ## latest.json 字段说明
 
@@ -47,10 +49,12 @@ mode: remote
   ],
   "totalItems": 20,
   "imageUrls": [
-    "https://raw.githubusercontent.com/.../images/page1.png",
-    "https://raw.githubusercontent.com/.../images/page2.png"
-    // ... 7 张
+    "https://github.com/.../releases/download/daily-2026-05-23/page1.png",
+    "https://github.com/.../releases/download/daily-2026-05-23/page2.png"
+    // ... 7 张，GitHub Release 托管
   ],
+  "releaseTag": "daily-2026-05-23",
+  "releaseUrl": "https://github.com/zhangziyana007-sudo/AINewsSkill/releases/tag/daily-2026-05-23",
   "xhsPackageUrl": "https://raw.githubusercontent.com/.../xhs-package.txt",
   "xhsPackageMdUrl": "https://raw.githubusercontent.com/.../xhs-package.md",
   "dataUrl": "https://raw.githubusercontent.com/.../data.json"

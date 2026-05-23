@@ -44,10 +44,52 @@ jobs:
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
         run: node bin/ainews.mjs run --force --ai
 
-      - name: 提交 API JSON + 每日图文产物到仓库
+      - name: 创建 daily release 并上传图片/素材
+        id: release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          TAG="daily-$DATE"
+          PROJECT=$(ls -d output/ai-daily-* | tail -n 1)
+          NAME=$(basename "$PROJECT")  # ai-daily-MMDD
+          echo "RELEASE_TAG=$TAG" >> $GITHUB_ENV
+          echo "📦 Release: $TAG ← $PROJECT"
+          # 清理同名 release（重跑场景）
+          gh release delete "$TAG" --yes --cleanup-tag 2>/dev/null || true
+          # 收集 asset
+          ASSETS=()
+          for f in "$PROJECT"/images/page*.png "$PROJECT/xhs-package.txt" "$PROJECT/xhs-package.md" "$PROJECT/data.json"; do
+            [ -f "$f" ] && ASSETS+=("$f")
+          done
+          # 创建 release
+          NOTES="$DATE AI 大模型新闻早报"
+          if [ -f "$PROJECT/xhs-package.md" ]; then NOTES_FILE="$PROJECT/xhs-package.md"; else NOTES_FILE=""; fi
+          if [ -n "$NOTES_FILE" ]; then
+            gh release create "$TAG" --title "📰 AI 早报 $DATE" --notes-file "$NOTES_FILE" "${ASSETS[@]}"
+          else
+            gh release create "$TAG" --title "📰 AI 早报 $DATE" --notes "$NOTES" "${ASSETS[@]}"
+          fi
+          echo "✅ Release 创建完成"
+
+      - name: 重新生成 API JSON（带 release URL）
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          RELEASE_TAG: ${{ env.RELEASE_TAG }}
+        run: |
+          PROJECT=$(ls -d output/ai-daily-* | tail -n 1)
+          node scripts/publish-api.mjs --input="$PROJECT"
+
+      - name: 提交 API JSON + 文本素材到仓库（不含图片）
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f output/api/ output/ai-daily-*/data.json output/ai-daily-*/xhs-package.md output/ai-daily-*/xhs-package.txt output/ai-daily-*/images/page*.png 2>/dev/null || true
+          git add -f output/api/ output/ai-daily-*/data.json output/ai-daily-*/xhs-package.md output/ai-daily-*/xhs-package.txt 2>/dev/null || true
           git diff --staged --quiet || git commit -m "chore: 更新每日产物 $(date +%Y-%m-%d)"
           git push
+
+      - name: 清理超过 30 天的 daily release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/cleanup-releases.mjs --keep=30

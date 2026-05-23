@@ -75,13 +75,21 @@ async function main() {
         .map(f => join(imagesDir, f))
     : [];
 
-  // 生成稳定的 GitHub Raw URL（仓库提交后即可访问）
-  // 仓库与分支可通过环境变量覆盖，默认指向本仓库 main
+  // 生成稳定 URL：优先使用 GitHub Release（不占仓库体积），否则用 raw URL
+  // 仓库与分支可通过环境变量覆盖
   const repo = process.env.GITHUB_REPOSITORY || 'zhangziyana007-sudo/AINewsSkill';
   const branch = process.env.GITHUB_REF_NAME || 'main';
   const projectName = basename(inputDir); // ai-daily-MMDD
+  const releaseTag = process.env.RELEASE_TAG; // 例：daily-2026-05-23
+  const useRelease = !!releaseTag;
   const rawBase = `https://raw.githubusercontent.com/${repo}/${branch}/output/${projectName}`;
-  const imageUrls = imageFiles.map(f => `${rawBase}/images/${basename(f)}`);
+  const releaseBase = useRelease ? `https://github.com/${repo}/releases/download/${releaseTag}` : null;
+
+  // 图片：release 模式平铺 page1.png；raw 模式带 images/ 子目录
+  const imageUrls = imageFiles.map(f =>
+    useRelease ? `${releaseBase}/${basename(f)}` : `${rawBase}/images/${basename(f)}`,
+  );
+  console.log(`🖼️  生成 ${useRelease ? 'Release' : 'Raw'} URL：${imageUrls.length} 张`);
 
   // 兜底：本地图床备份（用于本地预览或临时分享，不参与远程 Skill 调用）
   let backupImageUrls = [];
@@ -97,9 +105,9 @@ async function main() {
       }
     }
   }
-  console.log(`🖼️  生成 Raw URL：${imageUrls.length} 张`);
 
   // 构建 API 数据
+  // 文本资源（xhs-package、data.json）始终走 raw（这些已 commit 进仓库）
   const apiData = {
     version: '1.0',
     date: data.date,
@@ -107,8 +115,10 @@ async function main() {
     title: data.pages?.find(p => p.type === 'cover')?.title || `${data.date} AI早报`,
     subtitle: data.pages?.find(p => p.type === 'cover')?.subtitle || '',
     items: data.pages?.filter(p => p.type === 'news').flatMap(p => p.items || []) || [],
-    imageUrls,                                                  // 稳定 raw URL
+    imageUrls,                                                  // release 或 raw
     backupImageUrls: backupImageUrls.length > 0 ? backupImageUrls : undefined,
+    releaseTag: useRelease ? releaseTag : undefined,
+    releaseUrl: useRelease ? `https://github.com/${repo}/releases/tag/${releaseTag}` : undefined,
     xhsPackageUrl: `${rawBase}/xhs-package.txt`,
     xhsPackageMdUrl: `${rawBase}/xhs-package.md`,
     dataUrl: `${rawBase}/data.json`,
