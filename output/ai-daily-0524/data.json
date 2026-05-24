@@ -1,0 +1,191 @@
+{
+  "date": "2026.05.24",
+  "issue": "#20260524",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.05.24",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "智能体 · 开源 · 安全",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【阿里巴巴】发布Qwen3.7-Max，35小时自主优化芯片代码",
+          "source": "The Decoder",
+          "icon": "zap"
+        },
+        {
+          "rank": 2,
+          "title": "【OpenAI】GPT-5.6即将发布，UI去臃肿化取得进展",
+          "source": "X",
+          "icon": "rocket"
+        },
+        {
+          "rank": 3,
+          "title": "【Anthropic】Claude Opus 4.8现身Google Vertex平台",
+          "source": "X",
+          "icon": "cpu"
+        },
+        {
+          "rank": 4,
+          "title": "【Anthropic】准备发布Claude Mythos 1模型",
+          "source": "X",
+          "icon": "brain"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【阿里巴巴】发布Qwen3.7-Max，35小时自主优化芯片代码",
+          "keyFact": "模型可在单次会话持续运行35小时，自主优化芯片代码；性能持平Claude Opus 4.6，超越DeepSeek V4 Pro等竞品。",
+          "impact": "展示长周期自主智能体能力，推动企业自动化应用，加剧国内大模型竞争。",
+          "category": "The Decoder",
+          "icon": "zap"
+        },
+        {
+          "title": "【OpenAI】GPT-5.6即将发布，UI去臃肿化取得进展",
+          "keyFact": "社区发现GPT-5.6的UI指引减少，首个无UI指引的提示效果改进，暗示发布临近。",
+          "impact": "可能带来更简洁交互体验，巩固OpenAI在对话模型领域的领先地位。",
+          "category": "X",
+          "icon": "rocket"
+        },
+        {
+          "title": "【Anthropic】Claude Opus 4.8现身Google Vertex平台",
+          "keyFact": "在Google Vertex上发现Opus 4.8模型，虽未确认，但结合Sonnet 4.8泄露，预示加速发布。",
+          "impact": "若属实，将加剧高端模型竞争，对OpenAI形成压力，企业用户多一个选择。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【Anthropic】准备发布Claude Mythos 1模型",
+          "keyFact": "模型名“claude-mythos-1-preview”出现在Claude Code和Security中，即将发布。",
+          "impact": "新模型级别可能突破现有能力，或引入更强推理，提升开发者工具能力。",
+          "category": "X",
+          "icon": "brain"
+        },
+        {
+          "title": "【Anthropic】Mythos级模型将在强化安全后开放",
+          "keyFact": "Anthropic宣布，在开发出更强的安全防护措施后，Mythos级模型将向公众开放。",
+          "impact": "强调安全对齐，可能延缓发布时间但增强信任，树立负责任AI形象。",
+          "category": "X",
+          "icon": "brain"
+        },
+        {
+          "title": "【阿里】千问App接入Qwen3.7-Max免费体验",
+          "keyFact": "用户更新App至6.9.7版即可免费使用，模型覆盖编程、办公自动化和长周期任务。",
+          "impact": "降低使用门槛，吸引C端用户，推动千问生态，为API收费蓄势。",
+          "category": "IT之家",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【阿里】Qwen3.7-Max上线Model Studio享五折",
+          "keyFact": "限时一个月五折优惠，支持100万上下文，主打跨框架部署和企业级数据流处理。",
+          "impact": "价格吸引开发者，100万上下文窗口直击企业长文档需求，挑战竞争对手。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【阿里】Qwen3.7-Max上线OpenRouter",
+          "keyFact": "在OpenRouter平台提供，强调编程和智能体任务，支持显式提示缓存。",
+          "impact": "融入第三方平台，方便开发者接入和比较，扩大模型分发范围。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【微软】发布Fara1.5浏览器AI智能体系列",
+          "keyFact": "包含4B/9B/27B参数，基于200万样本微调，专为浏览器操作设计。",
+          "impact": "推动AI智能体在网页自动化场景落地，提升微软在智能体领域竞争力。",
+          "category": "IT之家",
+          "icon": "monitor"
+        },
+        {
+          "title": "【微软】Fara1.5-27B表现超OpenAI Operator",
+          "keyFact": "在Online-Mind2Web基准成功率达72%，超越Operator(58.3%)和Gemini 2.5(57.3%)。",
+          "impact": "树立浏览器智能体新标杆，可能倒逼OpenAI和Google升级相关产品。",
+          "category": "IT之家",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【微软】推出FaraGen1.5合成数据流水线",
+          "keyFact": "可高效生成训练数据，在受控环境中训练智能体，助力Fara1.5系列开发。",
+          "impact": "降低数据采集成本，加速智能体迭代，开源生态可借鉴。",
+          "category": "MarkTechPost",
+          "icon": "code"
+        },
+        {
+          "title": "【Runway】发布Aleph 2.0视频编辑模型",
+          "keyFact": "模型可精确修改视频局部，支持30秒1080p多镜头序列，集成于Edit Studio。",
+          "impact": "提升视频编辑精准度，吸引专业创作者，强化Runway在视频AI领域地位。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【阶跃星辰】发布StepAudio 2.5 Realtime",
+          "keyFact": "可感知语气、节奏等副语言特征，内置超1万种角色，支持中英双语。",
+          "impact": "语音交互体验更自然，适用于虚拟角色、客服等场景，推动实时语音AI应用。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【ModelBest/清华】开源BitCPM-CANN模型",
+          "keyFact": "全球首个基于华为昇腾910B全栈训练的1.58比特开源模型，内存占用降低约6倍，性能保持95-97%。",
+          "impact": "为边缘端部署提供高效方案，推动国产硬件生态，促进极低比特量化发展。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【智元】推出BFM-2基座模型，机器人拥有肌肉记忆",
+          "keyFact": "模型使机器人在任意状态自主完成动作插值与动态任务闭环，被击倒后能快速站起。",
+          "impact": "提升机器人运动稳定性和适应性，加速具身智能落地，为家庭服务机器人奠基。",
+          "category": "IT之家",
+          "icon": "robot"
+        },
+        {
+          "title": "【网易有道】开源子曰4多模态教育模型",
+          "keyFact": "27B参数，中文数理难题准确率81.4%，输出长度压缩43.2%降低推理成本。",
+          "impact": "教育垂直领域AI能力增强，开源策略有助于教育行业应用降本增效。",
+          "category": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "title": "【网易有道】开源子曰4语音合成模型",
+          "keyFact": "3秒零样本复制音色，准确度超97%，支持14种语言跨语种克隆。",
+          "impact": "推动语音合成技术普惠，可应用于智能教育硬件和内容创作。",
+          "category": "IT之家",
+          "icon": "globe"
+        },
+        {
+          "title": "【美团】开源LongCat-Video-Avatar 1.5",
+          "keyFact": "生成10秒数字人视频仅需1分钟，唇形同步和长视频稳定性升级，推理效率提升15倍。",
+          "impact": "降低数字人视频制作成本，有望推动直播、虚拟主播等商业应用普及。",
+          "category": "IT之家",
+          "icon": "star"
+        },
+        {
+          "title": "【字节跳动】开源轻量多模态模型Lance",
+          "keyFact": "激活参数3B，原生统一架构支持图文理解与生成，数据量1.9T标记，128张GPU训练。",
+          "impact": "低参数高性能多模态模型，适合消费级硬件部署，推动多模态开源生态。",
+          "category": "IT之家",
+          "icon": "zap"
+        },
+        {
+          "title": "【Anthropic】Project Glasswing发现超万个软件漏洞",
+          "keyFact": "与合作伙伴通过该项目已发现超过一万个关键或高危软件漏洞，为安全模型打基础。",
+          "impact": "展示AI在安全领域的应用潜力，有助于构建更安全的模型开发和漏洞修复。",
+          "category": "X",
+          "icon": "brain"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}
