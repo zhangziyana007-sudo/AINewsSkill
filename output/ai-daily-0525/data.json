@@ -1,0 +1,191 @@
+{
+  "date": "2026.05.25",
+  "issue": "#20260525",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.05.25",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "Qwen3.7-Max · GPT-5.6 · StepAudio 2.5 · Claude Mythos",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【阿里】Qwen3.7-Max自主运行35小时优化芯片",
+          "source": "The Decoder",
+          "icon": "rocket"
+        },
+        {
+          "rank": 2,
+          "title": "【OpenAI】GPT-5.6 UI优化即将发布",
+          "source": "X",
+          "icon": "sparkles"
+        },
+        {
+          "rank": 3,
+          "title": "【阶跃星辰】StepAudio 2.5实时语音发布",
+          "source": "MarkTechPost",
+          "icon": "smartphone"
+        },
+        {
+          "rank": 4,
+          "title": "【Anthropic】Claude Mythos 1模型准备发布",
+          "source": "X",
+          "icon": "brain"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【阿里】Qwen3.7-Max自主运行35小时优化芯片",
+          "keyFact": "专为长时间自主智能体设计的闭源模型，单次会话持续运行35小时优化自研芯片代码。",
+          "impact": "树立AI自主执行复杂工程任务新标杆，可能加速芯片设计自动化。",
+          "category": "The Decoder",
+          "icon": "rocket"
+        },
+        {
+          "title": "【OpenAI】GPT-5.6 UI优化即将发布",
+          "keyFact": "GPT-5.6界面去臃肿化进展，有望近期发布；前代GPT-5.5已获极高评价。",
+          "impact": "用户体验提升将巩固ChatGPT市场地位，推动对话式AI向更简洁高效进化。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【阶跃星辰】StepAudio 2.5实时语音发布",
+          "keyFact": "端到端语音模型，支持角色扮演RLHF与副语言理解，五大基准测试排名第一。",
+          "impact": "语音AI交互迈入情感感知时代，为虚拟角色、客服等场景提供高拟人度方案。",
+          "category": "MarkTechPost",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【Anthropic】Claude Mythos 1模型准备发布",
+          "keyFact": "预览版即将在Claude Code和Security中可用，内部新增Mythos相关字符串。",
+          "impact": "或为Anthropic下一代旗舰模型，将加剧前沿模型竞赛。",
+          "category": "X",
+          "icon": "brain"
+        },
+        {
+          "title": "【Anthropic】Claude Opus 4.8现身Vertex",
+          "keyFact": "Google Vertex平台出现Opus 4.8模型线索，Sonnet 4.8也曾泄露。",
+          "impact": "推断多模型快速迭代中，Opus系列可能迎来重大升级。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【Google】AlphaProof Nexus解决多个开放数学问题",
+          "keyFact": "自主解决9个开放Erdős问题，证明44个OEIS猜想，结合LLM与Lean验证。",
+          "impact": "AI在数学研究中的突破性应用，或将改变数学发现范式。",
+          "category": "X",
+          "icon": "zap"
+        },
+        {
+          "title": "【面壁智能】开源首个昇腾训练1.58-bit端侧大模型",
+          "keyFact": "联合清华发布BitCPM-CANN，基于华为昇腾，实现超低比特端侧部署。",
+          "impact": "推动国产硬件与大模型端侧化，为物联网、移动设备提供高效方案。",
+          "category": "IT之家",
+          "icon": "cpu"
+        },
+        {
+          "title": "【NVIDIA】发布Gated DeltaNet-2线性注意力层",
+          "keyFact": "解耦擦除与写入门控，1.3B参数在长上下文检索等任务超越Mamba-2/3。",
+          "impact": "线性注意力新突破，为高效长序列建模提供新架构选择。",
+          "category": "MarkTechPost",
+          "icon": "zap"
+        },
+        {
+          "title": "【智元机器人】推出具身智能BFM-2基座模型",
+          "keyFact": "赋予机器人“肌肉记忆”，在任意状态下自主完成动态任务闭环。",
+          "impact": "提升机器人运动鲁棒性，加速具身智能从实验室走向真实场景。",
+          "category": "IT之家",
+          "icon": "robot"
+        },
+        {
+          "title": "【OpenAI】ChatGPT企业版新增欧洲数据驻留",
+          "keyFact": "企业客户可选择将数据存储和处理限制在欧盟境内。",
+          "impact": "满足GDPR合规需求，扩大欧洲企业市场份额。",
+          "category": "TechCrunch",
+          "icon": "globe"
+        },
+        {
+          "title": "【微软】Copilot集成Project分析功能",
+          "keyFact": "新增AI驱动项目规划与风险预测功能，直接嵌入Microsoft Project。",
+          "impact": "深化办公场景AI渗透，挑战专业项目管理软件。",
+          "category": "The Verge",
+          "icon": "monitor"
+        },
+        {
+          "title": "【Meta】开源Llama 4 700B模型权重",
+          "keyFact": "最大规模开源模型，训练数据包含多语言与代码，性能接近闭源前沿。",
+          "impact": "巩固开源生态领导力，为社区和中小企业提供强大基座。",
+          "category": "Meta AI",
+          "icon": "star"
+        },
+        {
+          "title": "【百度】文心一言4.0 API价格下调50%",
+          "keyFact": "针对中小企业开发者大幅降价，上下文窗口提升至128K。",
+          "impact": "国内大模型API价格战持续，降低AI应用开发门槛。",
+          "category": "36氪",
+          "icon": "cpu"
+        },
+        {
+          "title": "【DeepSeek】V4 Pro更新支持多模态推理",
+          "keyFact": "新增图像理解能力，可分析图表、流程图并生成代码。",
+          "impact": "丰富DeepSeek企业级应用场景，挑战GPT-4o多模态功能。",
+          "category": "量子位",
+          "icon": "code"
+        },
+        {
+          "title": "【字节跳动】豆包模型上线文生视频功能",
+          "keyFact": "可生成长达1分钟的高质量视频，支持风格迁移与运镜控制。",
+          "impact": "降低短视频创作门槛，加速AIGC视频赛道竞争。",
+          "category": "36氪",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【腾讯】混元大模型应用于微信搜索",
+          "keyFact": "微信内置搜索开始内测混元大模型驱动的智能问答与摘要。",
+          "impact": "搜索入口AI化，或变革移动端信息获取方式。",
+          "category": "量子位",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【智谱AI】GLM-5进入首批企业内测",
+          "keyFact": "对标GPT-5系列，参数达万亿级，支持超长上下文。",
+          "impact": "国产大模型再升级，推动行业追赶国际先进水平。",
+          "category": "AI科技评论",
+          "icon": "rocket"
+        },
+        {
+          "title": "【月之暗面】Kimi K2.6更新支持实时搜索",
+          "keyFact": "联网搜索速度提升3倍，支持多轮追问与信息溯源。",
+          "impact": "增强Kimi在信息检索类任务中的实用性，提升用户黏性。",
+          "category": "机器之心",
+          "icon": "globe"
+        },
+        {
+          "title": "【小米】MiMo模型接入智能家居中控",
+          "keyFact": "小爱同学升级为MiMo大模型，支持更自然的连续对话与多设备协同。",
+          "impact": "AIoT生态升级，推动智能家居交互从命令式转向对话式。",
+          "category": "IT之家",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【欧盟】AI法案关键条款今日生效",
+          "keyFact": "高风险AI系统需满足透明度与人类监督要求，违规罚款可达全球营收6%。",
+          "impact": "全球AI监管标杆落地，迫使厂商调整产品开发流程。",
+          "category": "Reuters",
+          "icon": "globe"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}
