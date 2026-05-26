@@ -1,0 +1,191 @@
+{
+  "date": "2026.05.26",
+  "issue": "#20260526",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.05.26",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "Grok V9 · 腾讯混译 · Claude Mythos",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【xAI】Grok V9-Medium 完成训练",
+          "source": "X",
+          "icon": "rocket"
+        },
+        {
+          "rank": 2,
+          "title": "【腾讯混元】翻译模型登顶开源榜",
+          "source": "X",
+          "icon": "globe"
+        },
+        {
+          "rank": 3,
+          "title": "【Anthropic】Mythos 模型预览版现身",
+          "source": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "rank": 4,
+          "title": "【DeepMind】AlphaProof 解开放数学题",
+          "source": "X",
+          "icon": "sparkles"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【xAI】Grok V9-Medium 完成训练",
+          "keyFact": "1.5T参数基础模型训练完毕，评估结果良好，微调进行中，强化学习即将启动。",
+          "impact": "编码能力大幅提升，预计2-3周内发布，将对现有旗舰模型形成冲击。",
+          "category": "X",
+          "icon": "rocket"
+        },
+        {
+          "title": "【xAI】V9-Medium 训练加入大量 Cursor 数据",
+          "keyFact": "补充训练阶段引入大量 Cursor 代码编辑数据，针对复杂编码任务优化。",
+          "impact": "模型编码能力将显著增强，或改变AI编程助手竞争格局。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【xAI】V9-Medium 参数规模达 1.5T",
+          "keyFact": "相比当前生产环境 0.5T 的 v8-Small，参数量提升 3 倍，性能飞跃。",
+          "impact": "高参数模型将提升 Grok 在深度推理和长上下文任务上的表现。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【腾讯混元】翻译模型 Hy-MT2 开源",
+          "keyFact": "1.8B 版本登顶 Hugging Face 趋势榜，30B MoE 排第四，下载量超 7K。",
+          "impact": "开源翻译模型性能超越众多竞品，为端侧和云侧部署提供高性价比选择。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【腾讯混元】“腾讯混译”小程序发布",
+          "keyFact": "基于 Hy-MT2 的微信小程序支持语音输入、离线翻译和风格自定义。",
+          "impact": "模型落地消费端，提升翻译便捷性和个性化，加速流量变现。",
+          "category": "X",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【Anthropic】Claude Mythos 预览版被曝出",
+          "keyFact": "模型名“claude-mythos-1-preview”曾短暂出现在 Claude Code 等产品中。",
+          "impact": "Mythos 主打计算机安全与代码推理，能力超越 Opus 4.7，或成最强模型。",
+          "category": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "title": "【Anthropic】Mythos 发布因安全顾虑推迟",
+          "keyFact": "Anthropic 担忧 Mythos 能力过强带来安全风险，尚未全面开放。",
+          "impact": "过度谨慎可能延缓前沿模型落地，给其他厂商追赶窗口。",
+          "category": "IT之家",
+          "icon": "zap"
+        },
+        {
+          "title": "【Anthropic】Claude Code 新增后台运行",
+          "keyFact": "新版本允许 Coding Agent 在后台持续执行任务，不阻塞前台操作。",
+          "impact": "提升开发者效率，推动 AI 编程工具从即时响应向自动化后台演进。",
+          "category": "X",
+          "icon": "monitor"
+        },
+        {
+          "title": "【DeepMind】AlphaProof Nexus 解开放数学难题",
+          "keyFact": "自主解决 9 个开放 Erdős 问题（部分存在 56 年），每个成本数百美元。",
+          "impact": "首次实现 AI 数学研究的端到端自动化，或将重塑数学发现范式。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【DeepMind】AlphaProof 结合 Lean 验证逻辑",
+          "keyFact": "大模型推理与形式化证明系统结合，Lean 自动检查每一步逻辑，无需人工。",
+          "impact": "可信推理迈出关键一步，对代码验证、自动定理证明等领域影响深远。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【NVIDIA】Gated DeltaNet-2 解耦注意力层",
+          "keyFact": "将 Delta 规则中的擦除与写入解耦为独立门控，1.3B 参数超越 Mamba-2 等。",
+          "impact": "线性注意力模型再突破，长上下文检索性能大幅领先，推动高效架构创新。",
+          "category": "MarkTechPost",
+          "icon": "code"
+        },
+        {
+          "title": "【NVIDIA】DeltaNet-2 长上下文能力突出",
+          "keyFact": "在 RULER S-NIAH 和多关键针检索任务中取得显著最优，性能全面碾压。",
+          "impact": "为超长上下文语言模型提供了新的轻量级替代方案，降低计算成本。",
+          "category": "MarkTechPost",
+          "icon": "robot"
+        },
+        {
+          "title": "【阶跃星辰】StepAudio 2.5 Realtime 发布",
+          "keyFact": "端到端实时语音模型，支持角色扮演 RLHF 和副语言理解，基准测试全第一。",
+          "impact": "语音交互迈向高度个性化和情感化，推动语音助手场景落地。",
+          "category": "MarkTechPost",
+          "icon": "zap"
+        },
+        {
+          "title": "【阶跃星辰】StepAudio 副语言理解得分 82.18",
+          "keyFact": "在 5 个评测维度上均排第一，人类评测得分 80.41，支持 WebSocket API。",
+          "impact": "模型在语音意图和情感理解上显著优于竞品，可应用于情感陪伴等场景。",
+          "category": "MarkTechPost",
+          "icon": "brain"
+        },
+        {
+          "title": "【影眸科技】Rodin Gen-2.5 3D 生成模型",
+          "keyFact": "首个千万面级 3D 生成，5 档思考模式（4~80 秒），原生 3D 贴图支持 PBR。",
+          "impact": "游戏、影视等 3D 资产创作效率大幅提升，AI 生成 3D 进入高精时代。",
+          "category": "X",
+          "icon": "rocket"
+        },
+        {
+          "title": "【影眸科技】Rodin Gen-2.5 获 SIGGRAPH 最佳论文",
+          "keyFact": "研究在 ACM SIGGRAPH 2025 获最佳论文奖，技术含金量获权威认可。",
+          "impact": "学术与产业双突破，巩固中国在 3D 生成领域领先地位。",
+          "category": "X",
+          "icon": "star"
+        },
+        {
+          "title": "【面壁智能】开源 BitCPM-CANN 端侧大模型",
+          "keyFact": "中国首个基于华为昇腾训练的 1.58-bit 模型，极致压缩，适合终端部署。",
+          "impact": "国产芯片+端侧 AI 落地重要里程碑，降低对云端和英伟达依赖。",
+          "category": "IT之家",
+          "icon": "cpu"
+        },
+        {
+          "title": "【面壁智能】BitCPM 联合清华等机构发布",
+          "keyFact": "产学研合作，模型在昇腾上完成训练，推动国产 AI 生态建设。",
+          "impact": "开源社区再添国产硬核贡献，加速端侧智能普及。",
+          "category": "IT之家",
+          "icon": "globe"
+        },
+        {
+          "title": "【腾讯混元】Hy-MT2 实现多语种离线翻译",
+          "keyFact": "30B MoE 版本通过稀疏激活兼顾高性能与低功耗，适合离线场景。",
+          "impact": "打破在线翻译限制，拓展无网环境和企业本地化部署市场。",
+          "category": "X",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【xAI】V9-Medium 强化学习即将启动",
+          "keyFact": "微调数天后开始 RL 阶段，后续训练可能加入更多超大规模计算。",
+          "impact": "强化学习后的 V9 或进一步超越现有编码类模型，值得关注迭代节奏。",
+          "category": "X",
+          "icon": "rocket"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}
