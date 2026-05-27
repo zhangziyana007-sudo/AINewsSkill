@@ -1,0 +1,191 @@
+{
+  "date": "2026.05.27",
+  "issue": "#20260527",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.05.27",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "新模型密集发布 · 开源加速 · 编程能力跃升",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【xAI】Grok V9-Medium完成训练",
+          "source": "X",
+          "icon": "rocket"
+        },
+        {
+          "rank": 2,
+          "title": "【Anthropic】Mythos模型或即将上线",
+          "source": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "rank": 3,
+          "title": "【阿里云】Qwen3.7-Max编程全球第二",
+          "source": "X",
+          "icon": "code"
+        },
+        {
+          "rank": 4,
+          "title": "【MiniMax】即将发布M3新模型",
+          "source": "X",
+          "icon": "sparkles"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【xAI】Grok V9-Medium完成训练",
+          "keyFact": "1.5T参数，训练加入大量Cursor数据，复杂编码任务大幅改进，预计2-3周内发布。",
+          "impact": "xAI对标GPT-5，加剧基础模型军备竞赛。",
+          "category": "X",
+          "icon": "rocket"
+        },
+        {
+          "title": "【Anthropic】Mythos模型或即将上线",
+          "keyFact": "新模型claude-mythos-1-preview曾短暂现身，定位安全，能力超Opus 4.7。",
+          "impact": "安全与能力平衡再引关注，影响企业级产品。",
+          "category": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "title": "【阿里云】Qwen3.7-Max编程全球第二",
+          "keyFact": "Code Arena得分1541，仅次于Claude，可运行35小时任务、1000+工具调用。",
+          "impact": "中国模型在编程领域实现突破，对开发者生态产生吸引。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【MiniMax】即将发布M3新模型",
+          "keyFact": "预告海报发布，采用新稀疏注意力架构，预计开源，掀起新一波期待。",
+          "impact": "国产模型旗舰更新，关注开源对生态的推动。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【MiniMax】M3新稀疏注意力架构曝光",
+          "keyFact": "动态块稀疏注意力，1M上下文预填充加速9.7倍、解码加速15.6倍。",
+          "impact": "超长上下文推理成本大幅降低，推动Agent应用落地。",
+          "category": "X",
+          "icon": "zap"
+        },
+        {
+          "title": "【MiniMax】M3预计将开源",
+          "keyFact": "官方暗示M3为开源项目，社区期待高，可能引发端侧及研究热潮。",
+          "impact": "开源阵营再添重量级选手，加剧模型供给竞争。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【阿里云】Qwen3.7-Max Code Arena第四",
+          "keyFact": "升至Code Arena第4名，与Claude Opus 4.6持平，中国实验室最高。",
+          "impact": "权威编程基准验证模型实力，巩固开发者信任。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【阿里云】Qwen3.7 Max登陆Go平台",
+          "keyFact": "仅支持文本，1M上下文，目前Qwen家族最智能模型。",
+          "impact": "扩大模型分发渠道，方便Go开发者集成。",
+          "category": "X",
+          "icon": "monitor"
+        },
+        {
+          "title": "【面壁智能】开源MiniCPM5-1B端侧模型",
+          "keyFact": "1B参数，AA-Index得分17.9，超越Qwen3.5 2B，INT4权重仅0.5GB。",
+          "impact": "端侧小模型性能标杆，促进移动端AI应用。",
+          "category": "IT之家",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【OpenBMB】发布MiniCPM5-1B",
+          "keyFact": "在AA-Index上得分17.9，1B及以下开源模型最高，128K上下文。",
+          "impact": "开源社区获得高性价比小模型选择，繁荣生态。",
+          "category": "X",
+          "icon": "star"
+        },
+        {
+          "title": "【网易有道】开源子曰4全模态27B模型",
+          "keyFact": "视觉数理SOTA，纯文本数理准确率81.4%，TTS 3秒克隆声音。",
+          "impact": "教育垂直领域模型开源，多模态能力突出。",
+          "category": "X",
+          "icon": "robot"
+        },
+        {
+          "title": "【昆仑万维】发布SkyClaw Agent模型",
+          "keyFact": "支持百万上下文，性能超越MiniMax 2.7等，定价有竞争力。",
+          "impact": "Agent领域竞争加剧，百万上下文成标配。",
+          "category": "IT之家",
+          "icon": "robot"
+        },
+        {
+          "title": "【Google】AlphaProof攻克56年数学难题",
+          "keyFact": "AI框架解决两个悬置56年的数学问题。",
+          "impact": "AI for Science里程碑，强化模型推理能力。",
+          "category": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "title": "【PrismML】发布Bonsai Image压缩版",
+          "keyFact": "1-bit版本0.93GB，Mac生成速度最高提升5.6倍，质量媲美更大模型。",
+          "impact": "图像生成模型端侧部署进一步平民化。",
+          "category": "X",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【PrismML】推出Bonsai Studio iOS应用",
+          "keyFact": "配套iOS应用，支持在iPhone上完全离线本地图像生成。",
+          "impact": "降低创意工具使用门槛，推动AIGC移动化。",
+          "category": "X",
+          "icon": "monitor"
+        },
+        {
+          "title": "【Stability AI】发布Stable Audio 3",
+          "keyFact": "包括Small和Medium开源变体，Medium适配8GB显存，流匹配训练。",
+          "impact": "音乐和音效生成开源生态丰富，创作者受益。",
+          "category": "MarkTechPost",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【腾讯】发布混元翻译模型Hy-MT2",
+          "keyFact": "1.8B和30B-A3B版本，Hugging Face趋势榜第一，开源下载已超7K。",
+          "impact": "翻译赛道竞争升级，腾讯以轻量级模型切入。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【腾讯】推出混译小程序",
+          "keyFact": "基于Hy-MT2，支持语音输入、离线翻译与自定义风格。",
+          "impact": "AI翻译能力直接面向C端，提升日常使用体验。",
+          "category": "X",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【Anthropic】Claude Code支持后台运行",
+          "keyFact": "Claude Code更新，现在可以在后台执行任务。",
+          "impact": "提升开发者工作效率，AI编程工具向IDE深度集成。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【影眸科技】发布Rodin Gen-2.5 3D模型",
+          "keyFact": "千万面级，五档思考模式，原生3D贴图，获SIGGRAPH最佳论文。",
+          "impact": "高质量3D生成产业化提速，赋能游戏影视。",
+          "category": "X",
+          "icon": "rocket"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}
