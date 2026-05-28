@@ -1,0 +1,191 @@
+{
+  "date": "2026.05.28",
+  "issue": "#20260528",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.05.28",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "模型更新 · 开源突破 · 应用落地",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【谷歌】AlphaProof Nexus攻克数学难题",
+          "source": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "rank": 2,
+          "title": "【通义千问】Qwen3.7-Max代码竞技场第四",
+          "source": "X",
+          "icon": "code"
+        },
+        {
+          "rank": 3,
+          "title": "【微软】MAI-Image-2.5图像模型排名第三",
+          "source": "The Decoder",
+          "icon": "sparkles"
+        },
+        {
+          "rank": 4,
+          "title": "【MiniMax】发布M3稀疏注意力加速架构",
+          "source": "X",
+          "icon": "zap"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【谷歌】AlphaProof Nexus攻克两道数学难题",
+          "keyFact": "谷歌AI框架攻克2道悬置56年数学难题，展示AI基础科学探索能力。",
+          "impact": "AI在纯数学领域的突破或将改写传统研究范式。",
+          "category": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "title": "【通义千问】Qwen3.7-Max代码竞技场第四",
+          "keyFact": "得分1541，与Claude Opus 4.6并列，成为中国实验室最高排名。",
+          "impact": "中国编程模型首次跻身全球第一梯队。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【微软】MAI-Image-2.5图像生成排行榜第三",
+          "keyFact": "在Arena文本生成图像排行追平谷歌Nano Banana 2，文字渲染大幅提升。",
+          "impact": "微软图像生成能力快速逼近头部玩家。",
+          "category": "The Decoder",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【MiniMax】发布M3稀疏注意力加速架构",
+          "keyFact": "在1M上下文下，预填充速度提升9.7倍，解码提升15.6倍。",
+          "impact": "百万token推理成本骤降，加速AI Agent落地。",
+          "category": "X",
+          "icon": "zap"
+        },
+        {
+          "title": "【面壁智能】开源MiniCPM5-1B高性能小模型",
+          "keyFact": "1B参数，AA-Index得分17.9超越Qwen3.5 2B，量化后仅0.5GB。",
+          "impact": "手机和浏览器运行大模型的门槛进一步降低。",
+          "category": "IT之家",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【阿里云】Qwen3.7 Max支持Go语言调用",
+          "keyFact": "通过opencode提供支持，拥有高达100万上下文窗口。",
+          "impact": "拓展开发者生态，Go语言集成更便捷。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【Stability AI】发布Stable Audio 3音频模型",
+          "keyFact": "包含Small和Medium版本，Small可在M4 CPU运行，生成44.1kHz立体声。",
+          "impact": "本地快速音频生成工具为创作者提供新选择。",
+          "category": "MarkTechPost",
+          "icon": "monitor"
+        },
+        {
+          "title": "【Krea AI】发布首个基础图像模型Krea 2",
+          "keyFact": "从零训练，支持可调创造力、风格参考和情绪板控制，含Large和Medium版。",
+          "impact": "高可控性图像生成市场迎来新竞争者。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【网易有道】子曰4全模态模型开源",
+          "keyFact": "27B参数，视觉数理SOTA，TTS仅需3秒声音克隆，准确度超97%。",
+          "impact": "教育和多模态应用的开源生态再添强将。",
+          "category": "X",
+          "icon": "robot"
+        },
+        {
+          "title": "【昆仑万维】发布SkyClaw-v1.0 Agent模型",
+          "keyFact": "支持百万token上下文，性能超越多个开源模型，定价极具竞争力。",
+          "impact": "企业级智能体应用获得高性价比新选择。",
+          "category": "IT之家",
+          "icon": "cpu"
+        },
+        {
+          "title": "【ElevenLabs】发布音乐模型，支持中途切风格",
+          "keyFact": "可对歌曲任意片段重新生成，修改不影响其他部分。",
+          "impact": "音乐创作流程更灵活，修改成本显著降低。",
+          "category": "TechCrunch",
+          "icon": "monitor"
+        },
+        {
+          "title": "【PrismML】发布Bonsai Image 4B极致压缩版",
+          "keyFact": "1-bit版本仅0.93GB，速度最高提升5.6倍，质量媲美大模型。",
+          "impact": "端侧AI图像生成在存储和速度上实现突破。",
+          "category": "X",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【MiniMax】预告M3模型即将发布",
+          "keyFact": "MiniMax官方预告M3模型即将发布，采用新稀疏注意力架构。",
+          "impact": "新模型发布在即，为开源社区注入期待。",
+          "category": "X",
+          "icon": "rocket"
+        },
+        {
+          "title": "【通义千问】Qwen3.7-Max支持35小时长任务",
+          "keyFact": "可运行35小时任务、超1000次工具调用，数小时交付两周项目。",
+          "impact": "AI编程在复杂生产环境的应用边界进一步拓宽。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【Krea AI】Krea 2登陆ComfyUI和Runware",
+          "keyFact": "已登陆ComfyUI、Runware，支持最多10张加权参考图和图生图。",
+          "impact": "社区与开发者能够更便捷地调用Krea 2能力。",
+          "category": "X",
+          "icon": "monitor"
+        },
+        {
+          "title": "【PrismML】Bonsai Image 4B登陆iPhone，9.4秒生图",
+          "keyFact": "在iPhone 17 Pro Max上9.4秒生成512x512图像，完全离线本地运行。",
+          "impact": "手机端实时AI生图成为现实。",
+          "category": "IT之家",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【Poolside AI】宣布未来将开源基础模型",
+          "keyFact": "美国实验室Poolside AI承诺未来开源其基础模型Laguna。",
+          "impact": "开源模型阵营继续扩大，利好开发者和研究人员。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【MiniMax】预告M3模型将开源",
+          "keyFact": "MiniMax M3预计将开源，采用新稀疏注意力架构。",
+          "impact": "开源模型竞争加剧，开发者将获得更多先进选择。",
+          "category": "X",
+          "icon": "rocket"
+        },
+        {
+          "title": "【Krea AI】Krea 2图像生成集成至Hermes",
+          "keyFact": "Krea 2现已内置到Hermes智能体中。",
+          "impact": "AI Agent的图像生成能力得到增强。",
+          "category": "X",
+          "icon": "robot"
+        },
+        {
+          "title": "【MiniMax】预告MSA开源项目重大消息",
+          "keyFact": "MiniMax预告其MSA开源项目即将发布重大消息。",
+          "impact": "潜在的重大开源发布引发社区高度关注。",
+          "category": "X",
+          "icon": "star"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}
