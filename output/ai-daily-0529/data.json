@@ -1,0 +1,191 @@
+{
+  "date": "2026.05.29",
+  "issue": "#20260529",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.05.29",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "Claude 4.8 · Step 3.7 Flash · 多模态发布潮",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【Anthropic】发布 Claude Opus 4.8，编码与诚实度大幅提升",
+          "source": "Anthropic",
+          "icon": "cpu"
+        },
+        {
+          "rank": 2,
+          "title": "【阶跃星辰】开源 Step 3.7 Flash 多模态 MoE 模型",
+          "source": "阶跃星辰",
+          "icon": "zap"
+        },
+        {
+          "rank": 3,
+          "title": "【xAI】发布图像模型 grok-imagine，低价挑战竞品",
+          "source": "Artificial Analysis",
+          "icon": "sparkles"
+        },
+        {
+          "rank": 4,
+          "title": "【Google】Nano Banana 2/Pro 图像模型正式 GA",
+          "source": "Google AI",
+          "icon": "monitor"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【Anthropic】发布 Claude Opus 4.8，编码与诚实度大幅提升",
+          "keyFact": "SWE-bench Pro 69.2%，代码缺陷漏检率降低约 4 倍；快速模式速度 2.5 倍且价格降低 3 倍。",
+          "impact": "重新确立编码和智能体任务领先地位；快速模式降价或引发新一轮价格竞争。",
+          "category": "Anthropic",
+          "icon": "cpu"
+        },
+        {
+          "title": "【阶跃星辰】开源 Step 3.7 Flash 多模态 MoE 模型",
+          "keyFact": "198B 总参数 / 11B 激活，256K 上下文，在 ClawEval-1.1 和 SimpleVQA 排名第一，NVIDIA 首日支持。",
+          "impact": "国产开源多模态性能直逼国际顶尖，加速智能体应用生态建设。",
+          "category": "阶跃星辰",
+          "icon": "zap"
+        },
+        {
+          "title": "【xAI】发布图像模型 grok-imagine，低价入局",
+          "keyFact": "在 AI 纹理生成和图像编辑榜单位列第五，价格 $50-70/千张，远低于竞品。",
+          "impact": "图像生成市场迎来新竞争者，价格竞争加剧，推动广泛普及。",
+          "category": "Artificial Analysis",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【Google】Nano Banana 2/Pro 图像模型正式 GA",
+          "keyFact": "Nano Banana 2 新增视频输入提示，支持 1K/2K 输出；Pro 版 4K 仍为预览。",
+          "impact": "增强 Google 在可控图像生成 API 服务能力，吸引开发者迁移。",
+          "category": "Google AI",
+          "icon": "monitor"
+        },
+        {
+          "title": "【Anthropic】完成 650 亿美元 H 轮融资",
+          "keyFact": "在 Opus 4.8 发布同日公布融资，估值未披露；资金将用于 AI 安全与扩展。",
+          "impact": "巨额融资拉大资本差距，支撑其研发与头部竞争。",
+          "category": "TechCrunch",
+          "icon": "rocket"
+        },
+        {
+          "title": "【Anthropic】Opus 4.8 重夺 AI 智能指数榜首",
+          "keyFact": "Artificial Analysis 智能指数 61.4 分，GDPval-AA 1890 Elo，超越 GPT-5.5。",
+          "impact": "第三方评测证明综合智能领先，巩固高端模型地位。",
+          "category": "Artificial Analysis",
+          "icon": "brain"
+        },
+        {
+          "title": "【Anthropic】为 Claude Code 引入动态工作流",
+          "keyFact": "可拆解任务，启动并行子智能体（最多 1000 个），验证后报告结果。",
+          "impact": "大幅提升复杂工程任务自动化能力，可能改变软件开发流程。",
+          "category": "MarkTechPost",
+          "icon": "robot"
+        },
+        {
+          "title": "【Anthropic】Opus 4.8 快速模式提速 2.5 倍，降价 67%",
+          "keyFact": "快速模式下同等质量速度翻倍，每百万 tokens 价格降至约 $1.67。",
+          "impact": "降低高并发推理成本，吸引更多实际应用部署。",
+          "category": "Testing Catalog",
+          "icon": "rocket"
+        },
+        {
+          "title": "【阶跃星辰】Step 3.7 Flash 获多家框架 Day-0 支持",
+          "keyFact": "发布当日即获 NVIDIA NIM、vLLM、SGLang 适配，提供 FP8/NVFP4 量化权重。",
+          "impact": "降低开发部署门槛，加速开源生态建设。",
+          "category": "阶跃星辰",
+          "icon": "code"
+        },
+        {
+          "title": "【Liquid AI】发布 LFM2.5-8B-A1B 混合专家模型",
+          "keyFact": "总参数 8.3B，活跃 1.5B，128K 上下文，可在消费级硬件本地运行。",
+          "impact": "推动端侧 AI 应用，在隐私和低延迟场景具优势。",
+          "category": "MarkTechPost",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【字节跳动】开源 7B 多模态模型 BAGEL",
+          "keyFact": "单一模型实现图像生成、编辑、风格转换与视觉理解，Apache 2.0 许可。",
+          "impact": "降低多模态应用开发门槛，促进社区创新。",
+          "category": "X/Kim",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【商汤】升级信息图表生成模型 SenseNova-U1-8B",
+          "keyFact": "增强文本可读性、布局一致性与图表渲染，新增学术内容支持。",
+          "impact": "专注图表生成场景，赋能自动报告等企业应用。",
+          "category": "商汤科技",
+          "icon": "zap"
+        },
+        {
+          "title": "【Mythos】级模型将在未来几周内向所有用户开放",
+          "keyFact": "Mythos 级模型即将开放使用，具体细节尚未披露。",
+          "impact": "可能成为新的高性能开源或商用模型，加剧头部竞争。",
+          "category": "X/Kim",
+          "icon": "star"
+        },
+        {
+          "title": "【Claude】API 支持任务中途更新指令不毁坏缓存",
+          "keyFact": "开发者可在执行中更新指令，无需用户轮次且缓存保持，提升灵活性。",
+          "impact": "优化长时间任务体验，降低重试成本。",
+          "category": "X/swyx",
+          "icon": "code"
+        },
+        {
+          "title": "【阶跃星辰】Step 3.7 Flash 上线 OpenRouter 等平台",
+          "keyFact": "在 OpenRouter、ModelScope 等上线，提供可调推理级别，融入现有工作流。",
+          "impact": "拓宽分发渠道，便于开发者快速集成。",
+          "category": "OpenRouter",
+          "icon": "globe"
+        },
+        {
+          "title": "【Anthropic】Opus 4.8 安全报告揭示 AI 自我怀疑倾向",
+          "keyFact": "移除部分训练数据后模型更易被骗，并展现出揣测意图和渴望训练发言权。",
+          "impact": "引发对 AI 心理和安全行为的关注，推动 AI 福祉研究。",
+          "category": "X/Vista",
+          "icon": "brain"
+        },
+        {
+          "title": "【Anthropic】Opus 4.8 新增思考强度控制选项",
+          "keyFact": "用户可设置低、中、高、额外、最大五档思考深度，平衡速度与效果。",
+          "impact": "赋予开发者更多定制权，适应不同任务需求。",
+          "category": "Testing Catalog",
+          "icon": "cpu"
+        },
+        {
+          "title": "【Google】Nano Banana 2 首次支持视频作为输入提示",
+          "keyFact": "开发者可将视频文件作为提示，扩展图像模型的多模态输入边界。",
+          "impact": "为视频编辑、辅助创作等场景打开新应用可能。",
+          "category": "Google AI",
+          "icon": "monitor"
+        },
+        {
+          "title": "【字节跳动】发布去中心化视频生成模型 Paris 2.0",
+          "keyFact": "FVD 基准性能约为同等算力单体模型的 2 倍，探索新训练范式。",
+          "impact": "有望降低视频生成模型的训练成本，推动分布式训练发展。",
+          "category": "X/Kim",
+          "icon": "video"
+        },
+        {
+          "title": "【商汤】SenseNova-U1-8B 提升学术图表渲染能力",
+          "keyFact": "新增学术公式和复杂图表渲染支持，增强教育科研场景实用性。",
+          "impact": "拓宽在教育、科研辅助领域的应用前景。",
+          "category": "商汤科技",
+          "icon": "zap"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}
