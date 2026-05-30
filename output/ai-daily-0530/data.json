@@ -1,0 +1,191 @@
+{
+  "date": "2026.05.30",
+  "issue": "#20260530",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.05.30",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "Claude Opus 4.8 · Step 3.7 Flash · GPT-5.5 Instant",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【Anthropic】发布 Claude Opus 4.8",
+          "source": "The Decoder",
+          "icon": "rocket"
+        },
+        {
+          "rank": 2,
+          "title": "【阶跃星辰】开源 Step 3.7 Flash 多模态模型",
+          "source": "IT之家",
+          "icon": "cpu"
+        },
+        {
+          "rank": 3,
+          "title": "【OpenAI】ChatGPT 上新 GPT-5.5 Instant",
+          "source": "X",
+          "icon": "zap"
+        },
+        {
+          "rank": 4,
+          "title": "【Anthropic】完成 650 亿美元融资",
+          "source": "X",
+          "icon": "star"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【Anthropic】发布 Claude Opus 4.8",
+          "keyFact": "编码推理诚实度大幅提升，代码缺陷遗漏概率降约4倍，价格不变，推2.5倍速快速模式。",
+          "impact": "重新夺回性能王座，对 OpenAI 构成强力竞争，开发者获得更高可靠性选择。",
+          "category": "The Decoder",
+          "icon": "rocket"
+        },
+        {
+          "title": "【阶跃星辰】开源 Step 3.7 Flash 多模态模型",
+          "keyFact": "198B MoE，11B 激活参数，256K 上下文，ClawEval-1.1 第一，最高 400 tok/s，开源权重。",
+          "impact": "为智能体工作流提供高性能开源方案，国内开源生态再添重器。",
+          "category": "IT之家",
+          "icon": "cpu"
+        },
+        {
+          "title": "【OpenAI】ChatGPT 上新 GPT-5.5 Instant",
+          "keyFact": "新增 GPT-5.5 instant 版本，改进谄媚性、事实性、多语言性能，上线 ChatGPT。",
+          "impact": "优化用户体验，巩固多语言市场优势，加速快速响应场景应用。",
+          "category": "X",
+          "icon": "zap"
+        },
+        {
+          "title": "【Anthropic】完成 650 亿美元融资",
+          "keyFact": "投后估值 9650 亿美元，为 AI 领域最大单笔融资，同日发布 Opus 4.8。",
+          "impact": "巨额融资保障研发算力，加剧行业资本竞赛，巩固独立 AI 巨头地位。",
+          "category": "X",
+          "icon": "star"
+        },
+        {
+          "title": "【xAI】发布 Grok Build 0.1 公测版",
+          "keyFact": "API 定价输入 $1/M 输出 $2/M，擅长智能体编码，驱动 Grok Build CLI。",
+          "impact": "以极低价格切入开发者工具市场，可能重塑编码助手定价格局。",
+          "category": "xAI",
+          "icon": "robot"
+        },
+        {
+          "title": "【Google】正式推出 Nano Banana Pro 和 2",
+          "keyFact": "图像生成模型达通用可用，Nano Banana 2 支持视频输入，1K/2K 输出上线。",
+          "impact": "丰富 Gemini 多模态能力，提供生产级图像服务，加速 AI 应用开发。",
+          "category": "Google",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【OpenAI】推出实时翻译模型",
+          "keyFact": "gpt-realtime-translate 支持 70+ 语言语音输入，13 种输出语言，用于智能眼镜。",
+          "impact": "拓宽多语言实时场景，加速 AI 硬件落地，冲击传统翻译设备。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【字节跳动】开源多模态模型 BAGEL",
+          "keyFact": "7B 参数统一支持图像生成、编辑、风格转换与理解，Apache 2.0 开源。",
+          "impact": "低参数多合一降低多模态门槛，开源许可友好，推动社区创新。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【小米】开源可控音效模型 ControlFoley",
+          "keyFact": "支持文本引导、控制及参考音频配音，VGGSound-Test 等多项 SOTA，开源。",
+          "impact": "填补视频音效生成可控性空白，促进音视频 AIGC 发展。",
+          "category": "IT之家",
+          "icon": "star"
+        },
+        {
+          "title": "【Liquid AI】发布 LFM2.5-8B-A1B 模型",
+          "keyFact": "8.3B 总参，1.5B 激活，128K 上下文，消费级硬件可运行，支持工具调用。",
+          "impact": "推动设备端 AI 部署，为隐私和离线场景提供新选择。",
+          "category": "MarkTechPost",
+          "icon": "monitor"
+        },
+        {
+          "title": "【xAI】发布图像模型 grok-imagine",
+          "keyFact": "文本图像和编辑双榜第五，定价 $50-70/1k，低于 OpenAI 和 Google。",
+          "impact": "AI 图像价格战加剧，xAI 以低价高性能策略抢占市场份额。",
+          "category": "AAnalysis",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【Google】展示 Gemini Omni 与 3.5 实战",
+          "keyFact": "11 个视频演示 Gemini Omni 和 3.5 多模态场景，涵盖 AI 代理、搜索等。",
+          "impact": "直观展示多模态 AI 潜力，巩固 Google 领先形象，激发开发者创新。",
+          "category": "Google Blog",
+          "icon": "monitor"
+        },
+        {
+          "title": "【OpenAI】免费开放生命科学模型 GPT-Rosalind",
+          "keyFact": "通过生物防御计划免费开放，合作方包括国家实验室和疫苗组织，全球可申请。",
+          "impact": "利用 AI 加强全球流行病防范，树立社会责任标杆，推动 AI for Science。",
+          "category": "The Decoder",
+          "icon": "brain"
+        },
+        {
+          "title": "【百度飞桨】发布 PaddleOCR-VL 1.6",
+          "keyFact": "OmniDocBench 96.33% 新 SOTA，表格印章稀有字识别提升，架构兼容。",
+          "impact": "提升文档解析精度，为 RAG 等系统提供更高质量数据，赋能下游应用。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【阿里通义】发布 Qwen-VLA 视觉语言动作模型",
+          "keyFact": "Qwen Studio 新增视觉语言动作模型，实现从理解到行动的跨越。",
+          "impact": "统一视觉与行动，推动具身智能和机器人应用，拓展千问能力边界。",
+          "category": "Qwen Blog",
+          "icon": "robot"
+        },
+        {
+          "title": "【GPT-5.6】新检查点达成，预期近期发布",
+          "keyFact": "开发者透露 GPT-5.6 检查点达成，对下一代模型性能抱有高期望。",
+          "impact": "预示 OpenAI 下一代模型进展顺利，引发行业期待与竞争。",
+          "category": "X",
+          "icon": "star"
+        },
+        {
+          "title": "【Datacurve】推出编程基准 DeepSWE",
+          "keyFact": "更具挑战性的编程基准，旨在清晰评估顶尖模型编程能力差异。",
+          "impact": "提供更严苛评估标准，引导模型编程能力研发方向。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【Claude Opus 4.8】上线 OpenRouter",
+          "keyFact": "OpenRouter 首日上线，价格与 4.7 相同，提供快速模式 2.5 倍速 2 倍价。",
+          "impact": "扩大模型可及性，方便开发者集成，加速 Claude 生态构建。",
+          "category": "OpenRouter",
+          "icon": "zap"
+        },
+        {
+          "title": "【Step 3.7 Flash】获 NVIDIA 首日支持",
+          "keyFact": "NVIDIA NIM、NeMo 及 GPU 加速端点就绪，支持 FP8/NVFP4 量化部署。",
+          "impact": "强化 NVIDIA 生态部署便利性，吸引企业用户，加速商业化。",
+          "category": "阶跃星辰",
+          "icon": "cpu"
+        },
+        {
+          "title": "【SGLang】推理框架支持 Step 3.7 Flash",
+          "keyFact": "SGLang 推理框架提供 Day-0 支持，优化高吞吐量智能体工作负载。",
+          "impact": "降低开发门槛，加速模型智能体应用落地，体现开源社区活力。",
+          "category": "SGLang",
+          "icon": "sparkles"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}
