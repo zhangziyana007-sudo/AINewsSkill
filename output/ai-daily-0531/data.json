@@ -1,0 +1,191 @@
+{
+  "date": "2026.05.31",
+  "issue": "#20260531",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.05.31",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "Claude Opus 4.8 · 实时翻译 · GPT-5.5 Instant",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【Anthropic】发布Claude Opus 4.8",
+          "source": "AI News",
+          "icon": "brain"
+        },
+        {
+          "rank": 2,
+          "title": "【OpenAI】推出实时翻译模型",
+          "source": "X",
+          "icon": "globe"
+        },
+        {
+          "rank": 3,
+          "title": "【OpenAI】上线GPT-5.5 Instant新版本",
+          "source": "X",
+          "icon": "zap"
+        },
+        {
+          "rank": 4,
+          "title": "【xAI】Grok Imagine Video 1.5登顶视频榜",
+          "source": "X",
+          "icon": "rocket"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【Anthropic】发布Claude Opus 4.8",
+          "keyFact": "升级编码、智能体与推理能力，API名称为claude-opus-4-8。",
+          "impact": "巩固高端模型地位，加剧超大规模竞争。",
+          "category": "AI News",
+          "icon": "brain"
+        },
+        {
+          "title": "【OpenAI】推出实时翻译模型",
+          "keyFact": "gpt-realtime-translate支持70+语言输入、13种语言输出，可在智能眼镜上运行。",
+          "impact": "为实时跨语言交流打开新场景。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【OpenAI】上线GPT-5.5 Instant新版本",
+          "keyFact": "新版改进谄媚性、事实性与多语言能力，开放使用。",
+          "impact": "提升对话体验，增强实用性。",
+          "category": "X",
+          "icon": "zap"
+        },
+        {
+          "title": "【xAI】Grok Imagine Video 1.5登顶视频榜",
+          "keyFact": "在Video Arena基准测试中得分提升52分，超越竞品。",
+          "impact": "视频生成赛道竞争白热化，xAI快速追赶。",
+          "category": "X",
+          "icon": "rocket"
+        },
+        {
+          "title": "【xAI】grok-build-0.1模型公测",
+          "keyFact": "API开放，输入$1/M、输出$2/M，擅长智能体编码。",
+          "impact": "低成本编程智能体模型，抢占开发者。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【微软】将发布MAI系列图像语音模型",
+          "keyFact": "6月2日发布MAI Voice 2（15种语言）和MAI Image 2.5等。",
+          "impact": "微软自研模型矩阵逐渐成形。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【Google】Nano Banana Pro/2正式发布",
+          "keyFact": "Gemini 3 Pro/Flash图像生成模型通过API投入生产。",
+          "impact": "为开发者提供高质、可商用的图像API。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【阶跃星辰】发布Step 3.7 Flash",
+          "keyFact": "198B MoE视觉语言模型，支持256k上下文，面向编程智能体。",
+          "impact": "开源大模型在特定任务挑战闭源。",
+          "category": "MarkTechPost",
+          "icon": "robot"
+        },
+        {
+          "title": "【阿里】发布Qwen-VLA模型",
+          "keyFact": "从视觉理解到行动的综合模型，支持聊天、图像生成、工具使用等。",
+          "impact": "多模态迈向具身智能的关键一步。",
+          "category": "Qwen Blog",
+          "icon": "brain"
+        },
+        {
+          "title": "【百度】PaddleOCR-VL 1.6再夺SOTA",
+          "keyFact": "OmniDocBench达96.33%，文档解析与印章检测增强。",
+          "impact": "企业文档智能化处理工具升级。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【小米】开源ControlFoley音效生成",
+          "keyFact": "支持文本/参考音频控制视频配音，多项基准SOTA。",
+          "impact": "降低视频创作中音效制作门槛。",
+          "category": "IT之家",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【智元】世界模型GE 2.0登顶",
+          "keyFact": "2B参数在WorldArena榜单超越众多大模型。",
+          "impact": "小参数模型在真实世界模拟的突破。",
+          "category": "IT之家",
+          "icon": "globe"
+        },
+        {
+          "title": "【Liquid AI】发布8B-A1B MoE模型",
+          "keyFact": "在38T token数据集训练，采用混合专家架构。",
+          "impact": "新型MoE架构探索，平衡效率与性能。",
+          "category": "Liquid AI",
+          "icon": "cpu"
+        },
+        {
+          "title": "【Anthropic】完成650亿美元融资",
+          "keyFact": "投后估值9650亿美元，创AI融资纪录。",
+          "impact": "充裕资金加速下一代模型研发。",
+          "category": "X",
+          "icon": "star"
+        },
+        {
+          "title": "【Google】演示Gemini Omni与3.5",
+          "keyFact": "11个视频展示Gemini Omni和3.5多模态能力。",
+          "impact": "强化多模态领域领导地位。",
+          "category": "Google Blog",
+          "icon": "monitor"
+        },
+        {
+          "title": "【OpenAI】免费开放GPT-Rosalind",
+          "keyFact": "生命科学模型通过Rosalind计划免费提供，合作实验室包括LLNL。",
+          "impact": "AI for Science，助力全球生物防御。",
+          "category": "The Decoder",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【阶跃星辰】Step 3.7 Flash上线Kilo",
+          "keyFact": "开放权重模型集成至Kilocode，可快速部署运行。",
+          "impact": "降低智能体应用开发门槛。",
+          "category": "X",
+          "icon": "rocket"
+        },
+        {
+          "title": "【KogAI】展示2B模型3000 tokens/s",
+          "keyFact": "使用8块MI300X GPU，2B模型推理速度达3000 tokens/s。",
+          "impact": "展示特定硬件上高效推理潜力。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【Datacurve】推出DeepSWE编程基准",
+          "keyFact": "更具挑战性的编程基准，评估顶尖模型差异。",
+          "impact": "为模型编程能力提供更严格标尺。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【阶跃星辰】Step 3.7 Flash限时免费",
+          "keyFact": "Hermes Agent用户可免费使用Step 3.7 Flash 30天。",
+          "impact": "吸引开发者体验，推动智能体生态。",
+          "category": "X",
+          "icon": "star"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}
