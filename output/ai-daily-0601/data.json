@@ -1,0 +1,191 @@
+{
+  "date": "2026.06.01",
+  "issue": "#20260601",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.06.01",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "M3发布 · 英伟达开源 · 视频登顶",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【MiniMax】发布M3：百万上下文与原生多模态",
+          "source": "IT之家",
+          "icon": "zap"
+        },
+        {
+          "rank": 2,
+          "title": "【英伟达】开源5500亿Nemotron 3 Ultra",
+          "source": "IT之家",
+          "icon": "cpu"
+        },
+        {
+          "rank": 3,
+          "title": "【英伟达】发布Cosmos 3物理AI世界模型",
+          "source": "NVIDIA",
+          "icon": "robot"
+        },
+        {
+          "rank": 4,
+          "title": "【英伟达】Vera Rubin超级芯片全面投产",
+          "source": "IT之家",
+          "icon": "rocket"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【MiniMax】发布M3：百万上下文与原生多模态",
+          "keyFact": "开源模型，1M上下文，稀疏注意力，编码超GPT-5.5，API输入2.1元/百万tokens。",
+          "impact": "国产开源三项全能，冲击编码与多模态格局。",
+          "category": "IT之家",
+          "icon": "zap"
+        },
+        {
+          "title": "【英伟达】开源5500亿Nemotron 3 Ultra",
+          "keyFact": "550B参数MoE，推理速度比同级快5倍，成本降30%，6月4日上线。",
+          "impact": "大幅降低智能体门槛，对商业市场形成竞争。",
+          "category": "IT之家",
+          "icon": "cpu"
+        },
+        {
+          "title": "【英伟达】发布Cosmos 3物理AI世界模型",
+          "keyFact": "首个开放视觉推理与动作生成的物理AI全能模型，提供32B和8B版本。",
+          "impact": "推动机器人与自动驾驶的物理AI研发。",
+          "category": "NVIDIA",
+          "icon": "robot"
+        },
+        {
+          "title": "【英伟达】Vera Rubin超级芯片全面投产",
+          "keyFact": "智能体吞吐量较Grace Blackwell提升10倍，秋季发货，供应链规模翻倍。",
+          "impact": "巩固英伟达AI算力基础设施主导地位。",
+          "category": "IT之家",
+          "icon": "rocket"
+        },
+        {
+          "title": "【英伟达】推出Alpamayo 2 Super自动驾驶VLA模型",
+          "keyFact": "32B参数，360度感知与推理自动标注，适配DRIVE AGX Thor，夏季开源。",
+          "impact": "加速L4自动驾驶研发进程。",
+          "category": "IT之家",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【xAI】Grok视频1.5预览版上线API",
+          "keyFact": "Grok Imagine Video 1.5 Preview可通过API使用。",
+          "impact": "xAI视频生成能力开放，推动开发者测试与应用。",
+          "category": "TestCat",
+          "icon": "code"
+        },
+        {
+          "title": "【xAI】Grok视频模型登顶Video Arena",
+          "keyFact": "图生视频评测中排名第一，得分较前代飙升52分，超越Veo 3.1等。",
+          "impact": "xAI在视频生成领域快速崛起，行业竞争加剧。",
+          "category": "TestCat",
+          "icon": "star"
+        },
+        {
+          "title": "【微软】将发布MAI Voice 2等多款AI模型",
+          "keyFact": "支持15种语言和情感语音，MAI Image 2.5已预览，6月2日发布。",
+          "impact": "丰富多模态模型矩阵，强化生产力与创作工具。",
+          "category": "TestCat",
+          "icon": "monitor"
+        },
+        {
+          "title": "【xAI】Grok-build-0.1模型API公测",
+          "keyFact": "输入$1/百万tokens，输出$2/百万tokens，通过xAI API提供。",
+          "impact": "为开发者提供新选择，完善xAI模型家族。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【Google】Nano Banana Pro正式发布",
+          "keyFact": "搭载Gemini 3 Pro/Flash的图像模型正式版上线，可生产使用。",
+          "impact": "增强谷歌在图像生成市场的竞争力。",
+          "category": "GoogleAI",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【阶跃星辰】Step 3.7 Flash限时免费体验",
+          "keyFact": "在Hermes Agent平台提供30天免费使用。",
+          "impact": "通过免费策略吸引智能体应用开发者。",
+          "category": "X",
+          "icon": "zap"
+        },
+        {
+          "title": "【HiDream】发布O1-Image开源文生图模型",
+          "keyFact": "8B参数，图像质量在开源权重中排名第一，接近商业闭源模型。",
+          "impact": "提升开源文生图生态水平。",
+          "category": "AA",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【智元】世界模型GE 2.0登顶WorldArena",
+          "keyFact": "2B参数小模型在WorldArena基准上获得最佳排名。",
+          "impact": "展现小参数世界模型潜力，降低部署门槛。",
+          "category": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "title": "【1-Bit Bonsai】发布端侧图像模型Image 4B",
+          "keyFact": "本地硬件优化的图像生成模型，注重端侧部署。",
+          "impact": "端侧AI生成进一步实用化，保护隐私。",
+          "category": "HNews",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【MiniMax】M3 API定价公布",
+          "keyFact": "输入2.1元、输出8.4元/百万tokens，限时五折。",
+          "impact": "竞争力定价有望加速商业化。",
+          "category": "IT之家",
+          "icon": "star"
+        },
+        {
+          "title": "【MiniMax】M3在OpenRouter首周半价",
+          "keyFact": "支持百万上下文和原生多模态，上线首周五折优惠。",
+          "impact": "扩大分发渠道，降低全球开发者试用成本。",
+          "category": "X",
+          "icon": "globe"
+        },
+        {
+          "title": "【MiniMax】M3在OpenCode免费试用",
+          "keyFact": "开发者可在OpenCode平台免费体验M3模型。",
+          "impact": "提供便捷测试渠道，加速反馈收集。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【MiniMax】M3上线CREAO平台",
+          "keyFact": "CREAO平台集成M3，专注长上下文代码和文档推理。",
+          "impact": "拓展垂直场景，展示开源模型生态整合力。",
+          "category": "X",
+          "icon": "monitor"
+        },
+        {
+          "title": "【MiniMax】M3稀疏注意力计算效率提升20倍",
+          "keyFact": "新架构将每token成本降至前代1/20，预填充速度提升9倍。",
+          "impact": "大幅降低长文本处理成本，提升经济性。",
+          "category": "X",
+          "icon": "cpu"
+        },
+        {
+          "title": "【MiniMax】M3登陆Venice支持匿名使用",
+          "keyFact": "Venice平台上线M3，允许用户匿名使用模型。",
+          "impact": "满足隐私敏感场景需求，拓展用户群体。",
+          "category": "X",
+          "icon": "globe"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}
