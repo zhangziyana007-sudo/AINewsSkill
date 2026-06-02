@@ -1,0 +1,191 @@
+{
+  "date": "2026.06.02",
+  "issue": "#20260602",
+  "pages": [
+    {
+      "type": "cover",
+      "title": [
+        "2026.06.02",
+        "AI 大模型新闻早报"
+      ],
+      "subtitle": "开源模型角力 · 物理AI爆发 · 多模态智能体",
+      "previews": [
+        {
+          "rank": 1,
+          "title": "【MiniMax】发布开源模型M3",
+          "source": "X",
+          "icon": "rocket"
+        },
+        {
+          "rank": 2,
+          "title": "【阿里】发布Qwen3.7-Plus多模态智能体",
+          "source": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "rank": 3,
+          "title": "【NVIDIA】Nemotron 3 Ultra即将发布",
+          "source": "The Decoder",
+          "icon": "cpu"
+        },
+        {
+          "rank": 4,
+          "title": "【NVIDIA】全开源Cosmos 3世界模型",
+          "source": "IT之家",
+          "icon": "globe"
+        }
+      ]
+    },
+    {
+      "type": "news",
+      "items": [
+        {
+          "title": "【MiniMax】发布开源模型M3，1M上下文多模态编码",
+          "keyFact": "支持1M token上下文、原生多模态，SWE-Bench Pro 59.0%，成本约为GPT-5.5的1/12。",
+          "impact": "开源模型逼近闭源领先者，极大降低长上下文与多模态应用门槛。",
+          "category": "X",
+          "icon": "rocket"
+        },
+        {
+          "title": "【阿里巴巴】发布通义千问Qwen3.7-Plus多模态智能体",
+          "keyFact": "统一视觉语言，支持GUI/CLI操作，Vision Arena中国第1，全球前5。",
+          "impact": "强化多模态智能体布局，直接对标国际一线模型。",
+          "category": "IT之家",
+          "icon": "brain"
+        },
+        {
+          "title": "【NVIDIA】Nemotron 3 Ultra即将发布，美国最强开源",
+          "keyFact": "550B参数开放权重，采用混合SSM+MoE架构，专为长序列优化。",
+          "impact": "为开源社区提供高参数模型选择，挑战中国开源领先地位。",
+          "category": "The Decoder",
+          "icon": "cpu"
+        },
+        {
+          "title": "【NVIDIA】全开源Cosmos 3物理AI世界模型发布",
+          "keyFact": "首个全模态物理AI模型，支持文本/视频/动作等，提供Super和Nano版本。",
+          "impact": "降低物理AI开发门槛，加速机器人、自动驾驶仿真。",
+          "category": "IT之家",
+          "icon": "globe"
+        },
+        {
+          "title": "【阶跃星辰】发布Step 3.7 Flash高效推理模型",
+          "keyFact": "196B MoE，KV-cache成本仅为DeepSeek的22%，Apache 2.0许可。",
+          "impact": "高性价比推理方案，与DeepSeek在成本端直接竞争。",
+          "category": "X",
+          "icon": "zap"
+        },
+        {
+          "title": "【微软】自研推理模型MAI-Thinking-1曝光",
+          "keyFact": "未使用其他模型输出蒸馏，Build 2026发布，同时将发MAI-Image-2.5。",
+          "impact": "微软加入自研推理赛道，减少对OpenAI依赖，增强Copilot。",
+          "category": "IT之家",
+          "icon": "robot"
+        },
+        {
+          "title": "【xAI】发布Composer 2.5模型，面向长任务",
+          "keyFact": "在Grok Build中可用，擅长长时间运行任务和复杂指令遵循。",
+          "impact": "增强Grok在Agent场景下的实用性，与竞品差异化竞争。",
+          "category": "X",
+          "icon": "star"
+        },
+        {
+          "title": "【商汤】发布SenseNova U1信息图专用模型",
+          "keyFact": "解决AI图表生成数值错误、位置偏移等问题，支持实时调整设计。",
+          "impact": "填补AI信息可视化垂直领域空白，有实用价值。",
+          "category": "X",
+          "icon": "monitor"
+        },
+        {
+          "title": "【WindBorne】AI气象模型WeatherMesh-6精度超ECMWF",
+          "keyFact": "5天预报准确度相当于传统1天，基于自主探空气球数据训练。",
+          "impact": "验证垂直领域AI模型可超越传统机构，数据飞轮优势显现。",
+          "category": "TechCrunch",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【KwaiKeye】开源VL 2.0多模态模型，256K上下文",
+          "keyFact": "30B总参仅激活3B，采用DeepSeek稀疏注意力，视频理解越看越准。",
+          "impact": "超低激活参数的高效多模态方案，可能降低部署成本。",
+          "category": "X",
+          "icon": "code"
+        },
+        {
+          "title": "【JetBrains】发布Mellum2 12B混合专家模型",
+          "keyFact": "针对开发者场景的12B MoE模型，由JetBrains推出。",
+          "impact": "工具链厂商入局大模型，增强IDE等场景本地AI能力。",
+          "category": "HuggingFace",
+          "icon": "code"
+        },
+        {
+          "title": "【MiniMax】M3上线多家云平台，首周半价",
+          "keyFact": "上线Vercel、SiliconFlow等，输出$1.20/百万token，约为Sonnet 1/3。",
+          "impact": "低价策略吸引开发者，压降低端模型利润空间，加速价格战。",
+          "category": "X",
+          "icon": "smartphone"
+        },
+        {
+          "title": "【MiniMax】M3实现草图变游戏，成本$0.028",
+          "keyFact": "手绘草图一键生成可玩HTML游戏，消耗16k token，成本极低。",
+          "impact": "展示强大编码能力，为快速原型开辟新范式。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【MiniMax】Agent与Code更新，强化持久记忆",
+          "keyFact": "MiniMax Agent新增持久记忆与进化技能，MiniMax Code发布。",
+          "impact": "提升智能体长期任务稳定性，丰富开发者工具链。",
+          "category": "X",
+          "icon": "robot"
+        },
+        {
+          "title": "【NVIDIA】发布Alpamayo 2 Super驾驶大脑",
+          "keyFact": "显著扩展规模的自动驾驶模型，于GTC台北发布。",
+          "impact": "巩固NVIDIA在自动驾驶AI的领导地位。",
+          "category": "The Decoder",
+          "icon": "cpu"
+        },
+        {
+          "title": "【NVIDIA】发布开源人形机器人参考平台",
+          "keyFact": "在GTC台北推出开源人形机器人硬件参考设计，推动具身智能。",
+          "impact": "降低人形机器人开发门槛，加速行业标准化。",
+          "category": "The Decoder",
+          "icon": "robot"
+        },
+        {
+          "title": "【NVIDIA】Nemotron 3 Ultra成美国最聪明开源模型",
+          "keyFact": "超越所有美国开源模型，但整体仍落后中国开源模型。",
+          "impact": "美国开源大模型重要突破，但中美差距依然存在。",
+          "category": "The Decoder",
+          "icon": "zap"
+        },
+        {
+          "title": "【微软】Build 2026将展示Copilot超级应用",
+          "keyFact": "整合多个AI助手与Scout AI agent，测试版夏末推出。",
+          "impact": "预示操作系统级AI集成，可能重塑PC交互范式。",
+          "category": "IT之家",
+          "icon": "monitor"
+        },
+        {
+          "title": "【NVIDIA】Cosmos 3登顶生成双榜，图像视频双第一",
+          "keyFact": "在Artificial Analysis开放权重文生图与图生视频均排第一。",
+          "impact": "证明全模态模型在生成质量上的竞争力。",
+          "category": "X",
+          "icon": "sparkles"
+        },
+        {
+          "title": "【MiniMax】M3权重与技术报告10天后开放",
+          "keyFact": "MiniMax宣布约10天后在HuggingFace发布M3模型权重与技术报告。",
+          "impact": "开源社区将可深入复现和研究，推动技术透明。",
+          "category": "X",
+          "icon": "star"
+        }
+      ]
+    },
+    {
+      "type": "ending",
+      "slogan": "AI大模型早报 · 每日精选Top 20",
+      "cta": "关注获取每日推送",
+      "meta": "数据来源：公开报道与行业资讯"
+    }
+  ]
+}
